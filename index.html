@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CodeKids Academy — Coding & Automation for Kids</title>
+  <style>
+    :root{
+      --bg:#07090f;--surface:#0f1220;--card:#151929;--card2:#1b2036;
+      --border:#252d4a;--border2:#2e3860;
+      --purple:#7c6fff;--purple-l:#a89fff;
+      --teal:#00d4aa;--teal-l:#5ef0d0;
+      --yellow:#ffd166;--orange:#ff9f43;--pink:#ff6b9d;
+      --red:#ff6b6b;--blue:#48dbfb;--green:#26de81;
+      --text:#e8eaf6;--muted:#7880a8;--muted2:#3e4568;
+      --r-sm:8px;--r-md:14px;--r-lg:20px;--nav-h:64px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden;}
+    a{color:var(--teal);text-decoration:none;}
+    a:hover{opacity:.8;text-decoration:underline;}
+    input,select,textarea,button{font-family:inherit;}
+
+    /* ── NAV ── */
+    .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(7,9,15,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;padding:0 1.5rem;gap:.75rem;}
+    .nav-logo{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.1rem;cursor:pointer;flex-shrink:0;text-decoration:none;}
+    .nav-logo .li{width:36px;height:36px;background:linear-gradient(135deg,var(--purple),var(--teal));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .nav-logo .lt{background:linear-gradient(90deg,var(--purple-l),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .nav-links{display:flex;align-items:center;gap:.2rem;flex:1;justify-content:center;flex-wrap:wrap;}
+    .nav-link{padding:.42rem .82rem;border-radius:8px;font-size:.86rem;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap;}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,.06);}
+    .nav-link.active{color:var(--purple-l);background:rgba(124,111,255,.15);}
+    .nav-cta{background:linear-gradient(135deg,var(--purple),var(--teal));color:#fff;padding:.44rem 1rem;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;border:none;flex-shrink:0;white-space:nowrap;}
+    .nav-cta:hover{opacity:.88;}
+    .nav-ham{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer;margin-left:auto;padding:.2rem;}
+    .mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem;z-index:999;flex-direction:column;gap:.25rem;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu .nav-link{text-align:left;}
+
+    /* ── LAYOUT ── */
+    .page-wrap{padding-top:var(--nav-h);min-height:100vh;}
+    .view{display:none;}
+    .view.active{display:block;}
+    .container{max-width:1100px;margin:0 auto;padding:0 1.25rem;}
+
+    /* ── BUTTONS ── */
+    .btn{display:inline-flex;align-items:center;gap:.45rem;border:none;cursor:pointer;font-weight:600;transition:all .18s;border-radius:var(--r-sm);}
+    .btn-primary{background:linear-gradient(135deg,var(--purple),#5a54d4);color:#fff;padding:.78rem 1.7rem;font-size:1rem;font-weight:700;border-radius:var(--r-md);}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,111,255,.38);}
+    .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--border2)!important;color:var(--text);padding:.78rem 1.7rem;font-size:1rem;border-radius:var(--r-md);}
+    .btn-secondary:hover{background:rgba(255,255,255,.11);}
+    .btn-sm{padding:.48rem .95rem;font-size:.84rem;}
+    .btn-purple{background:rgba(124,111,255,.18);color:var(--purple-l);border:1px solid rgba(124,111,255,.28)!important;}
+    .btn-purple:hover{background:rgba(124,111,255,.28);}
+    .btn-teal{background:rgba(0,212,170,.14);color:var(--teal);border:1px solid rgba(0,212,170,.24)!important;}
+    .btn-teal:hover{background:rgba(0,212,170,.24);}
+    .btn-red{background:rgba(255,107,107,.14);color:var(--red);border:1px solid rgba(255,107,107,.24)!important;}
+    .btn-red:hover{background:rgba(255,107,107,.24);}
+    .btn-muted{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)!important;}
+    .btn-muted:hover{background:rgba(255,255,255,.1);color:var(--text);}
+
+    /* ── HOME HERO ── */
+    .hero{text-align:center;padding:5rem 1.5rem 3.5rem;position:relative;overflow:hidden;}
+    .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(124,111,255,.13) 0%,transparent 55%),radial-gradient(ellipse at 70% 40%,rgba(0,212,170,.1) 0%,transparent 55%);pointer-events:none;}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,111,255,.14);border:1px solid rgba(124,111,255,.28);border-radius:20px;padding:.33rem .95rem;font-size:.8rem;font-weight:600;color:var(--purple-l);margin-bottom:1.5rem;}
+    .hero h1{font-size:clamp(2rem,5vw,3.7rem);font-weight:900;letter-spacing:-.03em;line-height:1.14;margin-bottom:1.2rem;}
+    .hero h1 span{background:linear-gradient(100deg,var(--purple) 0%,var(--teal) 50%,var(--yellow) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-sub{font-size:1.1rem;color:var(--muted);max-width:580px;margin:0 auto 2.25rem;line-height:1.72;}
+    .hero-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;}
+    .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
+    .hstat .val{font-size:2.1rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;}
+    .hstat .lbl{font-size:.78rem;color:var(--muted);}
+
+    /* How it works */
+    .section{padding:3.5rem 0;}
+    .sec-head{text-align:center;margin-bottom:2.5rem;}
+    .sec-head h2{font-size:1.9rem;font-weight:800;margin-bottom:.45rem;}
+    .sec-head p{color:var(--muted);font-size:.96rem;}
+    .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.1rem;}
+    .step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;text-align:center;}
+    .step-n{width:40px;height:40px;background:linear-gradient(135deg,var(--purple),var(--teal));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;margin:0 auto .9rem;}
+    .step-card h3{font-size:.96rem;font-weight:700;margin-bottom:.35rem;}
+    .step-card p{font-size:.83rem;color:var(--muted);}
+    .mini-stages{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;padding:1rem 0 2rem;}
+    .mini-stage{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:.9rem 1rem;text-align:center;min-width:105px;flex:1;max-width:138px;cursor:pointer;transition:all .2s;}
+    .mini-stage:hover{transform:translateY(-3px);border-color:var(--purple);}
+    .ms-em{font-size:1.75rem;display:block;margin-bottom:.3rem;}
+    .ms-nm{font-size:.77rem;font-weight:600;}
+    .ms-ag{font-size:.7rem;color:var(--muted);}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.1rem;}
+    .feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.4rem;border-top:3px solid var(--purple);}
+    .feat-card:nth-child(2){border-top-color:var(--teal);}
+    .feat-card:nth-child(3){border-top-color:var(--yellow);}
+    .feat-card:nth-child(4){border-top-color:var(--pink);}
+    .feat-card:nth-child(5){border-top-color:var(--orange);}
+    .feat-card:nth-child(6){border-top-color:var(--blue);}
+    .feat-icon{font-size:1.9rem;margin-bottom:.65rem;display:block;}
+    .feat-card h3{font-size:.96rem;font-weight:700;margin-bottom:.35rem;}
+    .feat-card p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+    .cta-band{background:linear-gradient(135deg,#131630 0%,#0d0f1f 100%);border:1px solid var(--border2);border-radius:var(--r-lg);padding:2.5rem;text-align:center;position:relative;overflow:hidden;margin-bottom:3rem;}
+    .cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,111,255,.15) 0%,transparent 60%);pointer-events:none;}
+    .cta-band h2{font-size:1.7rem;font-weight:900;margin-bottom:.6rem;}
+    .cta-band p{color:var(--muted);margin-bottom:1.5rem;max-width:500px;margin-left:auto;margin-right:auto;}
+
+    /* ── DASHBOARD ── */
+    .dash-top{padding:2.5rem 0 1.5rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .dash-top h1{font-size:1.7rem;font-weight:800;}
+    .dash-top p{color:var(--muted);font-size:.88rem;margin-top:.15rem;}
+    .dash-actions{display:flex;gap:.55rem;flex-wrap:wrap;}
+    .dash-stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.85rem;margin-bottom:1.75rem;}
+    .dstat{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.2rem;display:flex;align-items:center;gap:.85rem;}
+    .dstat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+    .dstat-val{font-size:1.65rem;font-weight:900;line-height:1;}
+    .dstat-lbl{font-size:.75rem;color:var(--muted);margin-top:.15rem;}
+    .empty-state{text-align:center;padding:4.5rem 1rem;background:var(--surface);border:2px dashed var(--border2);border-radius:var(--r-lg);}
+    .es-icon{font-size:3.5rem;display:block;margin-bottom:.9rem;}
+    .empty-state h2{font-size:1.35rem;font-weight:800;margin-bottom:.4rem;}
+    .empty-state p{color:var(--muted);margin-bottom:1.4rem;max-width:380px;margin-left:auto;margin-right:auto;font-size:.9rem;}
+    .kids-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;margin-bottom:2rem;}
+    .kid-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;cursor:pointer;transition:all .2s;}
+    .kid-card:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 12px 38px rgba(0,0,0,.28);}
+    .kct{padding:1.15rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--border);}
+    .k-av{width:54px;height:54px;background:var(--card2);border:2px solid var(--border2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.75rem;flex-shrink:0;}
+    .k-info h3{font-size:1rem;font-weight:700;}
+    .k-info .k-age{font-size:.78rem;color:var(--muted);}
+    .k-stage-badge{margin-left:auto;flex-shrink:0;padding:.22rem .6rem;border-radius:20px;font-size:.7rem;font-weight:700;align-self:flex-start;}
+    .kcb{padding:1rem 1.15rem;}
+    .kprog-lbl{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:.45rem;}
+    .kprog-lbl span:last-child{color:var(--text);font-weight:700;}
+    .prog-track{height:8px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:.9rem;}
+    .prog-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--purple),var(--teal));transition:width .4s ease;}
+    .km-dots{display:flex;gap:.3rem;flex-wrap:wrap;}
+    .kd{width:9px;height:9px;border-radius:50%;background:var(--border);transition:background .3s;}
+    .kd.done{background:var(--teal);}
+    .kcf{padding:.7rem 1.15rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:.76rem;color:var(--muted);}
+
+    /* ── MODAL SYSTEM ── */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:500px;max-height:90vh;overflow-y:auto;transform:translateY(20px) scale(.97);transition:all .22s;}
+    .modal-overlay.open .modal{transform:translateY(0) scale(1);}
+    .modal-wide{max-width:820px;}
+    .modal-header{padding:1.4rem 1.65rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+    .modal-header h2{font-size:1.1rem;font-weight:800;}
+    .modal-close{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.06);border:none;color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .modal-close:hover{background:rgba(255,255,255,.13);color:var(--text);}
+    .modal-body{padding:1.4rem 1.65rem;}
+
+    /* ── FORMS ── */
+    .form-group{margin-bottom:1.15rem;}
+    .form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em;}
+    .form-control{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r-sm);padding:.62rem .88rem;color:var(--text);font-size:.9rem;transition:border-color .15s;}
+    .form-control:focus{outline:none;border-color:var(--purple);}
+    .form-control::placeholder{color:var(--muted2);}
+    textarea.form-control{resize:vertical;min-height:76px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+    .av-picker{display:flex;gap:.45rem;flex-wrap:wrap;}
+    .av-opt{width:44px;height:44px;background:var(--card);border:2px solid var(--border);border-radius:9px;font-size:1.45rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .av-opt:hover{border-color:var(--purple);}
+    .av-opt.sel{border-color:var(--teal);background:rgba(0,212,170,.1);}
+    .form-actions{display:flex;gap:.55rem;justify-content:flex-end;padding-top:.75rem;border-top:1px solid var(--border);margin-top:1.25rem;}
+
+    /* ── KID DETAIL ── */
+    .kd-header{display:flex;align-items:center;gap:1.15rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap;}
+    .kd-av{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:2px solid var(--border2);flex-shrink:0;}
+    .kd-info h2{font-size:1.4rem;font-weight:900;}
+    .kd-info .kd-meta{color:var(--muted);font-size:.85rem;}
+    .kd-progress-ring{margin-left:auto;text-align:center;}
+    .prog-ring-wrap{position:relative;width:70px;height:70px;margin:0 auto .2rem;}
+    .prog-ring-wrap svg{transform:rotate(-90deg);}
+    .prog-ring-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:900;}
+    .prog-ring-lbl{font-size:.7rem;color:var(--muted);}
+    .stage-tabs{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+    .s-tab{padding:.38rem .75rem;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:.3rem;}
+    .s-tab:hover{border-color:var(--border2);color:var(--text);}
+    .s-tab.active{background:rgba(124,111,255,.15);border-color:var(--purple);color:var(--purple-l);}
+    .s-tab .tp{font-size:.68rem;background:rgba(255,255,255,.1);padding:.08rem .32rem;border-radius:4px;}
+    .all-prog{margin-bottom:1.1rem;}
+    .sp-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;font-size:.82rem;}
+    .sp-lbl{min-width:155px;color:var(--muted);}
+    .sp-track{flex:1;height:6px;background:var(--border);border-radius:10px;overflow:hidden;}
+    .sp-fill{height:100%;border-radius:10px;transition:width .4s;}
+    .sp-pct{min-width:36px;text-align:right;font-weight:700;font-size:.8rem;}
+    .ms-list{display:flex;flex-direction:column;gap:.45rem;}
+    .ms-item{display:flex;align-items:flex-start;gap:.7rem;padding:.82rem .95rem;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .15s;}
+    .ms-item:hover{border-color:var(--border2);}
+    .ms-item.done{background:rgba(0,212,170,.06);border-color:rgba(0,212,170,.22);}
+    .ms-cb{width:22px;height:22px;border:2px solid var(--border2);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;transition:all .2s;margin-top:1px;}
+    .ms-item.done .ms-cb{background:var(--teal);border-color:var(--teal);color:#000;}
+    .ms-txt{font-size:.86rem;line-height:1.5;flex:1;}
+    .ms-item.done .ms-txt{color:var(--muted);text-decoration:line-through;}
+    .achievements-row{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:.4rem;}
+    .ach{display:inline-flex;align-items:center;gap:.4rem;padding:.42rem .82rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;font-size:.8rem;}
+    .ach.earned{background:rgba(255,209,102,.1);border-color:rgba(255,209,102,.3);color:var(--yellow);}
+    .ach.locked{opacity:.3;filter:grayscale(1);}
+    .det-section{margin-top:1.4rem;}
+    .det-section h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.65rem;}
+    .log-item{display:flex;gap:.65rem;padding:.55rem 0;border-bottom:1px solid rgba(37,45,74,.5);font-size:.83rem;}
+    .log-item:last-child{border-bottom:none;}
+    .log-date{color:var(--muted);min-width:85px;font-size:.78rem;}
+
+    /* ── CURRICULUM ── */
+    .view-header{padding:2.5rem 0 1.5rem;}
+    .view-header h1{font-size:1.65rem;font-weight:800;margin-bottom:.35rem;}
+    .view-header p{color:var(--muted);font-size:.9rem;}
+    .stage-acc{margin-bottom:.85rem;}
+    .acc-head{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.45rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);cursor:pointer;transition:all .15s;user-select:none;}
+    .acc-head:hover{border-color:var(--border2);}
+    .acc-head.open{border-radius:var(--r-md) var(--r-md) 0 0;border-bottom-color:transparent;}
+    .acc-em{font-size:1.75rem;flex-shrink:0;}
+    .acc-meta{flex:1;}
+    .acc-meta h3{font-size:1.02rem;font-weight:700;margin-bottom:.12rem;}
+    .acc-meta .as{font-size:.8rem;color:var(--muted);}
+    .acc-age-tag{padding:.22rem .6rem;border-radius:20px;font-size:.72rem;font-weight:700;white-space:nowrap;}
+    .acc-arr{color:var(--muted);font-size:1rem;transition:transform .2s;margin-left:.5rem;}
+    .acc-head.open .acc-arr{transform:rotate(180deg);}
+    .acc-body{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r-md) var(--r-md);padding:1.4rem;display:none;}
+    .acc-body.open{display:block;}
+    .acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.1rem;}
+    .acc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.95rem 1.05rem;}
+    .acc-card h4{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.6rem;}
+    .ri-item{display:flex;align-items:flex-start;gap:.45rem;padding:.38rem 0;border-bottom:1px solid rgba(37,45,74,.45);font-size:.83rem;line-height:1.45;}
+    .ri-item:last-child{border-bottom:none;}
+    .ri-sub{font-size:.74rem;color:var(--muted);display:block;margin-top:.06rem;}
+    .proj-pills{display:flex;flex-wrap:wrap;gap:.45rem;}
+    .pp{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:.22rem .6rem;font-size:.79rem;}
+
+    /* ── RESOURCES ── */
+    .res-filters{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.65rem;}
+    .rf{padding:.38rem .88rem;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;}
+    .rf:hover{color:var(--text);border-color:var(--border2);}
+    .rf.active{background:rgba(124,111,255,.15);border-color:var(--purple);color:var(--purple-l);}
+    .res-big-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1rem;margin-bottom:3rem;}
+    .rbc{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;transition:all .18s;}
+    .rbc:hover{border-color:var(--border2);transform:translateY(-2px);}
+    .rbc-head{padding:.82rem 1.05rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .rbc-head-l{display:flex;align-items:center;gap:.5rem;}
+    .rbc-head h3{font-size:.92rem;font-weight:700;}
+    .rbc-body{padding:.75rem 1.05rem;}
+    .rbc-body p{font-size:.82rem;color:var(--muted);margin-bottom:.7rem;line-height:1.55;}
+    .r-tags{display:flex;gap:.35rem;flex-wrap:wrap;}
+    .rtag{font-size:.7rem;font-weight:700;padding:.15rem .48rem;border-radius:5px;}
+    .rt-free{background:rgba(0,212,170,.12);color:var(--teal);}
+    .rt-paid{background:rgba(255,209,102,.12);color:var(--yellow);}
+    .rt-book{background:rgba(72,219,251,.12);color:var(--blue);}
+    .rt-game{background:rgba(124,111,255,.12);color:var(--purple-l);}
+    .rt-hw{background:rgba(255,159,67,.12);color:var(--orange);}
+    .rt-vid{background:rgba(255,107,157,.12);color:var(--pink);}
+    .rbc-foot{padding:.62rem 1.05rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:.76rem;color:var(--muted);}
+    .stage-pips{display:flex;gap:.22rem;}
+    .spip{width:7px;height:7px;border-radius:50%;background:var(--border);}
+    .spip.on{background:var(--teal);}
+
+    /* ── HOSTING ── */
+    .hosting-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:2.5rem;}
+    .host-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;}
+    .hc-head{padding:1.05rem 1.45rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.8rem;}
+    .hc-logo{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0;}
+    .hc-meta h3{font-size:.98rem;font-weight:700;}
+    .hc-meta .hcs{font-size:.78rem;color:var(--muted);}
+    .hc-badge{margin-left:auto;font-size:.7rem;font-weight:700;padding:.18rem .52rem;border-radius:5px;}
+    .hc-body{padding:1.2rem 1.45rem;}
+    .step-list{list-style:none;}
+    .step-list li{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem 0;border-bottom:1px solid rgba(37,45,74,.5);font-size:.86rem;line-height:1.5;}
+    .step-list li:last-child{border-bottom:none;}
+    .sn{width:22px;height:22px;background:rgba(124,111,255,.2);color:var(--purple-l);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;margin-top:2px;}
+    .step-list code{background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:.08rem .42rem;font-family:'SF Mono','Fira Code',monospace;font-size:.8rem;color:var(--teal);}
+    .code-block{background:#0d1020;border:1px solid var(--border);border-radius:var(--r-sm);padding:1.05rem 1.2rem;font-family:'SF Mono','Fira Code',monospace;font-size:.8rem;color:#a89fff;white-space:pre;overflow-x:auto;margin:.7rem 0;line-height:1.75;}
+    .tip-box{background:rgba(255,209,102,.07);border-left:3px solid var(--yellow);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:.85rem 1.05rem;font-size:.86rem;color:#e8d8a0;margin:1rem 0;}
+    .tip-box strong{color:var(--yellow);}
+    .domain-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;margin-bottom:1.5rem;}
+    .domain-section h3{font-size:1rem;font-weight:700;margin-bottom:.85rem;}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r-md);padding:.85rem 1.2rem;font-size:.86rem;display:flex;align-items:center;gap:.6rem;transform:translateY(100px);opacity:0;transition:all .3s;z-index:9999;max-width:320px;box-shadow:0 8px 30px rgba(0,0,0,.4);}
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast.success{border-left:3px solid var(--teal);}
+    .toast.info{border-left:3px solid var(--purple);}
+    .toast.warn{border-left:3px solid var(--yellow);}
+
+    /* ── CONFETTI ── */
+    #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9997;}
+
+    /* ── MISC ── */
+    .divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+    .badge{display:inline-block;padding:.18rem .52rem;border-radius:20px;font-size:.73rem;font-weight:700;}
+    .badge-green{background:rgba(38,222,129,.14);color:var(--green);}
+    .badge-purple{background:rgba(124,111,255,.14);color:var(--purple-l);}
+    .badge-yellow{background:rgba(255,209,102,.14);color:var(--yellow);}
+    .badge-red{background:rgba(255,107,107,.14);color:var(--red);}
+    .badge-blue{background:rgba(72,219,251,.14);color:var(--blue);}
+    .badge-teal{background:rgba(0,212,170,.14);color:var(--teal);}
+    .sec-sep{padding:3rem 0 .5rem;border-top:1px solid var(--border);margin-top:2rem;}
+    .sec-sep h2{font-size:1.25rem;font-weight:800;margin-bottom:.3rem;}
+    .sec-sep p{color:var(--muted);font-size:.88rem;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:1rem;}
+    .info-card h4{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.65rem;}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .nav-links,.nav-cta{display:none;}
+      .nav-ham{display:block;}
+      .hero h1{font-size:2rem;}
+      .acc-grid,.form-row,.grid2{grid-template-columns:1fr;}
+      .hosting-opts{grid-template-columns:1fr;}
+      .dash-top{flex-direction:column;align-items:flex-start;}
+      .kd-header{flex-direction:column;}
+      .kd-progress-ring{margin-left:0;}
+    }
+    @media print{
+      .nav,.dash-actions,.form-actions,.modal-close,.btn-sm{display:none!important;}
+      .modal-overlay{position:static!important;background:none!important;padding:0!important;opacity:1!important;pointer-events:all!important;}
+      .modal{transform:none!important;max-height:none!important;box-shadow:none!important;border:none!important;max-width:100%!important;}
+      body{background:#fff!important;color:#000!important;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ NAVIGATION ══════ -->
+<nav class="nav">
+  <div class="nav-logo" onclick="navigate('home')">
+    <div class="li">🚀</div>
+    <span class="lt">CodeKids Academy</span>
+  </div>
+  <div class="nav-links" id="nav-links">
+    <button class="nav-link active" onclick="navigate('home')">🏠 Home</button>
+    <button class="nav-link" onclick="navigate('dashboard')">📊 Dashboard</button>
+    <button class="nav-link" onclick="navigate('curriculum')">🗺️ Curriculum</button>
+    <button class="nav-link" onclick="navigate('resources')">📚 Resources</button>
+    <button class="nav-link" onclick="navigate('hosting')">🌐 Go Live</button>
+  </div>
+  <button class="nav-cta" onclick="navigate('dashboard');openAddKidModal()">➕ Add Student</button>
+  <button class="nav-ham" id="nav-ham" onclick="toggleMobileMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="nav-link" onclick="navigate('home');closeMobileMenu()">🏠 Home</button>
+  <button class="nav-link" onclick="navigate('dashboard');closeMobileMenu()">📊 Dashboard</button>
+  <button class="nav-link" onclick="navigate('curriculum');closeMobileMenu()">🗺️ Curriculum</button>
+  <button class="nav-link" onclick="navigate('resources');closeMobileMenu()">📚 Resources</button>
+  <button class="nav-link" onclick="navigate('hosting');closeMobileMenu()">🌐 Go Live</button>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="page-wrap">
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: HOME
+  ══════════════════════════════════════════════ -->
+  <div id="view-home" class="view active">
+    <div class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-badge">✨ Free Platform for Parents &amp; Mentors</div>
+      <h1>Turn Your Kids Into<br/><span>Future Coders &amp; AI Builders</span></h1>
+      <p class="hero-sub">A complete coding &amp; automation academy for children aged 5–18. Track every milestone, access 50+ resources, and guide your kids from their first block to building AI agents.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="navigate('dashboard')">🚀 Open Dashboard</button>
+        <button class="btn btn-secondary" onclick="navigate('curriculum')">📖 View Curriculum</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><span class="val">7</span><span class="lbl">Learning Stages</span></div>
+        <div class="hstat"><span class="val">50+</span><span class="lbl">Free Resources</span></div>
+        <div class="hstat"><span class="val">42</span><span class="lbl">Tracked Milestones</span></div>
+        <div class="hstat"><span class="val">5→18</span><span class="lbl">Age Range</span></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="section">
+        <div class="sec-head">
+          <h2>🗺️ The Full Journey at a Glance</h2>
+          <p>Click any stage to explore the full curriculum</p>
+        </div>
+        <div class="mini-stages" id="mini-stages-home"></div>
+      </div>
+
+      <div class="section" style="padding-top:0">
+        <div class="sec-head">
+          <h2>⚙️ How It Works</h2>
+          <p>Three simple steps to start your child's coding journey today</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card"><div class="step-n">1</div><h3>Add Your Students</h3><p>Create a profile for each child with their name, age, avatar and starting stage.</p></div>
+          <div class="step-card"><div class="step-n">2</div><h3>Follow the Curriculum</h3><p>Each stage has resources, projects and milestones perfectly matched to their age.</p></div>
+          <div class="step-card"><div class="step-n">3</div><h3>Track &amp; Celebrate</h3><p>Check off milestones as they complete them. Watch progress bars fill up and earn achievements!</p></div>
+          <div class="step-card"><div class="step-n">4</div><h3>Graduate to the Next Stage</h3><p>When all milestones are ticked, advance them to the next stage with a celebration! 🎉</p></div>
+        </div>
+      </div>
+
+      <div class="section" style="padding-top:0">
+        <div class="sec-head">
+          <h2>✨ Platform Features</h2>
+          <p>Everything you need to run a successful kids coding club</p>
+        </div>
+        <div class="features-grid">
+          <div class="feat-card"><span class="feat-icon">📊</span><h3>Progress Dashboard</h3><p>See every student's progress at a glance. Color-coded stages, completion dots and progress bars make tracking intuitive.</p></div>
+          <div class="feat-card"><span class="feat-icon">✅</span><h3>Milestone Checklists</h3><p>42 carefully crafted milestones across 7 stages. Check them off as your child completes them — with confetti celebrations!</p></div>
+          <div class="feat-card"><span class="feat-icon">🏆</span><h3>Achievements System</h3><p>Kids earn badges as they hit stage completions and special goals. Badges keep motivation sky-high.</p></div>
+          <div class="feat-card"><span class="feat-icon">📚</span><h3>Curated Resources</h3><p>50+ hand-picked free and paid resources — books, apps, courses, games and hardware kits — all linked and categorized.</p></div>
+          <div class="feat-card"><span class="feat-icon">💾</span><h3>Local Data Storage</h3><p>All progress is saved to your browser automatically. Export to JSON for backup, import to restore — your data never leaves your device.</p></div>
+          <div class="feat-card"><span class="feat-icon">🌐</span><h3>Host Online Free</h3><p>Publish this platform live on GitHub Pages, Netlify or Vercel in under 5 minutes — completely free, accessible from any device.</p></div>
+        </div>
+      </div>
+
+      <div class="cta-band">
+        <h2>Ready to Start? 🚀</h2>
+        <p>Add your first student and begin tracking their journey from zero to AI builder — for free.</p>
+        <button class="btn btn-primary" onclick="navigate('dashboard');openAddKidModal()">➕ Add Your First Student</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: DASHBOARD
+  ══════════════════════════════════════════════ -->
+  <div id="view-dashboard" class="view">
+    <div class="container">
+      <div class="dash-top">
+        <div>
+          <h1>📊 Student Dashboard</h1>
+          <p>Track every student's coding journey across all 7 stages</p>
+        </div>
+        <div class="dash-actions">
+          <button class="btn btn-sm btn-teal" onclick="exportData()">⬇️ Export</button>
+          <label class="btn btn-sm btn-muted" style="cursor:pointer">⬆️ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"/></label>
+          <button class="btn btn-sm btn-purple" onclick="openAddKidModal()">➕ Add Student</button>
+        </div>
+      </div>
+      <div class="dash-stats-bar" id="dash-stats-bar"></div>
+      <div id="kids-empty" class="empty-state" style="display:none">
+        <span class="es-icon">👶</span>
+        <h2>No students yet!</h2>
+        <p>Add your first student to start tracking their coding journey from zero to AI builder.</p>
+        <button class="btn btn-primary" onclick="openAddKidModal()">➕ Add First Student</button>
+      </div>
+      <div id="kids-grid" class="kids-grid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: CURRICULUM
+  ══════════════════════════════════════════════ -->
+  <div id="view-curriculum" class="view">
+    <div class="container">
+      <div class="view-header">
+        <h1>🗺️ Full Curriculum — 7 Stages</h1>
+        <p>Click any stage to expand resources, projects and milestones. All resources are linked directly.</p>
+      </div>
+      <div id="curriculum-accordions"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: RESOURCES
+  ══════════════════════════════════════════════ -->
+  <div id="view-resources" class="view">
+    <div class="container">
+      <div class="view-header">
+        <h1>📚 Resource Library</h1>
+        <p>50+ curated resources for every stage. Filter by type, age group or cost.</p>
+      </div>
+      <div class="res-filters" id="res-filters"></div>
+      <div class="res-big-grid" id="res-big-grid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: HOSTING GUIDE
+  ══════════════════════════════════════════════ -->
+  <div id="view-hosting" class="view">
+    <div class="container">
+      <div class="view-header">
+        <h1>🌐 Host Your Academy Online</h1>
+        <p>Get this platform live on the internet — free — so parents can access it from any device, anywhere.</p>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 How this works:</strong> This entire academy is a single <code style="background:rgba(0,0,0,.2);padding:.1rem .4rem;border-radius:4px;font-family:monospace;">index.html</code> file. No server, no database, no monthly fees. You simply upload one file to a free hosting service and share the link with parents.
+      </div>
+
+      <div class="sec-sep" style="border:none;padding-top:1rem;">
+        <h2>⚡ Option 1 — Netlify (Easiest — 60 seconds)</h2>
+        <p>Drag and drop. No account needed to start.</p>
+      </div>
+      <div class="hosting-opts" style="grid-template-columns:1fr">
+        <div class="host-card">
+          <div class="hc-head">
+            <div class="hc-logo" style="background:rgba(0,212,170,.15)">🟢</div>
+            <div class="hc-meta"><h3>Netlify Drop</h3><div class="hcs">The world's easiest deployment — drag one file, get a live URL</div></div>
+            <span class="hc-badge badge badge-green">FREE Forever</span>
+          </div>
+          <div class="hc-body">
+            <ol class="step-list">
+              <li><span class="sn">1</span><div>Save this file as <code>index.html</code> on your computer (File → Save As in your browser).</div></li>
+              <li><span class="sn">2</span><div>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> in your browser — no account needed yet.</div></li>
+              <li><span class="sn">3</span><div>Drag your <code>index.html</code> file into the big drop zone on the page.</div></li>
+              <li><span class="sn">4</span><div>In about 10 seconds you'll get a live URL like <code>https://amazing-tesla-abc123.netlify.app</code></div></li>
+              <li><span class="sn">5</span><div>Share that URL with all parents in your group! 🎉 They can bookmark it on any device.</div></li>
+              <li><span class="sn">6</span><div>To update: create a free Netlify account, claim your site, then drag-drop a new file to redeploy.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-sep">
+        <h2>🐙 Option 2 — GitHub Pages (Most Professional)</h2>
+        <p>Version-controlled, always free, with a clean URL you can customise.</p>
+      </div>
+      <div class="hosting-opts">
+        <div class="host-card">
+          <div class="hc-head">
+            <div class="hc-logo" style="background:rgba(255,255,255,.07)">🐙</div>
+            <div class="hc-meta"><h3>GitHub Pages</h3><div class="hcs">Free hosting for any public repository</div></div>
+            <span class="hc-badge badge badge-green">FREE</span>
+          </div>
+          <div class="hc-body">
+            <ol class="step-list">
+              <li><span class="sn">1</span><div>Create a free account at <a href="https://github.com" target="_blank">github.com</a> if you don't have one.</div></li>
+              <li><span class="sn">2</span><div>Click <strong>+</strong> → <strong>New repository</strong>. Name it <code>codekids-academy</code>. Set it to <strong>Public</strong>.</div></li>
+              <li><span class="sn">3</span><div>Click <strong>uploading an existing file</strong>, then drag in your <code>index.html</code> file. Commit it.</div></li>
+              <li><span class="sn">4</span><div>Go to <strong>Settings → Pages</strong>. Under Source, select <strong>main branch</strong>. Click Save.</div></li>
+              <li><span class="sn">5</span><div>Your site goes live at <code>https://yourusername.github.io/codekids-academy</code> within 2 minutes.</div></li>
+            </ol>
+            <div class="code-block">your URL: https://yourusername.github.io/codekids-academy
+example:  https://gianna.github.io/codekids-academy</div>
+          </div>
+        </div>
+
+        <div class="host-card">
+          <div class="hc-head">
+            <div class="hc-logo" style="background:rgba(0,0,0,.4)">▲</div>
+            <div class="hc-meta"><h3>Vercel</h3><div class="hcs">Instant global deployment, custom domains</div></div>
+            <span class="hc-badge badge badge-green">FREE</span>
+          </div>
+          <div class="hc-body">
+            <ol class="step-list">
+              <li><span class="sn">1</span><div>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up (you can use your GitHub account).</div></li>
+              <li><span class="sn">2</span><div>Click <strong>Add New → Project</strong> and connect your GitHub repo (from Option 2) OR use the Vercel CLI.</div></li>
+              <li><span class="sn">3</span><div>Vercel auto-detects the file and deploys it. Takes about 30 seconds.</div></li>
+              <li><span class="sn">4</span><div>You get a URL like <code>codekids-academy.vercel.app</code> instantly.</div></li>
+              <li><span class="sn">5</span><div>Every new commit to GitHub auto-redeploys. Perfect for ongoing updates.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="domain-section">
+        <h3>🏷️ Add a Custom Domain (Optional — Makes It Professional)</h3>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:1rem;">Want a proper URL like <code style="background:var(--card2);padding:.1rem .4rem;border-radius:4px;font-family:monospace;color:var(--teal)">www.codekids-yourtown.com</code>? Here's how:</p>
+        <ol class="step-list">
+          <li><span class="sn">1</span><div>Buy a domain at <a href="https://namecheap.com" target="_blank">Namecheap</a> or <a href="https://domains.google" target="_blank">Google Domains</a> (~$10–15/year for .com).</div></li>
+          <li><span class="sn">2</span><div>In Netlify or Vercel, go to <strong>Domain Settings → Add Custom Domain</strong> and type your domain name.</div></li>
+          <li><span class="sn">3</span><div>You'll get DNS records (CNAME or A records) to copy into your domain registrar's DNS settings.</div></li>
+          <li><span class="sn">4</span><div>Within 24 hours (usually minutes), your custom domain goes live — with <strong>free HTTPS/SSL</strong> auto-configured.</div></li>
+        </ol>
+        <div class="tip-box" style="margin-top:1rem;">
+          <strong>💡 Pro Tip:</strong> Use <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:3px;font-family:monospace">.app</code> domains — they look modern, are often cheaper, and HTTPS is required (more secure for your students' data).
+        </div>
+      </div>
+
+      <div class="sec-sep">
+        <h2>📱 Share With Parents</h2>
+        <p>Once live, here's how to make it easy for every parent to access</p>
+      </div>
+      <div class="features-grid" style="margin-bottom:3rem;">
+        <div class="feat-card"><span class="feat-icon">🔗</span><h3>Share the Link</h3><p>Send the URL in your WhatsApp group, email newsletter or print it on a flyer for your coding club.</p></div>
+        <div class="feat-card"><span class="feat-icon">📱</span><h3>Add to Home Screen</h3><p>On iPhone: tap Share → Add to Home Screen. On Android: tap Menu → Add to Home Screen. It works like an app!</p></div>
+        <div class="feat-card"><span class="feat-icon">💾</span><h3>Data is Local</h3><p>Each parent's progress is saved to their own browser — fully private. No logins, no cloud accounts, no sharing of personal data.</p></div>
+        <div class="feat-card"><span class="feat-icon">📤</span><h3>Export &amp; Share Progress</h3><p>Parents can use the Export button to get a JSON file of their child's progress to share with you at mentoring sessions.</p></div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;margin-bottom:3rem;">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:.75rem;">🔒 Privacy &amp; Data — What Parents Need to Know</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.55rem;">
+          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>All student data is stored <strong>only on the parent's own device</strong> — nothing is sent to any server.</span></li>
+          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>No accounts, no sign-ups, no email addresses collected.</span></li>
+          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>Clearing browser data/cache will erase progress — remind parents to Export regularly as backup.</span></li>
+          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>The platform itself is fully open-source — inspect every line of code by viewing the page source.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<!-- ══════ MODAL OVERLAY ══════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<!-- ══════ TOAST ══════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ── DATA: STAGES ─────────────────────────────────────────────── */
+const STAGES = [
+  { id:0, emoji:'🌱', name:'Unplugged Logic', age:'5–6', color:'#7c6fff',
+    desc:'Build sequencing, loops and conditions through play — no screen needed.',
+    resources:[
+      { e:'📗', n:'Hello Ruby', u:'https://helloruby.com', s:'Adventure stories that teach coding concepts beautifully.' },
+      { e:'🐢', n:'Robot Turtles Board Game', u:'https://robotturtles.com', s:'Youngest programmers\' game. Ages 4+.' },
+      { e:'🤖', n:'Botley the Coding Robot', u:'https://learningresources.com/botley', s:'Screen-free programmable robot. Ages 5+.' },
+      { e:'🐭', n:'Code & Go Robot Mouse', u:'https://learningresources.com', s:'Physical robot navigates a maze — sequences & debugging.' },
+    ],
+    activities:[
+      'Robot Game — give exact instructions; parent acts as robot',
+      'Floor Grid Maze — use tape + direction cards',
+      'PB&J Algorithm — program a parent to make a sandwich',
+      'Algorithm Art — write instructions to draw a picture',
+    ],
+    milestones:[
+      { id:'m0-0', t:'Completed the Robot Game with a parent' },
+      { id:'m0-1', t:'Built and navigated a floor grid maze' },
+      { id:'m0-2', t:'Read Hello Ruby — at least 2 chapters' },
+      { id:'m0-3', t:'Completed the PB&J Algorithm activity' },
+      { id:'m0-4', t:'Played Robot Turtles or Code & Go Mouse' },
+      { id:'m0-5', t:'Can explain what a "sequence" is in their own words' },
+    ],
+    projects:['🤖 Program a parent to make breakfast','🗺️ Treasure map with directions','🎭 Act out an if/then story','🎨 Algorithm drawing game'],
+  },
+  { id:1, emoji:'🎮', name:'Block Coding', age:'6–7', color:'#00d4aa',
+    desc:'Drag-and-drop visual programming. No typing needed. Concepts snap together like LEGO.',
+    resources:[
+      { e:'🐱', n:'ScratchJr (iPad/Android)', u:'https://scratchjr.org', s:'Official MIT app for ages 5–7. Perfect first coding tool. FREE.' },
+      { e:'💡', n:'Lightbot', u:'https://lightbot.com', s:'Guide a robot with command blocks. Sequences, loops & procedures.' },
+      { e:'❄️', n:'Code.org — Frozen (Anna & Elsa)', u:'https://code.org/hourofcode/frozen', s:'Draw snowflakes with loops. No account needed. FREE.' },
+      { e:'🎵', n:'Code.org — Dance Party', u:'https://hourofcode.com/dance', s:'Code characters to dance to music. Kids love it! FREE.' },
+    ],
+    activities:[
+      'Code.org Course A — full pre-reader curriculum',
+      'ScratchJr — animate a character with 3+ actions',
+      'Lightbot — complete levels 1 through 5',
+      'Make an animated birthday card',
+    ],
+    milestones:[
+      { id:'m1-0', t:'Opened ScratchJr independently and created a project' },
+      { id:'m1-1', t:'Completed Code.org Course A (all lessons)' },
+      { id:'m1-2', t:'Made a character do 3+ different actions in ScratchJr' },
+      { id:'m1-3', t:'Completed Lightbot levels 1–5' },
+      { id:'m1-4', t:'Animated a birthday card or greeting in ScratchJr' },
+      { id:'m1-5', t:'Can explain what a "loop" does in their own words' },
+    ],
+    projects:['🐱 Make a cat walk and say hello','🌅 Animate a sunrise scene','🎂 Animated birthday card','❄️ Draw snowflakes with loops'],
+  },
+  { id:2, emoji:'🐱', name:'Visual Programming', age:'7–9', color:'#48dbfb',
+    desc:'Graduate to full Scratch. Build real games, animations and stories with variables and functions.',
+    resources:[
+      { e:'🐱', n:'Scratch 3.0', u:'https://scratch.mit.edu', s:'World\'s most popular kids programming language. 100M+ projects. FREE.' },
+      { e:'🧱', n:'LEGO Boost', u:'https://lego.com/boost', s:'Build LEGO and code it with Scratch-like blocks. Ages 7+.' },
+      { e:'💎', n:'micro:bit', u:'https://microbit.org', s:'$15 programmable circuit board. Thousands of beginner projects.' },
+      { e:'📺', n:'Griffpatch on YouTube', u:'https://youtube.com/@griffpatch', s:'World\'s most popular Scratch creator. Amazing tutorials. FREE.' },
+    ],
+    activities:[
+      'Scratch — build a game with score counter & lives',
+      'Code.org Course B or C',
+      'LEGO Boost or micro:bit hardware project',
+      'Create an interactive story with choices',
+    ],
+    milestones:[
+      { id:'m2-0', t:'Built a complete Scratch game with a score counter' },
+      { id:'m2-1', t:'Completed Code.org Course B or C' },
+      { id:'m2-2', t:'Created an animated interactive story in Scratch' },
+      { id:'m2-3', t:'Used variables in a Scratch project' },
+      { id:'m2-4', t:'Shared a project on the Scratch community' },
+      { id:'m2-5', t:'Built a project using micro:bit or LEGO Boost (optional hardware)' },
+    ],
+    projects:['🎮 Platform jump game with lives','🐠 Fish catcher game','📖 Story with choices','🎵 Virtual piano','🌍 Geography quiz'],
+  },
+  { id:3, emoji:'🐍', name:'First Real Code', age:'9–11', color:'#ffd166',
+    desc:'Transition from blocks to typing real Python code. Swift Playgrounds for Apple fans.',
+    resources:[
+      { e:'🐢', n:'Trinket.io Turtle Python', u:'https://trinket.io/turtle', s:'Draw with Python turtle in the browser instantly. FREE.' },
+      { e:'📗', n:'Python for Kids (book)', u:'https://nostarch.com/pythonforkids', s:'Best-selling intro book by Jason Briggs. Ages 9–12.' },
+      { e:'📱', n:'Swift Playgrounds (iPad)', u:'https://apple.com/swift/playgrounds', s:'Apple\'s own learn-to-code app. Gorgeous, game-like, zero setup. FREE.' },
+      { e:'🔧', n:'CheckiO — Python Puzzles', u:'https://py.checkio.org', s:'Python puzzle island. Solve challenges to advance on a map. FREE.' },
+    ],
+    activities:[
+      'Trinket.io — first Python turtle drawings',
+      'Swift Playgrounds — Learn to Code 1 & 2',
+      'CodingBat — 10 Python exercises',
+      'Build a trivia quiz with 5+ questions',
+    ],
+    milestones:[
+      { id:'m3-0', t:'Wrote first Python program in Trinket or Thonny' },
+      { id:'m3-1', t:'Built a number guessing game in Python' },
+      { id:'m3-2', t:'Created Turtle graphics art with 3+ shapes' },
+      { id:'m3-3', t:'Completed 10 CodingBat Python exercises' },
+      { id:'m3-4', t:'Built a trivia quiz app with 5+ questions' },
+      { id:'m3-5', t:'Completed Swift Playgrounds — Learn to Code 1' },
+    ],
+    projects:['🎲 Number guessing game','🔐 Caesar cipher encoder','🐢 Turtle art generator','🧮 Calculator','📋 To-do list saved to file'],
+  },
+  { id:4, emoji:'🌐', name:'Web & Apps', age:'11–13', color:'#ff9f43',
+    desc:'HTML, CSS, JavaScript. Build websites and apps that run in any browser.',
+    resources:[
+      { e:'🏕️', n:'freeCodeCamp — Web Design', u:'https://freecodecamp.org/learn/2022/responsive-web-design', s:'300 hours of HTML & CSS. 5 certification projects. FREE.' },
+      { e:'🎓', n:'The Odin Project', u:'https://theodinproject.com', s:'Top-rated full-stack curriculum. HTML → CSS → JS → Node. FREE.' },
+      { e:'📝', n:'VS Code', u:'https://code.visualstudio.com', s:'Most popular code editor in the world. FREE.' },
+      { e:'🐙', n:'GitHub Pages', u:'https://pages.github.com', s:'Host any HTML website for free. Perfect for first live portfolio. FREE.' },
+    ],
+    activities:[
+      'Build a personal webpage with HTML & CSS',
+      'Add JavaScript interactivity',
+      'freeCodeCamp Responsive Web Design',
+      'Publish first site live on GitHub Pages',
+    ],
+    milestones:[
+      { id:'m4-0', t:'Built a personal webpage with HTML & CSS' },
+      { id:'m4-1', t:'Added JavaScript interactivity to a webpage' },
+      { id:'m4-2', t:'Completed freeCodeCamp Responsive Web Design' },
+      { id:'m4-3', t:'Published a website live on GitHub Pages' },
+      { id:'m4-4', t:'Built a JavaScript project (calculator, quiz or game)' },
+      { id:'m4-5', t:'Made first Git commit and push to GitHub' },
+    ],
+    projects:['🌐 Personal portfolio site','🧮 Calculator app','🎮 Browser game (Pong/Tetris)','✅ To-do list with localStorage','🃏 Memory card flip game'],
+  },
+  { id:5, emoji:'⚙️', name:'APIs & Automation', age:'13–15', color:'#ff6b9d',
+    desc:'Connect services with APIs, automate real tasks, build back-end servers.',
+    resources:[
+      { e:'📗', n:'Automate the Boring Stuff', u:'https://automatetheboringstuff.com', s:'The best Python automation book. Fully free online. FREE.' },
+      { e:'⚡', n:'n8n — Workflow Automation', u:'https://n8n.io', s:'Open-source visual workflow automation. Self-hostable. FREE.' },
+      { e:'🚀', n:'Flask — Python Web Framework', u:'https://flask.palletsprojects.com', s:'Build REST APIs and web servers with Python. Lightweight.' },
+      { e:'▲', n:'Vercel Deployment', u:'https://vercel.com', s:'Deploy web apps in seconds. Free tier. Perfect for first backends.' },
+    ],
+    activities:[
+      'Connect to a public API and display data',
+      'Build a Python automation script',
+      'Create a Flask REST API',
+      'Build a Zapier or n8n workflow',
+    ],
+    milestones:[
+      { id:'m5-0', t:'Connected to a public API and displayed live data' },
+      { id:'m5-1', t:'Built a Python automation script (files, email or web)' },
+      { id:'m5-2', t:'Created a Flask or Node.js web server' },
+      { id:'m5-3', t:'Built a Zapier or n8n workflow with 3+ steps' },
+      { id:'m5-4', t:'Set up a database and performed CRUD operations' },
+      { id:'m5-5', t:'Deployed a full-stack app to the cloud (Vercel/Railway)' },
+    ],
+    projects:['🤖 Discord or Telegram bot','📊 Live data dashboard','🛒 Full-stack shopping list','⏰ Task scheduler bot','🔔 Price tracker + email alerts'],
+  },
+  { id:6, emoji:'🤖', name:'AI & Professional', age:'15–18+', color:'#ff6b6b',
+    desc:'Machine learning, AI agents, LLMs and professional engineering practices. The summit.',
+    resources:[
+      { e:'🎓', n:'fast.ai — Practical Deep Learning', u:'https://fast.ai', s:'Top-down practical ML. Build real models from day 1. FREE.' },
+      { e:'🦜', n:'LangChain Docs', u:'https://python.langchain.com', s:'Build AI agents, chains, RAG systems. The leading AI framework. FREE.' },
+      { e:'🎓', n:'DeepLearning.AI Short Courses', u:'https://learn.deeplearning.ai', s:'30+ short AI courses from the world\'s best instructors. FREE.' },
+      { e:'🤗', n:'Hugging Face — NLP Course', u:'https://huggingface.co/learn', s:'Learn transformers, LLMs and fine-tuning. FREE.' },
+    ],
+    activities:[
+      'fast.ai or Andrew Ng ML course',
+      'Build an AI chatbot with OpenAI API',
+      'Create a LangChain agent',
+      'Enter a Kaggle competition',
+    ],
+    milestones:[
+      { id:'m6-0', t:'Completed fast.ai or Andrew Ng ML Specialization' },
+      { id:'m6-1', t:'Built an AI-powered app using an LLM API' },
+      { id:'m6-2', t:'Created a LangChain agent or RAG system' },
+      { id:'m6-3', t:'Entered a Kaggle competition' },
+      { id:'m6-4', t:'Made a contribution to an open-source project on GitHub' },
+      { id:'m6-5', t:'Published a technical blog post or YouTube tutorial' },
+    ],
+    projects:['🤖 AI tutor chatbot','🧠 RAG app over personal notes','📸 Image classifier','🌐 Full SaaS with AI features','📊 Automated data analysis agent'],
+  },
+];
+
+/* ── DATA: RESOURCES ─────────────────────────────────────────── */
+const RESOURCES = [
+  { n:'Hello Ruby',url:'https://helloruby.com',e:'📗',desc:'Adventure stories teaching loops, conditions and decomposition for ages 5–7.',type:'book',cost:'paid',stages:[0]},
+  { n:'Robot Turtles',url:'https://robotturtles.com',e:'🐢',desc:'The youngest programmer\'s board game. No screens needed. Ages 4+.',type:'game',cost:'paid',stages:[0,1]},
+  { n:'Code & Go Robot Mouse',url:'https://learningresources.com',e:'🐭',desc:'Physical mouse navigates a maze — teaches sequences and debugging.',type:'hardware',cost:'paid',stages:[0,1]},
+  { n:'ScratchJr',url:'https://scratchjr.org',e:'🐱',desc:'Official MIT drag-and-drop app for ages 5–7. No reading required. FREE.',type:'app',cost:'free',stages:[1]},
+  { n:'Code.org — Course A',url:'https://studio.code.org/s/coursea-2024',e:'🤖',desc:'Full curriculum for pre-readers. Videos + activities. 100% free.',type:'course',cost:'free',stages:[1]},
+  { n:'Code.org — Dance Party',url:'https://hourofcode.com/dance',e:'🎵',desc:'Code characters to dance to their favourite music. Huge hit with kids!',type:'activity',cost:'free',stages:[1,2]},
+  { n:'Lightbot',url:'https://lightbot.com',e:'💡',desc:'Guide a robot with command blocks. Teaches sequences, loops and procedures.',type:'game',cost:'paid',stages:[1,2]},
+  { n:'Scratch 3.0',url:'https://scratch.mit.edu',e:'🐱',desc:'The world\'s most popular kids programming language. 100M+ projects online.',type:'platform',cost:'free',stages:[2,3]},
+  { n:'Code.org — Course B/C/D',url:'https://studio.code.org/s/courseb-2024',e:'🎓',desc:'Complete self-paced curriculum for ages 6–10. Videos + exercises + projects.',type:'course',cost:'free',stages:[1,2]},
+  { n:'Griffpatch on YouTube',url:'https://youtube.com/@griffpatch',e:'📺',desc:'World\'s most popular Scratch creator. Makes Minecraft in Scratch!',type:'video',cost:'free',stages:[2]},
+  { n:'micro:bit',url:'https://microbit.org',e:'💎',desc:'$15 programmable circuit board with thousands of beginner projects.',type:'hardware',cost:'paid',stages:[2,3]},
+  { n:'LEGO Boost',url:'https://lego.com/boost',e:'🧱',desc:'Build LEGO models and code them with Scratch-like blocks. Ages 7+.',type:'hardware',cost:'paid',stages:[2]},
+  { n:'Makey Makey',url:'https://makeymakey.com',e:'🌈',desc:'Turn bananas into keyboards! Connects the real world to the computer.',type:'hardware',cost:'paid',stages:[2,3]},
+  { n:'Trinket.io Turtle Python',url:'https://trinket.io/turtle',e:'🐢',desc:'Draw with Python turtle graphics instantly in the browser. No install needed.',type:'platform',cost:'free',stages:[3]},
+  { n:'Python for Kids',url:'https://nostarch.com/pythonforkids',e:'📗',desc:'Best-selling intro book by Jason Briggs with games and fun examples.',type:'book',cost:'paid',stages:[3]},
+  { n:'Swift Playgrounds',url:'https://apple.com/swift/playgrounds',e:'📱',desc:'Apple\'s own app for learning Swift. Gorgeous, game-like, zero setup.',type:'app',cost:'free',stages:[3,4]},
+  { n:'Thonny IDE',url:'https://thonny.org',e:'🖥️',desc:'Best first Python IDE — shows how variables change in real time.',type:'tool',cost:'free',stages:[3]},
+  { n:'CheckiO — Python Puzzles',url:'https://py.checkio.org',e:'🔧',desc:'Python puzzle island — solve coding challenges to advance on a map.',type:'game',cost:'free',stages:[3,4]},
+  { n:'Automate the Boring Stuff',url:'https://automatetheboringstuff.com',e:'📗',desc:'The best Python automation book. Files, emails, PDFs, web scraping. FREE online.',type:'book',cost:'free',stages:[3,4,5]},
+  { n:'freeCodeCamp — Web Design',url:'https://freecodecamp.org',e:'🏕️',desc:'300 hours of HTML & CSS with 5 certification projects. 100% free.',type:'course',cost:'free',stages:[4]},
+  { n:'The Odin Project',url:'https://theodinproject.com',e:'🎓',desc:'Top-rated full-stack curriculum: HTML → CSS → JavaScript → Node.js.',type:'course',cost:'free',stages:[4,5]},
+  { n:'JavaScript.info',url:'https://javascript.info',e:'📘',desc:'The modern JavaScript tutorial. Best written resource on the web.',type:'book',cost:'free',stages:[4]},
+  { n:'VS Code',url:'https://code.visualstudio.com',e:'📝',desc:'Most popular code editor in the world. Extensions for every language.',type:'tool',cost:'free',stages:[3,4,5,6]},
+  { n:'GitHub Pages',url:'https://pages.github.com',e:'🐙',desc:'Host any HTML website for free. Perfect for first live portfolios.',type:'platform',cost:'free',stages:[4,5]},
+  { n:'n8n — Automation',url:'https://n8n.io',e:'🔧',desc:'Open-source visual workflow automation. Self-hostable or cloud.',type:'platform',cost:'free',stages:[5]},
+  { n:'Zapier',url:'https://zapier.com',e:'⚡',desc:'No-code automation between 6,000+ apps. Great for learning trigger/action model.',type:'platform',cost:'mixed',stages:[5]},
+  { n:'Make.com',url:'https://make.com',e:'🔗',desc:'Visual drag-and-drop workflow builder. Free tier available.',type:'platform',cost:'mixed',stages:[5]},
+  { n:'Flask',url:'https://flask.palletsprojects.com',e:'🚀',desc:'Build REST APIs and web servers with Python. Lightweight and beginner-friendly.',type:'framework',cost:'free',stages:[5]},
+  { n:'fast.ai',url:'https://fast.ai',e:'🎓',desc:'Practical deep learning — build real AI models from day 1. Completely free.',type:'course',cost:'free',stages:[6]},
+  { n:'DeepLearning.AI Courses',url:'https://learn.deeplearning.ai',e:'🤖',desc:'30+ short AI courses on agents, RAG, LLMOps. From the world\'s best instructors.',type:'course',cost:'free',stages:[6]},
+  { n:'LangChain',url:'https://python.langchain.com',e:'🦜',desc:'Build AI agents, chains and RAG systems. The leading AI orchestration framework.',type:'framework',cost:'free',stages:[6]},
+  { n:'Hugging Face Learn',url:'https://huggingface.co/learn',e:'🤗',desc:'Learn transformers, LLMs and fine-tuning state-of-the-art models.',type:'course',cost:'free',stages:[6]},
+  { n:'Kaggle Learn',url:'https://kaggle.com/learn',e:'🏆',desc:'Bite-size ML courses and competitions. Build your portfolio with Kaggle notebooks.',type:'platform',cost:'free',stages:[6]},
+  { n:'Replit',url:'https://replit.com',e:'💻',desc:'Browser-based IDE. No install needed. Share projects with just a link.',type:'tool',cost:'mixed',stages:[3,4,5]},
+  { n:'Google Colab',url:'https://colab.research.google.com',e:'📓',desc:'Jupyter notebooks in the browser. Great prep for data science.',type:'tool',cost:'free',stages:[5,6]},
+];
+
+const AVATARS = ['🦊','🐼','🦁','🐯','🐸','🦄','🐳','🦋','🐶','🐱','🦖','🚀','⭐','🌈','🎮'];
+const ACHIEVEMENTS = [
+  { id:'ach-0', e:'🌱', n:'First Steps', desc:'Complete Stage 0' },
+  { id:'ach-1', e:'🎮', n:'Block Builder', desc:'Complete Stage 1' },
+  { id:'ach-2', e:'🐱', n:'Scratch Star', desc:'Complete Stage 2' },
+  { id:'ach-3', e:'🐍', n:'Python Pioneer', desc:'Complete Stage 3' },
+  { id:'ach-4', e:'🌐', n:'Web Wizard', desc:'Complete Stage 4' },
+  { id:'ach-5', e:'⚙️', n:'API Architect', desc:'Complete Stage 5' },
+  { id:'ach-6', e:'🤖', n:'AI Innovator', desc:'Complete Stage 6' },
+  { id:'ach-all', e:'🏆', n:'Full Journey', desc:'Complete all 7 stages!' },
+];
+
+/* ── STATE ────────────────────────────────────────────────────── */
+let kids = [];
+let selAvatar = '🦊';
+let currentDetailKidId = null;
+let currentDetailStage = 0;
+let resFilter = 'all';
+let toastTimer = null;
+
+/* ── INIT ─────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  loadKids();
+  buildMiniStages();
+  buildCurriculum();
+  buildResources();
+  navigate('home');
+});
+
+/* ── ROUTER ───────────────────────────────────────────────────── */
+function navigate(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const el = document.getElementById('view-' + view);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => {
+    if (l.textContent.toLowerCase().includes(view === 'home' ? '🏠' : view === 'dashboard' ? '📊' : view === 'curriculum' ? '🗺️' : view === 'resources' ? '📚' : '🌐')) {
+      l.classList.add('active');
+    }
+  });
+  // simpler approach — match on onclick attribute
+  document.querySelectorAll('.nav-link, .mobile-menu .nav-link').forEach(l => {
+    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes(`navigate('${view}')`)) l.classList.add('active');
+  });
+  if (view === 'dashboard') renderDashboard();
+  window.scrollTo(0, 0);
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+/* ── LOCAL STORAGE ────────────────────────────────────────────── */
+function loadKids() {
+  try { kids = JSON.parse(localStorage.getItem('cka_kids') || '[]'); } catch(e) { kids = []; }
+}
+function saveKids() {
+  localStorage.setItem('cka_kids', JSON.stringify(kids));
+}
+function genId() { return 'k_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
+function today() { return new Date().toISOString().split('T')[0]; }
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+
+/* ── KIDS CRUD ────────────────────────────────────────────────── */
+function addKid(name, age, avatar, stage, notes) {
+  const kid = {
+    id: genId(), name, age: parseInt(age)||6, avatar,
+    stage: parseInt(stage)||0,
+    progress: {}, notes: notes||'',
+    joinDate: today(), lastActive: today(), sessions: [],
+  };
+  kids.push(kid);
+  saveKids();
+  return kid;
+}
+function removeKid(id) {
+  kids = kids.filter(k => k.id !== id);
+  saveKids();
+}
+function updateKidNotes(id, notes) {
+  const k = kids.find(k => k.id === id);
+  if (k) { k.notes = notes; saveKids(); }
+}
+
+/* ── PROGRESS ─────────────────────────────────────────────────── */
+function isCompleted(kid, stageId, milestoneId) {
+  const key = 's' + stageId;
+  return !!(kid.progress[key] && kid.progress[key].includes(milestoneId));
+}
+function toggleMilestone(kidId, stageId, milestoneId) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid) return;
+  const key = 's' + stageId;
+  if (!kid.progress[key]) kid.progress[key] = [];
+  const idx = kid.progress[key].indexOf(milestoneId);
+  if (idx > -1) {
+    kid.progress[key].splice(idx, 1);
+  } else {
+    kid.progress[key].push(milestoneId);
+    kid.lastActive = today();
+    const stage = STAGES[stageId];
+    kid.sessions.unshift({ date: today(), note: '✅ ' + stage.milestones.find(m=>m.id===milestoneId)?.t, stage: stageId });
+    if (kid.sessions.length > 20) kid.sessions = kid.sessions.slice(0, 20);
+    // Check stage completion
+    const pct = stageProgressPct(kid, stageId);
+    if (pct === 100) {
+      showToast('🎉 Stage ' + stageId + ': ' + stage.name + ' Complete!', 'success');
+      launchConfetti();
+      kid.sessions.unshift({ date: today(), note: '🏆 Completed Stage ' + stageId + ': ' + stage.name + '!', stage: stageId });
+    }
+  }
+  saveKids();
+  // Re-render milestone list
+  renderMilestoneList(kid, stageId);
+  renderStageProgressBars(kid);
+  renderOverallRing(kid);
+  updateKidCardInGrid(kid);
+}
+function stageProgressPct(kid, stageId) {
+  const stage = STAGES[stageId];
+  if (!stage) return 0;
+  const key = 's' + stageId;
+  const done = (kid.progress[key] || []).length;
+  return Math.round((done / stage.milestones.length) * 100);
+}
+function totalProgressPct(kid) {
+  const total = STAGES.reduce((s, st) => s + st.milestones.length, 0);
+  const done = STAGES.reduce((s, st) => {
+    const key = 's' + st.id;
+    return s + (kid.progress[key] || []).length;
+  }, 0);
+  return Math.round((done / total) * 100);
+}
+function totalMilestonesDone(kid) {
+  return STAGES.reduce((s, st) => {
+    const key = 's' + st.id;
+    return s + (kid.progress[key] || []).length;
+  }, 0);
+}
+function earnedAchievements(kid) {
+  const earned = [];
+  STAGES.forEach(st => {
+    if (stageProgressPct(kid, st.id) === 100) earned.push('ach-' + st.id);
+  });
+  const allDone = STAGES.every(st => stageProgressPct(kid, st.id) === 100);
+  if (allDone) earned.push('ach-all');
+  return earned;
+}
+
+/* ── DASHBOARD ────────────────────────────────────────────────── */
+function renderDashboard() {
+  // Stats bar
+  const total = kids.length;
+  const totalDone = kids.reduce((s, k) => s + totalMilestonesDone(k), 0);
+  const avgProg = total > 0 ? Math.round(kids.reduce((s, k) => s + totalProgressPct(k), 0) / total) : 0;
+  const achCount = kids.reduce((s, k) => s + earnedAchievements(k).length, 0);
+  document.getElementById('dash-stats-bar').innerHTML = `
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(124,111,255,.18)">👶</div><div><div class="dstat-val">${total}</div><div class="dstat-lbl">Students</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(0,212,170,.18)">✅</div><div><div class="dstat-val">${totalDone}</div><div class="dstat-lbl">Milestones Done</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,209,102,.18)">📈</div><div><div class="dstat-val">${avgProg}%</div><div class="dstat-lbl">Avg Progress</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,107,157,.18)">🏆</div><div><div class="dstat-val">${achCount}</div><div class="dstat-lbl">Achievements</div></div></div>
+  `;
+  // Kids grid
+  const emptyEl = document.getElementById('kids-empty');
+  const gridEl = document.getElementById('kids-grid');
+  if (kids.length === 0) {
+    emptyEl.style.display = 'block';
+    gridEl.innerHTML = '';
+  } else {
+    emptyEl.style.display = 'none';
+    gridEl.innerHTML = kids.map(renderKidCard).join('');
+  }
+}
+function renderKidCard(kid) {
+  const pct = totalProgressPct(kid);
+  const currentStage = STAGES[kid.stage] || STAGES[0];
+  const stagePct = stageProgressPct(kid, kid.stage);
+  // milestone dots (all milestones across all stages, just first 30)
+  const allMs = STAGES.flatMap(st => st.milestones.map(m => ({ stageId: st.id, id: m.id })));
+  const dots = allMs.slice(0, 30).map(m => `<div class="kd ${isCompleted(kid, m.stageId, m.id) ? 'done' : ''}"></div>`).join('');
+  return `
+    <div class="kid-card" id="kcard-${kid.id}" onclick="openKidDetail('${kid.id}')">
+      <div class="kct">
+        <div class="k-av">${kid.avatar}</div>
+        <div class="k-info"><h3>${kid.name}</h3><div class="k-age">Age ${kid.age} · Joined ${fmtDate(kid.joinDate)}</div></div>
+        <span class="k-stage-badge" style="background:${currentStage.color}22;color:${currentStage.color}">${currentStage.emoji} Stage ${kid.stage}</span>
+      </div>
+      <div class="kcb">
+        <div class="kprog-lbl"><span>Overall Progress</span><span>${pct}%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="km-dots">${dots}</div>
+      </div>
+      <div class="kcf">
+        <span>📚 ${totalMilestonesDone(kid)} milestones done</span>
+        <span>🏆 ${earnedAchievements(kid).length} badges</span>
+      </div>
+    </div>
+  `;
+}
+function updateKidCardInGrid(kid) {
+  const el = document.getElementById('kcard-' + kid.id);
+  if (el) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = renderKidCard(kid);
+    el.replaceWith(tmp.firstChild);
+  }
+  // update stats bar too
+  const total = kids.length;
+  const totalDone = kids.reduce((s, k) => s + totalMilestonesDone(k), 0);
+  const avgProg = total > 0 ? Math.round(kids.reduce((s, k) => s + totalProgressPct(k), 0) / total) : 0;
+  const achCount = kids.reduce((s, k) => s + earnedAchievements(k).length, 0);
+  const statsBar = document.getElementById('dash-stats-bar');
+  if (statsBar) {
+    statsBar.innerHTML = `
+      <div class="dstat"><div class="dstat-icon" style="background:rgba(124,111,255,.18)">👶</div><div><div class="dstat-val">${total}</div><div class="dstat-lbl">Students</div></div></div>
+      <div class="dstat"><div class="dstat-icon" style="background:rgba(0,212,170,.18)">✅</div><div><div class="dstat-val">${totalDone}</div><div class="dstat-lbl">Milestones Done</div></div></div>
+      <div class="dstat"><div class="dstat-icon" style="background:rgba(255,209,102,.18)">📈</div><div><div class="dstat-val">${avgProg}%</div><div class="dstat-lbl">Avg Progress</div></div></div>
+      <div class="dstat"><div class="dstat-icon" style="background:rgba(255,107,157,.18)">🏆</div><div><div class="dstat-val">${achCount}</div><div class="dstat-lbl">Achievements</div></div></div>
+    `;
+  }
+}
+
+/* ── ADD KID MODAL ────────────────────────────────────────────── */
+function openAddKidModal() {
+  selAvatar = '🦊';
+  const avHtml = AVATARS.map(a => `<div class="av-opt ${a===selAvatar?'sel':''}" onclick="pickAvatar('${a}')">${a}</div>`).join('');
+  const stageOpts = STAGES.map(s => `<option value="${s.id}">${s.emoji} Stage ${s.id}: ${s.name}</option>`).join('');
+  showModal(`
+    <div class="modal-header">
+      <h2>➕ Add New Student</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Student Name</label><input type="text" class="form-control" id="fi-name" placeholder="e.g. Alice" /></div>
+      <div class="form-row">
+        <div class="form-group"><label>Age</label><input type="number" class="form-control" id="fi-age" min="4" max="18" placeholder="6" /></div>
+        <div class="form-group"><label>Starting Stage</label><select class="form-control" id="fi-stage">${stageOpts}</select></div>
+      </div>
+      <div class="form-group"><label>Choose Avatar</label><div class="av-picker" id="av-picker">${avHtml}</div></div>
+      <div class="form-group"><label>Notes (optional)</label><textarea class="form-control" id="fi-notes" placeholder="Interests, learning style, goals..."></textarea></div>
+      <div class="form-actions">
+        <button class="btn btn-sm btn-muted" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-sm btn-primary" onclick="submitAddKid()">Add Student ➕</button>
+      </div>
+    </div>
+  `);
+}
+function pickAvatar(a) {
+  selAvatar = a;
+  document.querySelectorAll('.av-opt').forEach(el => el.classList.toggle('sel', el.textContent === a));
+}
+function submitAddKid() {
+  const name = document.getElementById('fi-name')?.value?.trim();
+  const age = document.getElementById('fi-age')?.value;
+  const stage = document.getElementById('fi-stage')?.value;
+  const notes = document.getElementById('fi-notes')?.value?.trim();
+  if (!name) { showToast('⚠️ Please enter a student name', 'warn'); return; }
+  addKid(name, age || 6, selAvatar, stage || 0, notes);
+  closeModal();
+  renderDashboard();
+  showToast(`✅ ${name} added to the academy!`, 'success');
+}
+
+/* ── KID DETAIL MODAL ─────────────────────────────────────────── */
+function openKidDetail(kidId) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid) return;
+  currentDetailKidId = kidId;
+  currentDetailStage = kid.stage;
+  const pct = totalProgressPct(kid);
+  const earned = earnedAchievements(kid);
+  const tabsHtml = STAGES.map(st => {
+    const p = stageProgressPct(kid, st.id);
+    return `<button class="s-tab ${st.id === currentDetailStage ? 'active' : ''}" onclick="switchDetailTab(${st.id})">${st.emoji} ${st.name} <span class="tp">${p}%</span></button>`;
+  }).join('');
+  const achHtml = ACHIEVEMENTS.map(a => `<span class="ach ${earned.includes(a.id)?'earned':'locked'}" title="${a.desc}">${a.e} ${a.n}</span>`).join('');
+  const logsHtml = (kid.sessions || []).slice(0, 8).map(s =>
+    `<div class="log-item"><span class="log-date">${fmtDate(s.date)}</span><span>${s.note}</span></div>`
+  ).join('') || '<div style="color:var(--muted);font-size:.85rem;">No sessions logged yet.</div>';
+
+  showModal(`
+    <div class="modal-header">
+      <h2>👤 ${kid.name}'s Progress</h2>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button class="btn btn-sm btn-muted" onclick="printReport('${kidId}')">🖨️ Report</button>
+        <button class="btn btn-sm btn-red" onclick="confirmRemoveKid('${kidId}')">🗑️</button>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="kd-header">
+        <div class="kd-av">${kid.avatar}</div>
+        <div class="kd-info">
+          <h2>${kid.name}</h2>
+          <div class="kd-meta">Age ${kid.age} · Joined ${fmtDate(kid.joinDate)} · Last active ${fmtDate(kid.lastActive)}</div>
+          <div style="margin-top:.4rem">${STAGES.map((st,i) => {
+            const p = stageProgressPct(kid, st.id);
+            const col = p===100 ? 'badge-teal' : p>0 ? 'badge-purple' : 'badge badge-muted';
+            return `<span class="badge ${p===100?'badge-teal':p>0?'badge-purple':'badge-muted'}" style="margin-right:.3rem">${st.emoji} ${p}%</span>`;
+          }).join('')}</div>
+        </div>
+        <div class="kd-progress-ring" id="kd-ring-wrap">
+          <div class="prog-ring-wrap">
+            <svg width="70" height="70" viewBox="0 0 70 70">
+              <circle cx="35" cy="35" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
+              <circle cx="35" cy="35" r="28" fill="none" stroke="url(#rg)" stroke-width="6"
+                stroke-dasharray="${Math.round(2*Math.PI*28)}" stroke-dashoffset="${Math.round(2*Math.PI*28*(1-pct/100))}"
+                stroke-linecap="round"/>
+              <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--purple)"/><stop offset="100%" stop-color="var(--teal)"/></linearGradient></defs>
+            </svg>
+            <div class="prog-ring-text">${pct}%</div>
+          </div>
+          <div class="prog-ring-lbl">Overall</div>
+        </div>
+      </div>
+
+      <div class="all-prog" id="kd-stage-bars"></div>
+
+      <div class="stage-tabs" id="kd-tabs">${tabsHtml}</div>
+      <div id="kd-milestone-list"></div>
+
+      <div class="det-section">
+        <h4>🏆 Achievements</h4>
+        <div class="achievements-row">${achHtml}</div>
+      </div>
+
+      <div class="det-section">
+        <h4>📝 Notes</h4>
+        <textarea class="form-control" id="kd-notes" style="min-height:64px" onblur="saveNotes('${kidId}')" placeholder="Add notes about this student...">${kid.notes||''}</textarea>
+      </div>
+
+      <div class="det-section">
+        <h4>📅 Recent Activity</h4>
+        <div>${logsHtml}</div>
+      </div>
+    </div>
+  `, true);
+
+  renderStageProgressBars(kid);
+  renderMilestoneList(kid, currentDetailStage);
+}
+function switchDetailTab(stageId) {
+  currentDetailStage = stageId;
+  const kid = kids.find(k => k.id === currentDetailKidId);
+  if (!kid) return;
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  const tabs = document.querySelectorAll('.s-tab');
+  if (tabs[stageId]) tabs[stageId].classList.add('active');
+  renderMilestoneList(kid, stageId);
+}
+function renderStageProgressBars(kid) {
+  const el = document.getElementById('kd-stage-bars');
+  if (!el) return;
+  el.innerHTML = STAGES.map(st => {
+    const p = stageProgressPct(kid, st.id);
+    return `<div class="sp-row">
+      <span class="sp-lbl">${st.emoji} ${st.name}</span>
+      <div class="sp-track"><div class="sp-fill" style="width:${p}%;background:${st.color}"></div></div>
+      <span class="sp-pct" style="color:${st.color}">${p}%</span>
+    </div>`;
+  }).join('');
+}
+function renderOverallRing(kid) {
+  const wrap = document.getElementById('kd-ring-wrap');
+  if (!wrap) return;
+  const pct = totalProgressPct(kid);
+  const circ = Math.round(2*Math.PI*28);
+  const offset = Math.round(circ*(1-pct/100));
+  wrap.innerHTML = `
+    <div class="prog-ring-wrap">
+      <svg width="70" height="70" viewBox="0 0 70 70">
+        <circle cx="35" cy="35" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
+        <circle cx="35" cy="35" r="28" fill="none" stroke="url(#rg2)" stroke-width="6"
+          stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+        <defs><linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--purple)"/><stop offset="100%" stop-color="var(--teal)"/></linearGradient></defs>
+      </svg>
+      <div class="prog-ring-text">${pct}%</div>
+    </div>
+    <div class="prog-ring-lbl">Overall</div>
+  `;
+}
+function renderMilestoneList(kid, stageId) {
+  const el = document.getElementById('kd-milestone-list');
+  if (!el) return;
+  const stage = STAGES[stageId];
+  if (!stage) return;
+  el.innerHTML = `<div class="ms-list">${stage.milestones.map(m => {
+    const done = isCompleted(kid, stageId, m.id);
+    return `<div class="ms-item ${done?'done':''}" onclick="toggleMilestone('${kid.id}', ${stageId}, '${m.id}')">
+      <div class="ms-cb">${done?'✓':''}</div>
+      <span class="ms-txt">${m.t}</span>
+    </div>`;
+  }).join('')}</div>`;
+  // Update tabs
+  document.querySelectorAll('.s-tab').forEach((t, i) => {
+    const p = stageProgressPct(kid, i);
+    const sp = t.querySelector('.tp');
+    if (sp) sp.textContent = p + '%';
+  });
+}
+function saveNotes(kidId) {
+  const el = document.getElementById('kd-notes');
+  if (el) updateKidNotes(kidId, el.value);
+}
+function confirmRemoveKid(kidId) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid) return;
+  if (confirm(`Remove ${kid.name} from the academy? This cannot be undone.`)) {
+    removeKid(kidId);
+    closeModal();
+    renderDashboard();
+    showToast(`🗑️ ${kid.name} removed.`, 'info');
+  }
+}
+function printReport(kidId) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid) return;
+  const w = window.open('', '_blank');
+  const rows = STAGES.map(st => {
+    const p = stageProgressPct(kid, st.id);
+    const msDone = st.milestones.filter(m => isCompleted(kid, st.id, m.id));
+    const msRows = st.milestones.map(m => {
+      const done = isCompleted(kid, st.id, m.id);
+      return `<li style="color:${done?'#26de81':'#888'};margin-bottom:4px">${done?'✅':'⬜'} ${m.t}</li>`;
+    }).join('');
+    return `<div style="margin-bottom:24px;break-inside:avoid">
+      <h3 style="margin-bottom:8px">${st.emoji} Stage ${st.id}: ${st.name} — ${p}% (${msDone.length}/${st.milestones.length})</h3>
+      <ul style="padding-left:20px">${msRows}</ul>
+    </div>`;
+  }).join('');
+  const ach = earnedAchievements(kid);
+  w.document.write(`<!DOCTYPE html><html><head><title>${kid.name} — Progress Report</title>
+    <style>body{font-family:sans-serif;padding:2rem;color:#111;}h1{margin-bottom:.25rem;}p{color:#666;margin-bottom:1.5rem;}h3{color:#333;}</style>
+    </head><body>
+    <h1>${kid.avatar} ${kid.name} — CodeKids Academy Progress Report</h1>
+    <p>Age: ${kid.age} | Joined: ${fmtDate(kid.joinDate)} | Overall: ${totalProgressPct(kid)}% | Badges: ${ach.length}</p>
+    ${rows}
+    <p style="border-top:1px solid #eee;padding-top:1rem;color:#999;font-size:12px">Generated by CodeKids Academy on ${new Date().toLocaleDateString()}</p>
+    </body></html>`);
+  w.document.close();
+  w.print();
+}
+
+/* ── MODAL HELPERS ────────────────────────────────────────────── */
+function showModal(html, wide = false) {
+  const box = document.getElementById('modal-box');
+  const overlay = document.getElementById('modal-overlay');
+  box.innerHTML = html;
+  box.className = 'modal' + (wide ? ' modal-wide' : '');
+  overlay.classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+/* ── CURRICULUM ───────────────────────────────────────────────── */
+function buildCurriculum() {
+  const el = document.getElementById('curriculum-accordions');
+  if (!el) return;
+  el.innerHTML = STAGES.map(st => `
+    <div class="stage-acc">
+      <div class="acc-head" id="acc-head-${st.id}" onclick="toggleAcc(${st.id})">
+        <span class="acc-em">${st.emoji}</span>
+        <div class="acc-meta">
+          <h3>Stage ${st.id}: ${st.name}</h3>
+          <div class="as">${st.desc}</div>
+        </div>
+        <span class="acc-age-tag" style="background:${st.color}22;color:${st.color}">Age ${st.age}</span>
+        <span class="acc-arr" id="acc-arr-${st.id}">▼</span>
+      </div>
+      <div class="acc-body" id="acc-body-${st.id}">
+        <div class="acc-grid">
+          <div class="acc-card">
+            <h4>📚 Key Resources</h4>
+            ${st.resources.map(r => `<div class="ri-item"><span class="ri">${r.e}</span><div><a href="${r.u}" target="_blank">${r.n}</a><span class="ri-sub">${r.s}</span></div></div>`).join('')}
+          </div>
+          <div class="acc-card">
+            <h4>✅ Stage Milestones</h4>
+            ${st.milestones.map(m => `<div class="ri-item"><span class="ri">📌</span><div>${m.t}</div></div>`).join('')}
+          </div>
+          <div class="acc-card">
+            <h4>🛠️ Activities</h4>
+            ${st.activities.map(a => `<div class="ri-item"><span class="ri">▶️</span><div>${a}</div></div>`).join('')}
+          </div>
+          <div class="acc-card">
+            <h4>🏗️ Project Ideas</h4>
+            <div class="proj-pills">${st.projects.map(p => `<span class="pp">${p}</span>`).join('')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleAcc(stageId) {
+  const head = document.getElementById('acc-head-' + stageId);
+  const body = document.getElementById('acc-body-' + stageId);
+  head.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+/* ── MINI STAGES (HOME) ──────────────────────────────────────── */
+function buildMiniStages() {
+  const el = document.getElementById('mini-stages-home');
+  if (!el) return;
+  el.innerHTML = STAGES.map(st => `
+    <div class="mini-stage" onclick="navigate('curriculum')" style="border-color:${st.color}33">
+      <span class="ms-em">${st.emoji}</span>
+      <div class="ms-nm">${st.name}</div>
+      <div class="ms-ag">Age ${st.age}</div>
+    </div>
+  `).join('');
+}
+
+/* ── RESOURCES VIEW ───────────────────────────────────────────── */
+const RES_FILTERS = [
+  { id:'all', label:'All' },
+  { id:'free', label:'🆓 Free Only' },
+  { id:'course', label:'🎓 Courses' },
+  { id:'book', label:'📗 Books' },
+  { id:'game', label:'🎮 Games' },
+  { id:'hardware', label:'🤖 Hardware' },
+  { id:'platform', label:'💻 Platforms' },
+  { id:'tool', label:'🛠️ Tools' },
+  { id:'video', label:'📺 Video' },
+];
+function buildResources() {
+  const filterEl = document.getElementById('res-filters');
+  if (filterEl) filterEl.innerHTML = RES_FILTERS.map(f =>
+    `<button class="rf ${f.id==='all'?'active':''}" onclick="filterRes('${f.id}')">${f.label}</button>`
+  ).join('');
+  renderResGrid();
+}
+function filterRes(id) {
+  resFilter = id;
+  document.querySelectorAll('.rf').forEach(el => el.classList.toggle('active', el.getAttribute('onclick').includes(`'${id}'`)));
+  renderResGrid();
+}
+function renderResGrid() {
+  const el = document.getElementById('res-big-grid');
+  if (!el) return;
+  let list = RESOURCES;
+  if (resFilter === 'free') list = list.filter(r => r.cost === 'free');
+  else if (resFilter !== 'all') list = list.filter(r => r.type === resFilter);
+  const costTag = c => c === 'free' ? '<span class="rtag rt-free">FREE</span>' : c === 'paid' ? '<span class="rtag rt-paid">Paid</span>' : '<span class="rtag rt-paid">Free/Paid</span>';
+  const typeTag = t => {
+    const map = { course:'rt-book', book:'rt-book', game:'rt-game', hardware:'rt-hw', platform:'rt-free', tool:'rt-free', video:'rt-vid', app:'rt-free', framework:'rt-free', activity:'rt-game' };
+    return `<span class="rtag ${map[t]||'rt-free'}">${t}</span>`;
+  };
+  el.innerHTML = list.map(r => {
+    const pips = STAGES.map((_, i) => `<div class="spip ${r.stages.includes(i)?'on':''}"></div>`).join('');
+    return `<div class="rbc">
+      <div class="rbc-head">
+        <div class="rbc-head-l"><span style="font-size:1.3rem">${r.e}</span><h3>${r.n}</h3></div>
+        ${costTag(r.cost)}
+      </div>
+      <div class="rbc-body">
+        <p>${r.desc}</p>
+        <div class="r-tags">${typeTag(r.type)}${costTag(r.cost)}</div>
+      </div>
+      <div class="rbc-foot">
+        <div class="stage-pips">${pips}</div>
+        <a href="${r.url}" target="_blank">Visit →</a>
+      </div>
+    </div>`;
+  }).join('') || '<div style="color:var(--muted);padding:2rem;grid-column:1/-1;text-align:center">No resources match this filter.</div>';
+}
+
+/* ── EXPORT / IMPORT ──────────────────────────────────────────── */
+function exportData() {
+  if (kids.length === 0) { showToast('⚠️ No students to export', 'warn'); return; }
+  const data = { version: 1, exported: today(), kids };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `codekids-backup-${today()}.json`;
+  a.click();
+  showToast('✅ Data exported successfully!', 'success');
+}
+function importData(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const importedKids = data.kids || data;
+      if (!Array.isArray(importedKids)) throw new Error('Invalid format');
+      kids = importedKids;
+      saveKids();
+      renderDashboard();
+      showToast(`✅ Imported ${kids.length} students!`, 'success');
+    } catch { showToast('❌ Could not read file. Please use a valid export file.', 'warn'); }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
+}
+
+/* ── TOAST ────────────────────────────────────────────────────── */
+function showToast(msg, type = 'info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+/* ── CONFETTI ─────────────────────────────────────────────────── */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const cols = ['#7c6fff','#00d4aa','#ffd166','#ff6b9d','#48dbfb','#ff9f43','#26de81'];
+  const parts = Array.from({length:180}, () => ({
+    x: Math.random()*canvas.width, y: -20,
+    vx: (Math.random()-.5)*5, vy: Math.random()*5+2,
+    col: cols[Math.floor(Math.random()*cols.length)],
+    w: Math.random()*10+4, h: Math.random()*6+3,
+    rot: Math.random()*360, rv: (Math.random()-.5)*10,
+    alpha: 1,
+  }));
+  let frame;
+  let t = 0;
+  function draw() {
+    t++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    parts.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+      if (t > 80) p.alpha -= .015;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle = p.col;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if (t < 160 && parts.some(p => p.alpha > 0)) {
+      frame = requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cancelAnimationFrame(frame);
+    }
+  }
+  draw();
+}
+
+/* ── KEYBOARD ─────────────────────────────────────────────────── */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
