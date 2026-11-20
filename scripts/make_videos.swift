@@ -23,7 +23,8 @@ struct Info: Decodable { let title: String; let scenes: [Scene] }
 @discardableResult
 func run(_ exe: String, _ args: [String]) throws -> Int32 {
     let p = Process(); p.executableURL = URL(fileURLWithPath: exe); p.arguments = args
-    p.standardOutput = FileHandle.nullDevice; p.standardError = FileHandle.nullDevice
+    // never let child tools read the terminal (ffmpeg would stop with SIGTTIN when run interactively)
+    p.standardInput = FileHandle.nullDevice; p.standardOutput = FileHandle.nullDevice; p.standardError = FileHandle.nullDevice
     try p.run(); p.waitUntilExit()
     if p.terminationStatus != 0 { throw NSError(domain: "make_videos", code: Int(p.terminationStatus), userInfo: [NSLocalizedDescriptionKey: "\(exe) \(args.prefix(4).joined(separator: " ")) failed"]) }
     return p.terminationStatus
@@ -72,7 +73,7 @@ for pid in wanted {
         let dur = max(audioLen + 0.7, sc.len + 0.5)
         // 2) padded scene audio
         let wav = tmp.appendingPathComponent("s\(i).wav")
-        try run(ffmpeg, ["-y", "-i", aiff.path, "-af", String(format: "apad=whole_dur=%.3f", dur), "-ar", "44100", "-ac", "1", wav.path])
+        try run(ffmpeg, ["-nostdin", "-y", "-i", aiff.path, "-af", String(format: "apad=whole_dur=%.3f", dur), "-ar", "44100", "-ac", "1", wav.path])
         concat += "file '\(wav.path)'\n"
         // 3) frames
         let n = Int((dur * fps).rounded(.up))
@@ -87,9 +88,9 @@ for pid in wanted {
     }
     let list = tmp.appendingPathComponent("list.txt"); try concat.write(to: list, atomically: true, encoding: .utf8)
     let audio = tmp.appendingPathComponent("audio.wav")
-    try run(ffmpeg, ["-y", "-f", "concat", "-safe", "0", "-i", list.path, "-c", "copy", audio.path])
+    try run(ffmpeg, ["-nostdin", "-y", "-f", "concat", "-safe", "0", "-i", list.path, "-c", "copy", audio.path])
     let out = outDir.appendingPathComponent("\(pid)-\(slug(info.title)).mp4")
-    try run(ffmpeg, ["-y", "-framerate", String(Int(fps)), "-i", frames.appendingPathComponent("%06d.jpg").path, "-i", audio.path,
+    try run(ffmpeg, ["-nostdin", "-y", "-framerate", String(Int(fps)), "-i", frames.appendingPathComponent("%06d.jpg").path, "-i", audio.path,
                      "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-pix_fmt", "yuv420p",
                      "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart", out.path])
     try? FileManager.default.removeItem(at: tmp)
