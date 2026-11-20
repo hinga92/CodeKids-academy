@@ -105,7 +105,7 @@
     .dash-top h1{font-size:1.7rem;font-weight:800;}
     .dash-top p{color:var(--muted);font-size:.88rem;margin-top:.15rem;}
     .dash-actions{display:flex;gap:.55rem;flex-wrap:wrap;}
-    .dash-stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.85rem;margin-bottom:1.75rem;}
+    .dash-stats-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem;margin-bottom:1.75rem;}
     .dstat{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.2rem;display:flex;align-items:center;gap:.85rem;}
     .dstat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
     .dstat-val{font-size:1.65rem;font-weight:900;line-height:1;}
@@ -342,6 +342,9 @@
       .dash-top{flex-direction:column;align-items:flex-start;}
       .kd-header{flex-direction:column;}
       .kd-progress-ring{margin-left:0;}
+    }
+    @media(max-width:700px){
+      .dash-stats-bar{grid-template-columns:repeat(2,minmax(0,1fr));}
     }
     @media print{
       .nav,.dash-actions,.form-actions,.modal-close,.btn-sm{display:none!important;}
@@ -657,6 +660,7 @@ const Native = (() => {
         title: '🚀 CodeKids — coding time this week?',
         body: next.length ? next.join('\n') : 'Open CodeKids to pick this week\'s project.',
         schedule: { on: { weekday: 1, hour: 17, minute: 0 }, allowWhileIdle: true },
+        isExactNotification: false,   // a weekly nudge doesn't need an exact alarm (and Android would open Settings to ask)
       }] });
       return true;
     } catch(e) { if (!silent) showToast('⚠️ Could not set the reminder.', 'warn'); return false; }
@@ -1151,8 +1155,11 @@ function suggestStage() {
   const age = parseInt(document.getElementById('fi-age')?.value);
   const sel = document.getElementById('fi-stage');
   if (!sel || isNaN(age)) return;
-  const idx = STAGES.findIndex(st => { const lo = parseInt(st.age); return age < lo; });
-  sel.value = String(idx === -1 ? LAST_STAGE : Math.max(0, idx - 1));
+  // Beginners start at the EARLIEST stage whose age range includes them (ranges overlap, e.g. 6–7 and 7–9).
+  const range = st => { const [lo, hi] = st.age.match(/\d+/g).map(Number); return [lo, hi || lo]; };
+  let idx = STAGES.findIndex(st => { const [lo, hi] = range(st); return age >= lo && age <= hi; });
+  if (idx === -1) idx = age < range(STAGES[0])[0] ? 0 : LAST_STAGE;
+  sel.value = String(idx);
 }
 function pickAvatar(a) {
   selAvatar = a;
@@ -1659,7 +1666,9 @@ function applyImport(mode) {
 function eraseAllData() {
   if (!confirm('Erase ALL CodeKids students and progress stored on this device? This cannot be undone unless you have a backup file.')) return;
   kids = [];
-  ['cka_kids', 'cka_last_change', 'cka_last_backup', 'cka_backup_snooze'].forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+  ['cka_kids', 'cka_last_change', 'cka_last_backup', 'cka_backup_snooze', 'cka_reminder'].forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+  Native.cancelReminder();
+  const r = document.getElementById('reminder-toggle'); if (r) r.checked = false;
   showToast('🗑️ All CodeKids data on this device has been erased.', 'info');
 }
 

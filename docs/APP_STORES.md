@@ -5,7 +5,7 @@ Phase 3 status (20 Nov 2026):
 | | Status |
 |---|---|
 | iOS app (iPhone + iPad) | ✅ Builds and runs in the simulator. Backup share sheet and weekly reminder tested |
-| Android app | ✅ Debug APK builds. ⏳ Not yet run on a device (none was connected) |
+| Android app | ✅ Tested on a Samsung Galaxy Tab A7 Lite (Android 14): add student, milestones + haptics, report/backup share sheet, weekly reminder, erase data |
 | Store accounts, signing, screenshots, listing | ⏳ Your steps, listed below |
 
 ## How it's built
