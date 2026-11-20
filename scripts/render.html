@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>CodeKids video renderer</title></head>
+<body style="margin:0;background:#000">
+<!-- Used by make_videos.swift: renders Watch & Do frames off-screen. -->
+<canvas id="c" width="1080" height="1080"></canvas>
+<script src="../watch.js"></script>
+<script>
+  const c = document.getElementById('c'), ctx = c.getContext('2d');
+  window.renderFrame = (pid, i, t) => { CKWatch.drawScene(ctx, pid, i, t); return c.toDataURL('image/jpeg', 0.9); };
+  window.projectInfo = pid => JSON.stringify({ title: CKWatch.WATCH[pid].title, scenes: CKWatch.WATCH[pid].scenes.map(s => ({ say: s.say, len: CKWatch.sceneLength(s) })) });
+  window.projectIds = () => JSON.stringify(Object.keys(CKWatch.WATCH));
+</script>
+</body></html>

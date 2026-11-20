@@ -12,3 +12,10 @@
 **In the app:**
 - **Dashboard → 📋 Weekly check-in** makes an anonymous summary that families send you.
 - **Curriculum → Stage 0 → 🖨️ Printable pack** is the unplugged cards and worksheets (`printables/unplugged-pack.html`).
+- **▶️ Watch & Do** is on every Stage 0–2 project, and under **Next up** for children on those stages. It's a narrated animation to watch together before starting.
+
+**Videos for the WhatsApp group:**
+```bash
+cd ~/Automation-Projects/CodeKids-academy && bash scripts/make-videos.sh
+```
+This creates 9 square MP4s (about 30 s and 1.2 MB each) in `videos/`. To change the voice, add `--voice Karen` (see `say -v '?'` for the list).

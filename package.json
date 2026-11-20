@@ -11,6 +11,7 @@
     "assets": "npx capacitor-assets generate --ios --android --iconBackgroundColor '#07090f' --iconBackgroundColorDark '#07090f' --splashBackgroundColor '#07090f' --splashBackgroundColorDark '#07090f'"
   },
   "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
     "@capacitor/android": "^8.6.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/filesystem": "^8.1.5",

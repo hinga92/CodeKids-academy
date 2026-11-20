@@ -199,6 +199,16 @@
     .stage-acc{margin-bottom:.85rem;}
     .acc-head{scroll-margin-top:calc(var(--nav-h) + env(safe-area-inset-top) + 12px);}
     .native-only{display:none;}
+    /* ── WATCH & DO player ── */
+    .modal.modal-watch{max-width:min(760px,96vw);background:#0b0e1c;}
+    .wd-wrap{padding:0 1rem 1rem;}
+    .wd-canvas{width:100%;max-width:min(100%, calc(100vh - 220px));aspect-ratio:1/1;display:block;margin:0 auto;border-radius:16px;background:#141833;}
+    .wd-controls{display:flex;justify-content:center;align-items:center;gap:.6rem;margin-top:.8rem;flex-wrap:wrap;}
+    .wd-btn{width:58px;height:58px;border-radius:50%;border:none;font-size:1.6rem;cursor:pointer;background:var(--card2);color:var(--text);display:flex;align-items:center;justify-content:center;}
+    .wd-btn.main{width:76px;height:76px;font-size:2.1rem;background:linear-gradient(135deg,var(--purple),var(--teal));}
+    .wd-btn:disabled{opacity:.35;}
+    .watch-btn{background:linear-gradient(135deg,#ff6b9d,#ff9f43);color:#fff;border:none;border-radius:999px;padding:.5rem 1rem;font-weight:800;font-size:.9rem;cursor:pointer;}
+    .watch-badge{display:inline-block;background:rgba(255,107,157,.18);color:var(--pink);border-radius:999px;padding:.05rem .5rem;font-size:.72rem;font-weight:800;}
     html.is-native .native-only{display:block;}
     html.is-native .web-only{display:none!important;}
     .acc-head{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.45rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);cursor:pointer;transition:all .15s;user-select:none;}
@@ -600,6 +610,7 @@
      JAVASCRIPT
 ═══════════════════════════════════════════════════════════════ -->
 <script src="curriculum.js"></script>
+<script src="watch.js"></script>
 <script>
 const AVATARS = ['🦊','🐼','🦁','🐯','🐸','🦄','🐳','🦋','🐶','🐱','🦖','🚀','⭐','🌈','🎮'];
 const ACHIEVEMENTS = [
@@ -914,6 +925,7 @@ function renderNextSteps(kid) {
     <h4>🧭 Next up for ${esc(kid.name)}</h4>
     <div class="nb-row"><span>🎯</span><span><strong>${LEVELS[next.lvl].e} ${LEVELS[next.lvl].name} milestone:</strong> ${next.t}</span></div>
     <div class="nb-row"><span>${proj.e}</span><span><strong>Suggested project:</strong> <a href="#" onclick="event.preventDefault();openProject(${st.id}, '${proj.id}')">${proj.title}</a> · ⏱ ${proj.mins} · ${proj.tool}</span></div>
+    ${CKWatch.has(proj.id) ? `<div class="nb-row" style="margin-top:.6rem"><button class="watch-btn" onclick="openWatch('${proj.id}')">▶️ Watch &amp; Do with your child</button></div>` : ''}
   </div>`;
 }
 
@@ -1253,6 +1265,132 @@ function renderAchievements(kid) {
   }).join('') + (earned.length ? '<div style="font-size:.74rem;color:var(--muted);width:100%;margin-top:.3rem">Tap a 📜 badge for a printable certificate.</div>' : '');
 }
 
+/* ── WATCH & DO (narrated step animations, see watch.js) ─────── */
+const Voice = (() => {
+  let token = 0, voice = null;
+  const web = typeof window.speechSynthesis !== 'undefined';
+  function pickVoice() {
+    if (!web || voice) return voice;
+    const vs = speechSynthesis.getVoices().filter(v => /^en(-|_)/i.test(v.lang));
+    voice = vs.find(v => /Samantha|Ava|Google US English|Zira|Jenny|Aria/i.test(v.name)) || vs.find(v => /en-US/i.test(v.lang)) || vs[0] || null;
+    return voice;
+  }
+  if (web) speechSynthesis.onvoiceschanged = () => { voice = null; pickVoice(); };
+  async function speak(textToSay) {
+    const my = ++token;
+    const words = textToSay.split(/\s+/).length;
+    const fallback = new Promise(r => setTimeout(r, 600 + words * 380));
+    try {
+      if (Native.isNative) {
+        const tts = Native.P('TextToSpeech');
+        if (tts) { await tts.speak({ text: textToSay, lang: 'en-US', rate: 0.95, pitch: 1.05, volume: 1, category: 'playback' }); return my === token; }
+      } else if (web) {
+        await new Promise(res => {
+          speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(textToSay);
+          const v = pickVoice(); if (v) u.voice = v;
+          u.lang = (v && v.lang) || 'en-US'; u.rate = 0.95; u.pitch = 1.05;
+          u.onend = res; u.onerror = res;
+          speechSynthesis.speak(u);
+          setTimeout(res, 2500 + words * 600); // safety net if onend never fires
+        });
+        return my === token;
+      }
+    } catch (e) { /* fall through to timer */ }
+    await fallback; return my === token;
+  }
+  function stop() {
+    token++;
+    if (Native.isNative) Native.P('TextToSpeech')?.stop().catch(() => {});
+    else if (web) speechSynthesis.cancel();
+  }
+  return { speak, stop };
+})();
+
+const Watch = { pid: null, i: 0, playing: false, muted: false, raf: 0, t0: 0, sceneDone: false, run: 0 };
+function openWatch(pid) {
+  if (!CKWatch.has(pid)) return;
+  Watch.pid = pid; Watch.i = 0; Watch.muted = lsGet('cka_watch_muted') === '1';
+  const p = CKWatch.WATCH[pid];
+  showModal(`
+    <div class="modal-header" style="background:#0b0e1c"><h2>▶️ ${p.e} ${p.title}</h2><button class="modal-close" onclick="closeWatch()" aria-label="Close">✕</button></div>
+    <div class="wd-wrap">
+      <canvas id="wd-canvas" class="wd-canvas" width="${CKWatch.W}" height="${CKWatch.H}" role="img" aria-label="Animated step"></canvas>
+      <p id="wd-cap" class="sr-only" aria-live="polite" style="position:absolute;left:-9999px"></p>
+      <div class="wd-controls">
+        <button class="wd-btn" id="wd-prev" onclick="watchGo(-1)" aria-label="Previous step">⏮</button>
+        <button class="wd-btn main" id="wd-play" onclick="watchToggle()" aria-label="Play or pause">⏸</button>
+        <button class="wd-btn" id="wd-next" onclick="watchGo(1)" aria-label="Next step">⏭</button>
+        <button class="wd-btn" id="wd-mute" onclick="watchMute()" aria-label="Sound on or off">${Watch.muted ? '🔇' : '🔊'}</button>
+      </div>
+    </div>`, true);
+  document.getElementById('modal-box').classList.add('modal-watch');
+  watchPlayScene(0);
+}
+function watchDraw(t) {
+  const c = document.getElementById('wd-canvas'); if (!c) return false;
+  CKWatch.drawScene(c.getContext('2d'), Watch.pid, Watch.i, t);
+  return true;
+}
+function watchPlayScene(i) {
+  const p = CKWatch.WATCH[Watch.pid]; if (!p) return;
+  Watch.i = Math.max(0, Math.min(p.scenes.length - 1, i));
+  const sc = p.scenes[Watch.i], len = CKWatch.sceneLength(sc), run = ++Watch.run;
+  Watch.playing = true; Watch.t0 = performance.now(); Watch.sceneDone = false;
+  let spoken = Watch.muted;
+  document.getElementById('wd-cap').textContent = sc.say;
+  watchButtons();
+  Voice.stop();
+  if (!Watch.muted) Voice.speak(sc.say).then(ok => { if (ok && run === Watch.run) spoken = true; });
+  else setTimeout(() => { if (run === Watch.run) spoken = true; }, 800 + sc.say.split(/\s+/).length * 330);
+  cancelAnimationFrame(Watch.raf);
+  const tick = now => {
+    if (run !== Watch.run) return;
+    const t = (now - Watch.t0) / 1000;
+    if (!watchDraw(Math.min(t, len + 0.5))) return;
+    if (t >= len && spoken && !Watch.sceneDone) {
+      Watch.sceneDone = true;
+      setTimeout(() => {
+        if (run !== Watch.run || !Watch.playing) return;
+        if (Watch.i < p.scenes.length - 1) watchPlayScene(Watch.i + 1);
+        else { Watch.playing = false; watchButtons(); Native.haptic('success'); }
+      }, 700);
+    }
+    Watch.raf = requestAnimationFrame(tick);
+  };
+  Watch.raf = requestAnimationFrame(tick);
+}
+function watchButtons() {
+  const p = CKWatch.WATCH[Watch.pid]; if (!p) return;
+  const b = id => document.getElementById(id);
+  if (!b('wd-play')) return;
+  b('wd-prev').disabled = Watch.i === 0;
+  b('wd-next').disabled = Watch.i === p.scenes.length - 1;
+  b('wd-play').textContent = Watch.playing ? '⏸' : (Watch.i === p.scenes.length - 1 && Watch.sceneDone ? '🔁' : '▶️');
+}
+function watchToggle() {
+  const p = CKWatch.WATCH[Watch.pid];
+  if (Watch.playing) {
+    Watch.playing = false; Watch.run++; Voice.stop(); cancelAnimationFrame(Watch.raf);
+    watchDraw(CKWatch.sceneLength(p.scenes[Watch.i])); // show the finished picture while paused
+    watchButtons();
+  } else {
+    watchPlayScene(Watch.i === p.scenes.length - 1 && Watch.sceneDone ? 0 : Watch.i);
+  }
+}
+function watchGo(d) { watchPlayScene(Watch.i + d); }
+function watchMute() {
+  Watch.muted = !Watch.muted; lsSet('cka_watch_muted', Watch.muted ? '1' : '0');
+  document.getElementById('wd-mute').textContent = Watch.muted ? '🔇' : '🔊';
+  if (Watch.muted) Voice.stop();
+  watchPlayScene(Watch.i);
+}
+function closeWatch() {
+  Watch.run++; Watch.playing = false; cancelAnimationFrame(Watch.raf); Voice.stop();
+  const pid = Watch.pid; Watch.pid = null;
+  closeModal();
+}
+
 /* ── PRINTABLES ───────────────────────────────────────────────── */
 const SITE_URL = 'https://hinga92.github.io/CodeKids-academy/';
 function openPrintables() {
@@ -1503,6 +1641,7 @@ function showModal(html, wide = false) {
   const overlay = document.getElementById('modal-overlay');
   if (!overlay.classList.contains('open')) lastFocus = document.activeElement;
   box.innerHTML = html;
+  if (Watch.pid && !html.includes('wd-canvas')) { Watch.run++; Watch.playing = false; cancelAnimationFrame(Watch.raf); Voice.stop(); Watch.pid = null; }
   box.className = 'modal' + (wide ? ' modal-wide' : '');
   box.setAttribute('role', 'dialog');
   box.setAttribute('aria-modal', 'true');
@@ -1512,6 +1651,7 @@ function showModal(html, wide = false) {
 function closeModal() {
   const overlay = document.getElementById('modal-overlay');
   if (!overlay.classList.contains('open')) return;
+  if (Watch.pid) { Watch.run++; Watch.playing = false; cancelAnimationFrame(Watch.raf); Voice.stop(); Watch.pid = null; }
   if (currentDetailKidId) saveNotes(currentDetailKidId);
   overlay.classList.remove('open');
   currentDetailKidId = null;
@@ -1579,7 +1719,7 @@ function projCard(st, p) {
   return `<div class="proj-card" role="button" tabindex="0" onclick="openProject(${st.id}, '${p.id}')">
     <h5>${p.e} ${p.title}</h5>
     <p>${p.brief}</p>
-    <div class="proj-meta"><span class="badge badge-purple">${LEVELS[p.lvl].e} ${LEVELS[p.lvl].name}</span><span>⏱ ${p.mins}</span></div>
+    <div class="proj-meta"><span class="badge badge-purple">${LEVELS[p.lvl].e} ${LEVELS[p.lvl].name}</span><span>⏱ ${p.mins}</span>${CKWatch.has(p.id) ? '<span class="watch-badge">▶️ Watch &amp; Do</span>' : ''}</div>
   </div>`;
 }
 function findProject(stageId, projId) {
@@ -1612,7 +1752,9 @@ function openProject(stageId, projId) {
         <button class="btn btn-sm btn-muted" onclick="printProject(${stageId}, '${projId}')">🖨️ Print</button>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
       </div></div>
-    <div class="modal-body">${projectBriefHtml(st, p, false)}</div>`, true);
+    <div class="modal-body">
+      ${CKWatch.has(p.id) ? `<button class="watch-btn" style="width:100%;padding:.85rem 1rem;font-size:1.05rem;margin-bottom:1rem" onclick="openWatch('${p.id}')">▶️ Watch &amp; Do — watch it together first (about 30 s)</button>` : ''}
+      ${projectBriefHtml(st, p, false)}</div>`, true);
 }
 function printProject(stageId, projId) {
   const st = STAGES[stageId], p = findProject(stageId, projId);

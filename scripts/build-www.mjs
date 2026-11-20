@@ -1,7 +1,7 @@
 // Copies the web app into www/ for the native (Capacitor) apps and adds the Capacitor runtime.
 // The website itself is still served from the repo root by GitHub Pages (no service-worker changes needed).
 import { cpSync, rmSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-const files = ['index.html', 'curriculum.js', 'manifest.json', 'icons', 'printables'];
+const files = ['index.html', 'curriculum.js', 'watch.js', 'manifest.json', 'icons', 'printables'];
 rmSync('www', { recursive: true, force: true });
 mkdirSync('www');
 for (const f of files) cpSync(f, `www/${f}`, { recursive: true });

@@ -19,6 +19,8 @@ Live site: https://hinga92.github.io/CodeKids-academy/
 |---|---|
 | `index.html` | The app (HTML, CSS and JavaScript) |
 | `curriculum.js` | Stages, milestones, standards, projects and resources (shared with future mobile apps) |
+| `watch.js` | **Watch & Do**: narrated, animated step-by-step guides for the 9 under-10 projects (shared by the app and the video maker) |
+| `scripts/make-videos.sh` | Turns Watch & Do into narrated MP4 videos with the Mac's voice: `bash scripts/make-videos.sh` → `videos/` |
 | `printables/` | Printable unplugged pack (arrow cards, maze, worksheets, debug puzzles) |
 | `docs/pilot/` | Phase 4 pilot kit — plan, invites, parent guide, interview, video scripts, tracker |
 | `docs/STRATEGY.md` | Competitor research, standards, mobile-app plan and roadmap |
