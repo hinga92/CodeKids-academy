@@ -4,6 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CodeKids Academy — Coding & Automation for Kids</title>
+  <meta name="description" content="A free, private progress tracker that guides kids aged 5–18 from unplugged logic to building AI apps."/>
+  <meta name="theme-color" content="#07090f"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="CodeKids"/>
   <style>
     :root{
       --bg:#07090f;--surface:#0f1220;--card:#151929;--card2:#1b2036;
@@ -205,6 +212,7 @@
     .view-header h1{font-size:1.65rem;font-weight:800;margin-bottom:.35rem;}
     .view-header p{color:var(--muted);font-size:.9rem;}
     .stage-acc{margin-bottom:.85rem;}
+    .acc-head{scroll-margin-top:calc(var(--nav-h) + 12px);}
     .acc-head{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.45rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);cursor:pointer;transition:all .15s;user-select:none;}
     .acc-head:hover{border-color:var(--border2);}
     .acc-head.open{border-radius:var(--r-md) var(--r-md) 0 0;border-bottom-color:transparent;}
@@ -253,7 +261,6 @@
     .spip.on{background:var(--teal);}
 
     /* ── HOSTING ── */
-    .hosting-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:2.5rem;}
     .host-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;}
     .hc-head{padding:1.05rem 1.45rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.8rem;}
     .hc-logo{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0;}
@@ -291,6 +298,22 @@
     .badge-red{background:rgba(255,107,107,.14);color:var(--red);}
     .badge-blue{background:rgba(72,219,251,.14);color:var(--blue);}
     .badge-teal{background:rgba(0,212,170,.14);color:var(--teal);}
+    .badge-muted{background:rgba(255,255,255,.05);color:var(--muted);}
+
+    /* ── BACKUP BANNER / GRADUATE / AGE NOTES ── */
+    .backup-banner{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;background:rgba(255,209,102,.08);border:1px solid rgba(255,209,102,.3);border-radius:var(--r-md);padding:.8rem 1.1rem;margin-bottom:1.25rem;font-size:.86rem;color:#e8d8a0;}
+    .backup-banner strong{color:var(--yellow);}
+    .backup-banner .bb-txt{flex:1;min-width:200px;}
+    .grad-box{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:var(--r-md);padding:.85rem 1.1rem;margin-bottom:1.1rem;font-size:.88rem;}
+    .grad-box span{flex:1;min-width:200px;}
+    .stage-set{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;font-size:.8rem;color:var(--muted);}
+    .stage-set select{width:auto;padding:.3rem .5rem;font-size:.8rem;}
+    .rt-age{background:rgba(255,107,107,.12);color:var(--red);}
+    .age-note{background:rgba(255,107,107,.07);border-left:3px solid var(--red);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:.7rem 1rem;font-size:.84rem;color:#f0c4c4;margin-bottom:1rem;}
+    .age-note strong{color:var(--red);}
+    .import-opts{display:flex;flex-direction:column;gap:.6rem;}
+    .import-opts .btn{justify-content:flex-start;text-align:left;}
+    [role="button"]:focus-visible,button:focus-visible,a:focus-visible,.form-control:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
     .sec-sep{padding:3rem 0 .5rem;border-top:1px solid var(--border);margin-top:2rem;}
     .sec-sep h2{font-size:1.25rem;font-weight:800;margin-bottom:.3rem;}
     .sec-sep p{color:var(--muted);font-size:.88rem;}
@@ -304,7 +327,6 @@
       .nav-ham{display:block;}
       .hero h1{font-size:2rem;}
       .acc-grid,.form-row,.grid2{grid-template-columns:1fr;}
-      .hosting-opts{grid-template-columns:1fr;}
       .dash-top{flex-direction:column;align-items:flex-start;}
       .kd-header{flex-direction:column;}
       .kd-progress-ring{margin-left:0;}
@@ -321,26 +343,26 @@
 
 <!-- ══════ NAVIGATION ══════ -->
 <nav class="nav">
-  <div class="nav-logo" onclick="navigate('home')">
+  <div class="nav-logo" role="button" tabindex="0" aria-label="CodeKids Academy home" onclick="navigate('home')">
     <div class="li">🚀</div>
     <span class="lt">CodeKids Academy</span>
   </div>
   <div class="nav-links" id="nav-links">
-    <button class="nav-link active" onclick="navigate('home')">🏠 Home</button>
-    <button class="nav-link" onclick="navigate('dashboard')">📊 Dashboard</button>
-    <button class="nav-link" onclick="navigate('curriculum')">🗺️ Curriculum</button>
-    <button class="nav-link" onclick="navigate('resources')">📚 Resources</button>
-    <button class="nav-link" onclick="navigate('hosting')">🌐 Go Live</button>
+    <button class="nav-link" data-view="home" onclick="navigate('home')">🏠 Home</button>
+    <button class="nav-link" data-view="dashboard" onclick="navigate('dashboard')">📊 Dashboard</button>
+    <button class="nav-link" data-view="curriculum" onclick="navigate('curriculum')">🗺️ Curriculum</button>
+    <button class="nav-link" data-view="resources" onclick="navigate('resources')">📚 Resources</button>
+    <button class="nav-link" data-view="privacy" onclick="navigate('privacy')">🔒 Privacy</button>
   </div>
   <button class="nav-cta" onclick="navigate('dashboard');openAddKidModal()">➕ Add Student</button>
-  <button class="nav-ham" id="nav-ham" onclick="toggleMobileMenu()">☰</button>
+  <button class="nav-ham" id="nav-ham" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-  <button class="nav-link" onclick="navigate('home');closeMobileMenu()">🏠 Home</button>
-  <button class="nav-link" onclick="navigate('dashboard');closeMobileMenu()">📊 Dashboard</button>
-  <button class="nav-link" onclick="navigate('curriculum');closeMobileMenu()">🗺️ Curriculum</button>
-  <button class="nav-link" onclick="navigate('resources');closeMobileMenu()">📚 Resources</button>
-  <button class="nav-link" onclick="navigate('hosting');closeMobileMenu()">🌐 Go Live</button>
+  <button class="nav-link" data-view="home" onclick="navigate('home');closeMobileMenu()">🏠 Home</button>
+  <button class="nav-link" data-view="dashboard" onclick="navigate('dashboard');closeMobileMenu()">📊 Dashboard</button>
+  <button class="nav-link" data-view="curriculum" onclick="navigate('curriculum');closeMobileMenu()">🗺️ Curriculum</button>
+  <button class="nav-link" data-view="resources" onclick="navigate('resources');closeMobileMenu()">📚 Resources</button>
+  <button class="nav-link" data-view="privacy" onclick="navigate('privacy');closeMobileMenu()">🔒 Privacy</button>
 </div>
 
 <canvas id="confetti-canvas"></canvas>
@@ -355,15 +377,15 @@
       <div class="hero-glow"></div>
       <div class="hero-badge">✨ Free Platform for Parents &amp; Mentors</div>
       <h1>Turn Your Kids Into<br/><span>Future Coders &amp; AI Builders</span></h1>
-      <p class="hero-sub">A complete coding &amp; automation academy for children aged 5–18. Track every milestone, access 50+ resources, and guide your kids from their first block to building AI agents.</p>
+      <p class="hero-sub">A complete coding &amp; automation academy for children aged 5–18. Track every milestone, access <span class="js-res-count">35</span>+ curated resources, and guide your kids from their first block to building AI agents.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" onclick="navigate('dashboard')">🚀 Open Dashboard</button>
         <button class="btn btn-secondary" onclick="navigate('curriculum')">📖 View Curriculum</button>
       </div>
       <div class="hero-stats">
         <div class="hstat"><span class="val">7</span><span class="lbl">Learning Stages</span></div>
-        <div class="hstat"><span class="val">50+</span><span class="lbl">Free Resources</span></div>
-        <div class="hstat"><span class="val">42</span><span class="lbl">Tracked Milestones</span></div>
+        <div class="hstat"><span class="val"><span class="js-res-count">35</span></span><span class="lbl">Curated Resources</span></div>
+        <div class="hstat"><span class="val js-ms-count">42</span><span class="lbl">Tracked Milestones</span></div>
         <div class="hstat"><span class="val">5→18</span><span class="lbl">Age Range</span></div>
       </div>
     </div>
@@ -397,11 +419,11 @@
         </div>
         <div class="features-grid">
           <div class="feat-card"><span class="feat-icon">📊</span><h3>Progress Dashboard</h3><p>See every student's progress at a glance. Color-coded stages, completion dots and progress bars make tracking intuitive.</p></div>
-          <div class="feat-card"><span class="feat-icon">✅</span><h3>Milestone Checklists</h3><p>42 carefully crafted milestones across 7 stages. Check them off as your child completes them — with confetti celebrations!</p></div>
+          <div class="feat-card"><span class="feat-icon">✅</span><h3>Milestone Checklists</h3><p><span class="js-ms-count">42</span> carefully crafted milestones across 7 stages. Check them off as your child completes them — with confetti celebrations!</p></div>
           <div class="feat-card"><span class="feat-icon">🏆</span><h3>Achievements System</h3><p>Kids earn badges as they hit stage completions and special goals. Badges keep motivation sky-high.</p></div>
-          <div class="feat-card"><span class="feat-icon">📚</span><h3>Curated Resources</h3><p>50+ hand-picked free and paid resources — books, apps, courses, games and hardware kits — all linked and categorized.</p></div>
-          <div class="feat-card"><span class="feat-icon">💾</span><h3>Local Data Storage</h3><p>All progress is saved to your browser automatically. Export to JSON for backup, import to restore — your data never leaves your device.</p></div>
-          <div class="feat-card"><span class="feat-icon">🌐</span><h3>Host Online Free</h3><p>Publish this platform live on GitHub Pages, Netlify or Vercel in under 5 minutes — completely free, accessible from any device.</p></div>
+          <div class="feat-card"><span class="feat-icon">📚</span><h3>Curated Resources</h3><p><span class="js-res-count">35</span> hand-picked free and paid resources — books, apps, courses, games and hardware kits — all linked and categorized.</p></div>
+          <div class="feat-card"><span class="feat-icon">💾</span><h3>Local Data Storage</h3><p>All progress is saved on your own device — nothing is sent anywhere. We remind you to download a backup file regularly so nothing is ever lost.</p></div>
+          <div class="feat-card"><span class="feat-icon">📱</span><h3>Install Like an App</h3><p>Add CodeKids to your home screen and it works offline. On iPhone, installing it also protects your saved progress from Safari's automatic clean-up.</p></div>
         </div>
       </div>
 
@@ -424,11 +446,12 @@
           <p>Track every student's coding journey across all 7 stages</p>
         </div>
         <div class="dash-actions">
-          <button class="btn btn-sm btn-teal" onclick="exportData()">⬇️ Export</button>
-          <label class="btn btn-sm btn-muted" style="cursor:pointer">⬆️ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"/></label>
+          <button class="btn btn-sm btn-teal" onclick="exportData()" title="Download a backup file of all students">⬇️ Backup</button>
+          <label class="btn btn-sm btn-muted" style="cursor:pointer" title="Restore students from a backup file">⬆️ Restore<input type="file" accept=".json,application/json" style="display:none" onchange="importData(event)"/></label>
           <button class="btn btn-sm btn-purple" onclick="openAddKidModal()">➕ Add Student</button>
         </div>
       </div>
+      <div id="backup-banner"></div>
       <div class="dash-stats-bar" id="dash-stats-bar"></div>
       <div id="kids-empty" class="empty-state" style="display:none">
         <span class="es-icon">👶</span>
@@ -460,7 +483,7 @@
     <div class="container">
       <div class="view-header">
         <h1>📚 Resource Library</h1>
-        <p>50+ curated resources for every stage. Filter by type, age group or cost.</p>
+        <p><span class="js-res-count">35</span> curated resources for every stage. Filter by type or cost. Items marked <span class="rtag rt-age">👪 Parent account</span> or <span class="rtag rt-age">13+</span> have sign-up age limits — a parent should create and own the account.</p>
       </div>
       <div class="res-filters" id="res-filters"></div>
       <div class="res-big-grid" id="res-big-grid"></div>
@@ -468,118 +491,44 @@
   </div>
 
   <!-- ══════════════════════════════════════════════
-       VIEW: HOSTING GUIDE
+       VIEW: PRIVACY
   ══════════════════════════════════════════════ -->
-  <div id="view-hosting" class="view">
-    <div class="container">
+  <div id="view-privacy" class="view">
+    <div class="container" style="max-width:780px">
       <div class="view-header">
-        <h1>🌐 Host Your Academy Online</h1>
-        <p>Get this platform live on the internet — free — so parents can access it from any device, anywhere.</p>
+        <h1>🔒 Privacy &amp; Your Data</h1>
+        <p>Plain-English answers for parents and mentors. Last updated: <span id="privacy-date">November 2026</span>.</p>
       </div>
-
-      <div class="tip-box">
-        <strong>💡 How this works:</strong> This entire academy is a single <code style="background:rgba(0,0,0,.2);padding:.1rem .4rem;border-radius:4px;font-family:monospace;">index.html</code> file. No server, no database, no monthly fees. You simply upload one file to a free hosting service and share the link with parents.
-      </div>
-
-      <div class="sec-sep" style="border:none;padding-top:1rem;">
-        <h2>⚡ Option 1 — Netlify (Easiest — 60 seconds)</h2>
-        <p>Drag and drop. No account needed to start.</p>
-      </div>
-      <div class="hosting-opts" style="grid-template-columns:1fr">
-        <div class="host-card">
-          <div class="hc-head">
-            <div class="hc-logo" style="background:rgba(0,212,170,.15)">🟢</div>
-            <div class="hc-meta"><h3>Netlify Drop</h3><div class="hcs">The world's easiest deployment — drag one file, get a live URL</div></div>
-            <span class="hc-badge badge badge-green">FREE Forever</span>
-          </div>
-          <div class="hc-body">
-            <ol class="step-list">
-              <li><span class="sn">1</span><div>Save this file as <code>index.html</code> on your computer (File → Save As in your browser).</div></li>
-              <li><span class="sn">2</span><div>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> in your browser — no account needed yet.</div></li>
-              <li><span class="sn">3</span><div>Drag your <code>index.html</code> file into the big drop zone on the page.</div></li>
-              <li><span class="sn">4</span><div>In about 10 seconds you'll get a live URL like <code>https://amazing-tesla-abc123.netlify.app</code></div></li>
-              <li><span class="sn">5</span><div>Share that URL with all parents in your group! 🎉 They can bookmark it on any device.</div></li>
-              <li><span class="sn">6</span><div>To update: create a free Netlify account, claim your site, then drag-drop a new file to redeploy.</div></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec-sep">
-        <h2>🐙 Option 2 — GitHub Pages (Most Professional)</h2>
-        <p>Version-controlled, always free, with a clean URL you can customise.</p>
-      </div>
-      <div class="hosting-opts">
-        <div class="host-card">
-          <div class="hc-head">
-            <div class="hc-logo" style="background:rgba(255,255,255,.07)">🐙</div>
-            <div class="hc-meta"><h3>GitHub Pages</h3><div class="hcs">Free hosting for any public repository</div></div>
-            <span class="hc-badge badge badge-green">FREE</span>
-          </div>
-          <div class="hc-body">
-            <ol class="step-list">
-              <li><span class="sn">1</span><div>Create a free account at <a href="https://github.com" target="_blank">github.com</a> if you don't have one.</div></li>
-              <li><span class="sn">2</span><div>Click <strong>+</strong> → <strong>New repository</strong>. Name it <code>codekids-academy</code>. Set it to <strong>Public</strong>.</div></li>
-              <li><span class="sn">3</span><div>Click <strong>uploading an existing file</strong>, then drag in your <code>index.html</code> file. Commit it.</div></li>
-              <li><span class="sn">4</span><div>Go to <strong>Settings → Pages</strong>. Under Source, select <strong>main branch</strong>. Click Save.</div></li>
-              <li><span class="sn">5</span><div>Your site goes live at <code>https://yourusername.github.io/codekids-academy</code> within 2 minutes.</div></li>
-            </ol>
-            <div class="code-block">your URL: https://yourusername.github.io/codekids-academy
-example:  https://gianna.github.io/codekids-academy</div>
-          </div>
-        </div>
-
-        <div class="host-card">
-          <div class="hc-head">
-            <div class="hc-logo" style="background:rgba(0,0,0,.4)">▲</div>
-            <div class="hc-meta"><h3>Vercel</h3><div class="hcs">Instant global deployment, custom domains</div></div>
-            <span class="hc-badge badge badge-green">FREE</span>
-          </div>
-          <div class="hc-body">
-            <ol class="step-list">
-              <li><span class="sn">1</span><div>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up (you can use your GitHub account).</div></li>
-              <li><span class="sn">2</span><div>Click <strong>Add New → Project</strong> and connect your GitHub repo (from Option 2) OR use the Vercel CLI.</div></li>
-              <li><span class="sn">3</span><div>Vercel auto-detects the file and deploys it. Takes about 30 seconds.</div></li>
-              <li><span class="sn">4</span><div>You get a URL like <code>codekids-academy.vercel.app</code> instantly.</div></li>
-              <li><span class="sn">5</span><div>Every new commit to GitHub auto-redeploys. Perfect for ongoing updates.</div></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-
       <div class="domain-section">
-        <h3>🏷️ Add a Custom Domain (Optional — Makes It Professional)</h3>
-        <p style="color:var(--muted);font-size:.88rem;margin-bottom:1rem;">Want a proper URL like <code style="background:var(--card2);padding:.1rem .4rem;border-radius:4px;font-family:monospace;color:var(--teal)">www.codekids-yourtown.com</code>? Here's how:</p>
-        <ol class="step-list">
-          <li><span class="sn">1</span><div>Buy a domain at <a href="https://namecheap.com" target="_blank">Namecheap</a> or <a href="https://domains.google" target="_blank">Google Domains</a> (~$10–15/year for .com).</div></li>
-          <li><span class="sn">2</span><div>In Netlify or Vercel, go to <strong>Domain Settings → Add Custom Domain</strong> and type your domain name.</div></li>
-          <li><span class="sn">3</span><div>You'll get DNS records (CNAME or A records) to copy into your domain registrar's DNS settings.</div></li>
-          <li><span class="sn">4</span><div>Within 24 hours (usually minutes), your custom domain goes live — with <strong>free HTTPS/SSL</strong> auto-configured.</div></li>
-        </ol>
-        <div class="tip-box" style="margin-top:1rem;">
-          <strong>💡 Pro Tip:</strong> Use <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:3px;font-family:monospace">.app</code> domains — they look modern, are often cheaper, and HTTPS is required (more secure for your students' data).
-        </div>
-      </div>
-
-      <div class="sec-sep">
-        <h2>📱 Share With Parents</h2>
-        <p>Once live, here's how to make it easy for every parent to access</p>
-      </div>
-      <div class="features-grid" style="margin-bottom:3rem;">
-        <div class="feat-card"><span class="feat-icon">🔗</span><h3>Share the Link</h3><p>Send the URL in your WhatsApp group, email newsletter or print it on a flyer for your coding club.</p></div>
-        <div class="feat-card"><span class="feat-icon">📱</span><h3>Add to Home Screen</h3><p>On iPhone: tap Share → Add to Home Screen. On Android: tap Menu → Add to Home Screen. It works like an app!</p></div>
-        <div class="feat-card"><span class="feat-icon">💾</span><h3>Data is Local</h3><p>Each parent's progress is saved to their own browser — fully private. No logins, no cloud accounts, no sharing of personal data.</p></div>
-        <div class="feat-card"><span class="feat-icon">📤</span><h3>Export &amp; Share Progress</h3><p>Parents can use the Export button to get a JSON file of their child's progress to share with you at mentoring sessions.</p></div>
-      </div>
-
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;margin-bottom:3rem;">
-        <h3 style="font-size:1rem;font-weight:800;margin-bottom:.75rem;">🔒 Privacy &amp; Data — What Parents Need to Know</h3>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:.55rem;">
-          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>All student data is stored <strong>only on the parent's own device</strong> — nothing is sent to any server.</span></li>
-          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>No accounts, no sign-ups, no email addresses collected.</span></li>
-          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>Clearing browser data/cache will erase progress — remind parents to Export regularly as backup.</span></li>
-          <li style="font-size:.86rem;display:flex;gap:.6rem;"><span>✅</span><span>The platform itself is fully open-source — inspect every line of code by viewing the page source.</span></li>
+        <h3>What we store</h3>
+        <ul class="step-list">
+          <li><span class="sn">✓</span><div>Only what you type in: each student's first name (or nickname), age, avatar, stage, milestone ticks and your notes.</div></li>
+          <li><span class="sn">✓</span><div>It is saved <strong>only in this browser on this device</strong> (browser "local storage"). It is never sent to us or anyone else.</div></li>
+          <li><span class="sn">✓</span><div>No accounts, no email addresses, no cookies, no analytics, no advertising, no tracking.</div></li>
+          <li><span class="sn">✓</span><div>Tip: use a nickname or first name only. You don't need to enter a full name, school or photo.</div></li>
         </ul>
+      </div>
+      <div class="domain-section">
+        <h3>Keeping your data safe</h3>
+        <ul class="step-list">
+          <li><span class="sn">1</span><div><strong>Download a backup</strong> from the Dashboard (⬇️ Backup) every week or so. We'll remind you. Keep the file somewhere safe — it contains your child's progress.</div></li>
+          <li><span class="sn">2</span><div><strong>On iPhone/iPad:</strong> Safari can delete website data that hasn't been used for 7 days. Tap Share → <em>Add to Home Screen</em> and open CodeKids from there — installed apps are protected from this.</div></li>
+          <li><span class="sn">3</span><div>Clearing your browser history/site data, or using a private window, will erase progress. Restore it with ⬆️ Restore and your backup file.</div></li>
+          <li><span class="sn">4</span><div>Progress does not sync between devices. To move to a new device, download a backup on the old one and restore it on the new one.</div></li>
+        </ul>
+      </div>
+      <div class="domain-section">
+        <h3>Deleting data</h3>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:.9rem">You can remove a single student from their progress page (🗑️), or erase everything stored by CodeKids on this device:</p>
+        <button class="btn btn-sm btn-red" onclick="eraseAllData()">🗑️ Erase all CodeKids data on this device</button>
+      </div>
+      <div class="domain-section">
+        <h3>Outside websites &amp; age limits</h3>
+        <p style="color:var(--muted);font-size:.88rem;">The curriculum links to other websites and apps (Scratch, Code.org, GitHub and more). They have their own privacy policies and many require users to be 13 or older — or 18 for some AI services. Resources that need an account are marked, and a parent should create and supervise those accounts.</p>
+      </div>
+      <div class="domain-section" style="margin-bottom:3rem">
+        <h3>Open source</h3>
+        <p style="color:var(--muted);font-size:.88rem;">CodeKids Academy is open source — every line of code is public on <a href="https://github.com/hinga92/CodeKids-academy" target="_blank" rel="noopener">GitHub</a>, so anyone can check these promises.</p>
       </div>
     </div>
   </div>
@@ -603,8 +552,8 @@ const STAGES = [
   { id:0, emoji:'🌱', name:'Unplugged Logic', age:'5–6', color:'#7c6fff',
     desc:'Build sequencing, loops and conditions through play — no screen needed.',
     resources:[
-      { e:'📗', n:'Hello Ruby', u:'https://helloruby.com', s:'Adventure stories that teach coding concepts beautifully.' },
-      { e:'🐢', n:'Robot Turtles Board Game', u:'https://robotturtles.com', s:'Youngest programmers\' game. Ages 4+.' },
+      { e:'📗', n:'Hello Ruby', u:'https://www.helloruby.com', s:'Adventure stories that teach coding concepts beautifully.' },
+      { e:'🐢', n:'Robot Turtles Board Game', u:'https://www.thinkfun.com', s:'Youngest programmers\' game. Ages 4+.' },
       { e:'🤖', n:'Botley the Coding Robot', u:'https://learningresources.com/botley', s:'Screen-free programmable robot. Ages 5+.' },
       { e:'🐭', n:'Code & Go Robot Mouse', u:'https://learningresources.com', s:'Physical robot navigates a maze — sequences & debugging.' },
     ],
@@ -698,6 +647,7 @@ const STAGES = [
   },
   { id:4, emoji:'🌐', name:'Web & Apps', age:'11–13', color:'#ff9f43',
     desc:'HTML, CSS, JavaScript. Build websites and apps that run in any browser.',
+    ageNote:'GitHub requires users to be 13 or older. Under-13s can publish with Netlify Drop (no account needed) or under a parent\'s GitHub account with the parent present.',
     resources:[
       { e:'🏕️', n:'freeCodeCamp — Web Design', u:'https://freecodecamp.org/learn/2022/responsive-web-design', s:'300 hours of HTML & CSS. 5 certification projects. FREE.' },
       { e:'🎓', n:'The Odin Project', u:'https://theodinproject.com', s:'Top-rated full-stack curriculum. HTML → CSS → JS → Node. FREE.' },
@@ -722,6 +672,7 @@ const STAGES = [
   },
   { id:5, emoji:'⚙️', name:'APIs & Automation', age:'13–15', color:'#ff6b9d',
     desc:'Connect services with APIs, automate real tasks, build back-end servers.',
+    ageNote:'Most automation services (Zapier, Make, n8n Cloud), chat platforms (Discord, Telegram) and cloud hosts have minimum ages of 13–18. A parent should create and own these accounts and any API keys.',
     resources:[
       { e:'📗', n:'Automate the Boring Stuff', u:'https://automatetheboringstuff.com', s:'The best Python automation book. Fully free online. FREE.' },
       { e:'⚡', n:'n8n — Workflow Automation', u:'https://n8n.io', s:'Open-source visual workflow automation. Self-hostable. FREE.' },
@@ -746,15 +697,16 @@ const STAGES = [
   },
   { id:6, emoji:'🤖', name:'AI & Professional', age:'15–18+', color:'#ff6b6b',
     desc:'Machine learning, AI agents, LLMs and professional engineering practices. The summit.',
+    ageNote:'AI model APIs usually require users to be 18+ (some allow 13–17 with parental permission). Keep API keys in a parent\'s account with a spending limit set, and never paste keys into public code.',
     resources:[
       { e:'🎓', n:'fast.ai — Practical Deep Learning', u:'https://fast.ai', s:'Top-down practical ML. Build real models from day 1. FREE.' },
-      { e:'🦜', n:'LangChain Docs', u:'https://python.langchain.com', s:'Build AI agents, chains, RAG systems. The leading AI framework. FREE.' },
+      { e:'🦜', n:'LangChain Docs', u:'https://docs.langchain.com', s:'Build AI agents, chains, RAG systems. The leading AI framework. FREE.' },
       { e:'🎓', n:'DeepLearning.AI Short Courses', u:'https://learn.deeplearning.ai', s:'30+ short AI courses from the world\'s best instructors. FREE.' },
       { e:'🤗', n:'Hugging Face — NLP Course', u:'https://huggingface.co/learn', s:'Learn transformers, LLMs and fine-tuning. FREE.' },
     ],
     activities:[
       'fast.ai or Andrew Ng ML course',
-      'Build an AI chatbot with OpenAI API',
+      'Build an AI chatbot with an LLM API (parent-owned key)',
       'Create a LangChain agent',
       'Enter a Kaggle competition',
     ],
@@ -772,15 +724,15 @@ const STAGES = [
 
 /* ── DATA: RESOURCES ─────────────────────────────────────────── */
 const RESOURCES = [
-  { n:'Hello Ruby',url:'https://helloruby.com',e:'📗',desc:'Adventure stories teaching loops, conditions and decomposition for ages 5–7.',type:'book',cost:'paid',stages:[0]},
-  { n:'Robot Turtles',url:'https://robotturtles.com',e:'🐢',desc:'The youngest programmer\'s board game. No screens needed. Ages 4+.',type:'game',cost:'paid',stages:[0,1]},
+  { n:'Hello Ruby',url:'https://www.helloruby.com',e:'📗',desc:'Adventure stories teaching loops, conditions and decomposition for ages 5–7.',type:'book',cost:'paid',stages:[0]},
+  { n:'Robot Turtles',url:'https://www.thinkfun.com',e:'🐢',desc:'The youngest programmer\'s board game. No screens needed. Ages 4+.',type:'game',cost:'paid',stages:[0,1]},
   { n:'Code & Go Robot Mouse',url:'https://learningresources.com',e:'🐭',desc:'Physical mouse navigates a maze — teaches sequences and debugging.',type:'hardware',cost:'paid',stages:[0,1]},
   { n:'ScratchJr',url:'https://scratchjr.org',e:'🐱',desc:'Official MIT drag-and-drop app for ages 5–7. No reading required. FREE.',type:'app',cost:'free',stages:[1]},
-  { n:'Code.org — Course A',url:'https://studio.code.org/s/coursea-2024',e:'🤖',desc:'Full curriculum for pre-readers. Videos + activities. 100% free.',type:'course',cost:'free',stages:[1]},
+  { n:'Code.org — Course A',acct:'parent',url:'https://studio.code.org/courses/coursea-2025/units/1',e:'🤖',desc:'Full curriculum for pre-readers. Videos + activities. 100% free.',type:'course',cost:'free',stages:[1]},
   { n:'Code.org — Dance Party',url:'https://hourofcode.com/dance',e:'🎵',desc:'Code characters to dance to their favourite music. Huge hit with kids!',type:'activity',cost:'free',stages:[1,2]},
   { n:'Lightbot',url:'https://lightbot.com',e:'💡',desc:'Guide a robot with command blocks. Teaches sequences, loops and procedures.',type:'game',cost:'paid',stages:[1,2]},
-  { n:'Scratch 3.0',url:'https://scratch.mit.edu',e:'🐱',desc:'The world\'s most popular kids programming language. 100M+ projects online.',type:'platform',cost:'free',stages:[2,3]},
-  { n:'Code.org — Course B/C/D',url:'https://studio.code.org/s/courseb-2024',e:'🎓',desc:'Complete self-paced curriculum for ages 6–10. Videos + exercises + projects.',type:'course',cost:'free',stages:[1,2]},
+  { n:'Scratch 3.0',acct:'parent',url:'https://scratch.mit.edu',e:'🐱',desc:'The world\'s most popular kids programming language. 100M+ projects online.',type:'platform',cost:'free',stages:[2,3]},
+  { n:'Code.org — Course B/C/D',acct:'parent',url:'https://studio.code.org/courses/courseb-2025/units/1',e:'🎓',desc:'Complete self-paced curriculum for ages 6–10. Videos + exercises + projects.',type:'course',cost:'free',stages:[1,2]},
   { n:'Griffpatch on YouTube',url:'https://youtube.com/@griffpatch',e:'📺',desc:'World\'s most popular Scratch creator. Makes Minecraft in Scratch!',type:'video',cost:'free',stages:[2]},
   { n:'micro:bit',url:'https://microbit.org',e:'💎',desc:'$15 programmable circuit board with thousands of beginner projects.',type:'hardware',cost:'paid',stages:[2,3]},
   { n:'LEGO Boost',url:'https://lego.com/boost',e:'🧱',desc:'Build LEGO models and code them with Scratch-like blocks. Ages 7+.',type:'hardware',cost:'paid',stages:[2]},
@@ -791,22 +743,22 @@ const RESOURCES = [
   { n:'Thonny IDE',url:'https://thonny.org',e:'🖥️',desc:'Best first Python IDE — shows how variables change in real time.',type:'tool',cost:'free',stages:[3]},
   { n:'CheckiO — Python Puzzles',url:'https://py.checkio.org',e:'🔧',desc:'Python puzzle island — solve coding challenges to advance on a map.',type:'game',cost:'free',stages:[3,4]},
   { n:'Automate the Boring Stuff',url:'https://automatetheboringstuff.com',e:'📗',desc:'The best Python automation book. Files, emails, PDFs, web scraping. FREE online.',type:'book',cost:'free',stages:[3,4,5]},
-  { n:'freeCodeCamp — Web Design',url:'https://freecodecamp.org',e:'🏕️',desc:'300 hours of HTML & CSS with 5 certification projects. 100% free.',type:'course',cost:'free',stages:[4]},
+  { n:'freeCodeCamp — Web Design',acct:'parent',url:'https://freecodecamp.org',e:'🏕️',desc:'300 hours of HTML & CSS with 5 certification projects. 100% free.',type:'course',cost:'free',stages:[4]},
   { n:'The Odin Project',url:'https://theodinproject.com',e:'🎓',desc:'Top-rated full-stack curriculum: HTML → CSS → JavaScript → Node.js.',type:'course',cost:'free',stages:[4,5]},
   { n:'JavaScript.info',url:'https://javascript.info',e:'📘',desc:'The modern JavaScript tutorial. Best written resource on the web.',type:'book',cost:'free',stages:[4]},
   { n:'VS Code',url:'https://code.visualstudio.com',e:'📝',desc:'Most popular code editor in the world. Extensions for every language.',type:'tool',cost:'free',stages:[3,4,5,6]},
-  { n:'GitHub Pages',url:'https://pages.github.com',e:'🐙',desc:'Host any HTML website for free. Perfect for first live portfolios.',type:'platform',cost:'free',stages:[4,5]},
-  { n:'n8n — Automation',url:'https://n8n.io',e:'🔧',desc:'Open-source visual workflow automation. Self-hostable or cloud.',type:'platform',cost:'free',stages:[5]},
-  { n:'Zapier',url:'https://zapier.com',e:'⚡',desc:'No-code automation between 6,000+ apps. Great for learning trigger/action model.',type:'platform',cost:'mixed',stages:[5]},
-  { n:'Make.com',url:'https://make.com',e:'🔗',desc:'Visual drag-and-drop workflow builder. Free tier available.',type:'platform',cost:'mixed',stages:[5]},
+  { n:'GitHub Pages',acct:'13+',url:'https://pages.github.com',e:'🐙',desc:'Host any HTML website for free. Perfect for first live portfolios.',type:'platform',cost:'free',stages:[4,5]},
+  { n:'n8n — Automation',acct:'parent',url:'https://n8n.io',e:'🔧',desc:'Open-source visual workflow automation. Self-hostable or cloud.',type:'platform',cost:'free',stages:[5]},
+  { n:'Zapier',acct:'parent',url:'https://zapier.com',e:'⚡',desc:'No-code automation between 6,000+ apps. Great for learning trigger/action model.',type:'platform',cost:'mixed',stages:[5]},
+  { n:'Make.com',acct:'parent',url:'https://make.com',e:'🔗',desc:'Visual drag-and-drop workflow builder. Free tier available.',type:'platform',cost:'mixed',stages:[5]},
   { n:'Flask',url:'https://flask.palletsprojects.com',e:'🚀',desc:'Build REST APIs and web servers with Python. Lightweight and beginner-friendly.',type:'framework',cost:'free',stages:[5]},
   { n:'fast.ai',url:'https://fast.ai',e:'🎓',desc:'Practical deep learning — build real AI models from day 1. Completely free.',type:'course',cost:'free',stages:[6]},
-  { n:'DeepLearning.AI Courses',url:'https://learn.deeplearning.ai',e:'🤖',desc:'30+ short AI courses on agents, RAG, LLMOps. From the world\'s best instructors.',type:'course',cost:'free',stages:[6]},
-  { n:'LangChain',url:'https://python.langchain.com',e:'🦜',desc:'Build AI agents, chains and RAG systems. The leading AI orchestration framework.',type:'framework',cost:'free',stages:[6]},
-  { n:'Hugging Face Learn',url:'https://huggingface.co/learn',e:'🤗',desc:'Learn transformers, LLMs and fine-tuning state-of-the-art models.',type:'course',cost:'free',stages:[6]},
-  { n:'Kaggle Learn',url:'https://kaggle.com/learn',e:'🏆',desc:'Bite-size ML courses and competitions. Build your portfolio with Kaggle notebooks.',type:'platform',cost:'free',stages:[6]},
-  { n:'Replit',url:'https://replit.com',e:'💻',desc:'Browser-based IDE. No install needed. Share projects with just a link.',type:'tool',cost:'mixed',stages:[3,4,5]},
-  { n:'Google Colab',url:'https://colab.research.google.com',e:'📓',desc:'Jupyter notebooks in the browser. Great prep for data science.',type:'tool',cost:'free',stages:[5,6]},
+  { n:'DeepLearning.AI Courses',acct:'parent',url:'https://learn.deeplearning.ai',e:'🤖',desc:'30+ short AI courses on agents, RAG, LLMOps. From the world\'s best instructors.',type:'course',cost:'free',stages:[6]},
+  { n:'LangChain',url:'https://docs.langchain.com',e:'🦜',desc:'Build AI agents, chains and RAG systems. The leading AI orchestration framework.',type:'framework',cost:'free',stages:[6]},
+  { n:'Hugging Face Learn',acct:'parent',url:'https://huggingface.co/learn',e:'🤗',desc:'Learn transformers, LLMs and fine-tuning state-of-the-art models.',type:'course',cost:'free',stages:[6]},
+  { n:'Kaggle Learn',acct:'parent',url:'https://kaggle.com/learn',e:'🏆',desc:'Bite-size ML courses and competitions. Build your portfolio with Kaggle notebooks.',type:'platform',cost:'free',stages:[6]},
+  { n:'Replit',acct:'13+',url:'https://replit.com',e:'💻',desc:'Browser-based IDE. No install needed. Share projects with just a link.',type:'tool',cost:'mixed',stages:[3,4,5]},
+  { n:'Google Colab',acct:'parent',url:'https://colab.research.google.com',e:'📓',desc:'Jupyter notebooks in the browser. Great prep for data science.',type:'tool',cost:'free',stages:[5,6]},
 ];
 
 const AVATARS = ['🦊','🐼','🦁','🐯','🐸','🦄','🐳','🦋','🐶','🐱','🦖','🚀','⭐','🌈','🎮'];
@@ -828,31 +780,45 @@ let currentDetailKidId = null;
 let currentDetailStage = 0;
 let resFilter = 'all';
 let toastTimer = null;
+const LAST_STAGE = STAGES.length - 1;
+const TOTAL_MILESTONES = STAGES.reduce((s, st) => s + st.milestones.length, 0);
+const BACKUP_REMINDER_DAYS = 7;
+
+/* ── SAFETY HELPERS ───────────────────────────────────────────── */
+// Escape any user-supplied text before it goes into innerHTML.
+function esc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+}
+const SAFE_ID = /^k_[A-Za-z0-9_]{1,40}$/;
 
 /* ── INIT ─────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   loadKids();
+  document.querySelectorAll('.js-res-count').forEach(el => el.textContent = RESOURCES.length);
+  document.querySelectorAll('.js-ms-count').forEach(el => el.textContent = TOTAL_MILESTONES);
   buildMiniStages();
   buildCurriculum();
   buildResources();
-  navigate('home');
+  navigate(viewFromHash(), false);
+  window.addEventListener('hashchange', () => navigate(viewFromHash(), false));
+  setupOfflineAndStorage();
 });
 
 /* ── ROUTER ───────────────────────────────────────────────────── */
-function navigate(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  const el = document.getElementById('view-' + view);
-  if (el) el.classList.add('active');
+const VIEWS = ['home', 'dashboard', 'curriculum', 'resources', 'privacy'];
+function viewFromHash() {
+  const v = location.hash.replace('#', '');
+  return VIEWS.includes(v) ? v : 'home';
+}
+function navigate(view, updateHash = true) {
+  if (!VIEWS.includes(view)) view = 'home';
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
   document.querySelectorAll('.nav-link').forEach(l => {
-    if (l.textContent.toLowerCase().includes(view === 'home' ? '🏠' : view === 'dashboard' ? '📊' : view === 'curriculum' ? '🗺️' : view === 'resources' ? '📚' : '🌐')) {
-      l.classList.add('active');
-    }
+    const on = l.dataset.view === view;
+    l.classList.toggle('active', on);
+    if (on) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
   });
-  // simpler approach — match on onclick attribute
-  document.querySelectorAll('.nav-link, .mobile-menu .nav-link').forEach(l => {
-    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes(`navigate('${view}')`)) l.classList.add('active');
-  });
+  if (updateHash && location.hash !== '#' + view) history.pushState(null, '', '#' + view);
   if (view === 'dashboard') renderDashboard();
   window.scrollTo(0, 0);
 }
@@ -866,12 +832,56 @@ function closeMobileMenu() {
 
 /* ── LOCAL STORAGE ────────────────────────────────────────────── */
 function loadKids() {
-  try { kids = JSON.parse(localStorage.getItem('cka_kids') || '[]'); } catch(e) { kids = []; }
+  try {
+    const raw = JSON.parse(localStorage.getItem('cka_kids') || '[]');
+    kids = Array.isArray(raw) ? raw.map(sanitizeKid).filter(Boolean) : [];
+  } catch(e) { kids = []; }
 }
 function saveKids() {
-  localStorage.setItem('cka_kids', JSON.stringify(kids));
+  try {
+    localStorage.setItem('cka_kids', JSON.stringify(kids));
+    localStorage.setItem('cka_last_change', new Date().toISOString());
+  } catch(e) {
+    showToast('⚠️ Could not save — your browser storage may be full or disabled. Download a backup now.', 'warn');
+  }
+  renderBackupBanner();
 }
-function genId() { return 'k_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
+function genId() { return 'k_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
+
+/* Turn any stored or imported object into a clean, safe student record (or null). */
+function sanitizeKid(k) {
+  if (!k || typeof k !== 'object') return null;
+  const name = String(k.name || '').trim().slice(0, 40);
+  if (!name) return null;
+  const isDate = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d);
+  const progress = {};
+  STAGES.forEach(st => {
+    const key = 's' + st.id;
+    const valid = st.milestones.map(m => m.id);
+    const list = Array.isArray(k.progress && k.progress[key]) ? k.progress[key] : [];
+    const clean = [...new Set(list.filter(id => valid.includes(id)))];
+    if (clean.length) progress[key] = clean;
+  });
+  const stage = Math.min(LAST_STAGE, Math.max(0, parseInt(k.stage) || 0));
+  return {
+    id: SAFE_ID.test(k.id) ? k.id : genId(),
+    name,
+    age: Math.min(25, Math.max(3, parseInt(k.age) || 6)),
+    avatar: AVATARS.includes(k.avatar) ? k.avatar : AVATARS[0],
+    stage,
+    startStage: Math.min(stage, Math.max(0, parseInt(k.startStage ?? k.stage) || 0)),
+    progress,
+    completedStages: Array.isArray(k.completedStages)
+      ? [...new Set(k.completedStages.map(Number).filter(n => n >= 0 && n <= LAST_STAGE))]
+      : STAGES.filter(st => (progress['s' + st.id] || []).length === st.milestones.length).map(st => st.id),
+    notes: String(k.notes || '').slice(0, 5000),
+    joinDate: isDate(k.joinDate) ? k.joinDate : today(),
+    lastActive: isDate(k.lastActive) ? k.lastActive : today(),
+    sessions: (Array.isArray(k.sessions) ? k.sessions : []).slice(0, 30)
+      .filter(x => x && typeof x === 'object')
+      .map(x => ({ date: isDate(x.date) ? x.date : today(), note: String(x.note || '').slice(0, 300), stage: parseInt(x.stage) || 0 })),
+  };
+}
 function today() { return new Date().toISOString().split('T')[0]; }
 function fmtDate(d) {
   if (!d) return '—';
@@ -881,12 +891,12 @@ function fmtDate(d) {
 
 /* ── KIDS CRUD ────────────────────────────────────────────────── */
 function addKid(name, age, avatar, stage, notes) {
-  const kid = {
-    id: genId(), name, age: parseInt(age)||6, avatar,
-    stage: parseInt(stage)||0,
-    progress: {}, notes: notes||'',
+  const kid = sanitizeKid({
+    id: genId(), name, age, avatar, stage, startStage: stage,
+    progress: {}, notes: notes||'', completedStages: [],
     joinDate: today(), lastActive: today(), sessions: [],
-  };
+  });
+  if (!kid) return null;
   kids.push(kid);
   saveKids();
   return kid;
@@ -919,20 +929,74 @@ function toggleMilestone(kidId, stageId, milestoneId) {
     const stage = STAGES[stageId];
     kid.sessions.unshift({ date: today(), note: '✅ ' + stage.milestones.find(m=>m.id===milestoneId)?.t, stage: stageId });
     if (kid.sessions.length > 20) kid.sessions = kid.sessions.slice(0, 20);
-    // Check stage completion
-    const pct = stageProgressPct(kid, stageId);
-    if (pct === 100) {
-      showToast('🎉 Stage ' + stageId + ': ' + stage.name + ' Complete!', 'success');
+    // Check stage completion — celebrate and log only the first time
+    if (stageProgressPct(kid, stageId) === 100 && !kid.completedStages.includes(stageId)) {
+      kid.completedStages.push(stageId);
+      const canGraduate = stageId === kid.stage && kid.stage < LAST_STAGE;
+      showToast('🎉 Stage ' + stageId + ': ' + stage.name + ' complete!' + (canGraduate ? ' Ready to graduate to the next stage.' : ''), 'success');
       launchConfetti();
       kid.sessions.unshift({ date: today(), note: '🏆 Completed Stage ' + stageId + ': ' + stage.name + '!', stage: stageId });
     }
   }
+  kid.sessions = kid.sessions.slice(0, 30);
   saveKids();
-  // Re-render milestone list
-  renderMilestoneList(kid, stageId);
+  refreshDetail(kid);
+}
+
+/* Re-render every part of the open detail modal that depends on progress. */
+function refreshDetail(kid) {
+  renderMilestoneList(kid, currentDetailStage);
   renderStageProgressBars(kid);
   renderOverallRing(kid);
+  renderGradBox(kid);
+  renderAchievements(kid);
+  renderActivity(kid);
   updateKidCardInGrid(kid);
+}
+
+/* ── STAGE ADVANCEMENT ────────────────────────────────────────── */
+function advanceStage(kidId) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid || kid.stage >= LAST_STAGE) return;
+  const from = STAGES[kid.stage];
+  kid.stage += 1;
+  const to = STAGES[kid.stage];
+  kid.lastActive = today();
+  kid.sessions.unshift({ date: today(), note: '🎓 Graduated from ' + from.name + ' to Stage ' + to.id + ': ' + to.name, stage: to.id });
+  saveKids();
+  launchConfetti();
+  showToast('🎓 ' + kid.name + ' is now on Stage ' + to.id + ': ' + to.name + '!', 'success');
+  switchDetailTab(kid.stage);
+  refreshDetail(kid);
+}
+function setStage(kidId, value) {
+  const kid = kids.find(k => k.id === kidId);
+  const stage = parseInt(value);
+  if (!kid || isNaN(stage) || stage < 0 || stage > LAST_STAGE || stage === kid.stage) return;
+  kid.stage = stage;
+  kid.sessions.unshift({ date: today(), note: '✏️ Stage set to ' + stage + ': ' + STAGES[stage].name, stage });
+  saveKids();
+  switchDetailTab(stage);
+  refreshDetail(kid);
+  showToast('✏️ ' + kid.name + ' moved to Stage ' + stage, 'info');
+}
+function renderGradBox(kid) {
+  const el = document.getElementById('kd-grad');
+  if (!el) return;
+  const cur = STAGES[kid.stage];
+  if (kid.stage < LAST_STAGE && stageProgressPct(kid, kid.stage) === 100) {
+    const next = STAGES[kid.stage + 1];
+    el.innerHTML = `<div class="grad-box"><span>🎉 <strong>${esc(kid.name)}</strong> finished every milestone in ${cur.emoji} ${cur.name}!</span>
+      <button class="btn btn-sm btn-teal" onclick="advanceStage('${kid.id}')">🎓 Graduate to Stage ${next.id}: ${next.name}</button></div>`;
+  } else if (kid.stage === LAST_STAGE && stageProgressPct(kid, LAST_STAGE) === 100) {
+    el.innerHTML = `<div class="grad-box"><span>🏆 <strong>${esc(kid.name)}</strong> has completed the final stage. Amazing work!</span></div>`;
+  } else {
+    el.innerHTML = '';
+  }
+  const sel = document.getElementById('kd-stage-select');
+  if (sel) sel.value = kid.stage;
+  const badge = document.getElementById('kd-cur-stage');
+  if (badge) badge.textContent = `${cur.emoji} Stage ${cur.id}: ${cur.name}`;
 }
 function stageProgressPct(kid, stageId) {
   const stage = STAGES[stageId];
@@ -967,18 +1031,8 @@ function earnedAchievements(kid) {
 
 /* ── DASHBOARD ────────────────────────────────────────────────── */
 function renderDashboard() {
-  // Stats bar
-  const total = kids.length;
-  const totalDone = kids.reduce((s, k) => s + totalMilestonesDone(k), 0);
-  const avgProg = total > 0 ? Math.round(kids.reduce((s, k) => s + totalProgressPct(k), 0) / total) : 0;
-  const achCount = kids.reduce((s, k) => s + earnedAchievements(k).length, 0);
-  document.getElementById('dash-stats-bar').innerHTML = `
-    <div class="dstat"><div class="dstat-icon" style="background:rgba(124,111,255,.18)">👶</div><div><div class="dstat-val">${total}</div><div class="dstat-lbl">Students</div></div></div>
-    <div class="dstat"><div class="dstat-icon" style="background:rgba(0,212,170,.18)">✅</div><div><div class="dstat-val">${totalDone}</div><div class="dstat-lbl">Milestones Done</div></div></div>
-    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,209,102,.18)">📈</div><div><div class="dstat-val">${avgProg}%</div><div class="dstat-lbl">Avg Progress</div></div></div>
-    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,107,157,.18)">🏆</div><div><div class="dstat-val">${achCount}</div><div class="dstat-lbl">Achievements</div></div></div>
-  `;
-  // Kids grid
+  renderStatsBar();
+  renderBackupBanner();
   const emptyEl = document.getElementById('kids-empty');
   const gridEl = document.getElementById('kids-grid');
   if (kids.length === 0) {
@@ -989,27 +1043,40 @@ function renderDashboard() {
     gridEl.innerHTML = kids.map(renderKidCard).join('');
   }
 }
+function renderStatsBar() {
+  const statsBar = document.getElementById('dash-stats-bar');
+  if (!statsBar) return;
+  const total = kids.length;
+  const totalDone = kids.reduce((s, k) => s + totalMilestonesDone(k), 0);
+  const avgProg = total > 0 ? Math.round(kids.reduce((s, k) => s + totalProgressPct(k), 0) / total) : 0;
+  const achCount = kids.reduce((s, k) => s + earnedAchievements(k).length, 0);
+  statsBar.innerHTML = `
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(124,111,255,.18)">👶</div><div><div class="dstat-val">${total}</div><div class="dstat-lbl">Students</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(0,212,170,.18)">✅</div><div><div class="dstat-val">${totalDone}</div><div class="dstat-lbl">Milestones Done</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,209,102,.18)">📈</div><div><div class="dstat-val">${avgProg}%</div><div class="dstat-lbl">Avg Progress</div></div></div>
+    <div class="dstat"><div class="dstat-icon" style="background:rgba(255,107,157,.18)">🏆</div><div><div class="dstat-val">${achCount}</div><div class="dstat-lbl">Achievements</div></div></div>
+  `;
+}
 function renderKidCard(kid) {
   const pct = totalProgressPct(kid);
   const currentStage = STAGES[kid.stage] || STAGES[0];
-  const stagePct = stageProgressPct(kid, kid.stage);
-  // milestone dots (all milestones across all stages, just first 30)
-  const allMs = STAGES.flatMap(st => st.milestones.map(m => ({ stageId: st.id, id: m.id })));
-  const dots = allMs.slice(0, 30).map(m => `<div class="kd ${isCompleted(kid, m.stageId, m.id) ? 'done' : ''}"></div>`).join('');
+  const dots = STAGES.flatMap(st => st.milestones.map(m =>
+    `<div class="kd ${isCompleted(kid, st.id, m.id) ? 'done' : ''}"></div>`)).join('');
+  const ready = kid.stage < LAST_STAGE && stageProgressPct(kid, kid.stage) === 100;
   return `
-    <div class="kid-card" id="kcard-${kid.id}" onclick="openKidDetail('${kid.id}')">
+    <div class="kid-card" id="kcard-${kid.id}" role="button" tabindex="0" aria-label="Open ${esc(kid.name)}'s progress" onclick="openKidDetail('${kid.id}')">
       <div class="kct">
-        <div class="k-av">${kid.avatar}</div>
-        <div class="k-info"><h3>${kid.name}</h3><div class="k-age">Age ${kid.age} · Joined ${fmtDate(kid.joinDate)}</div></div>
+        <div class="k-av">${esc(kid.avatar)}</div>
+        <div class="k-info"><h3>${esc(kid.name)}</h3><div class="k-age">Age ${kid.age} · Joined ${fmtDate(kid.joinDate)}</div></div>
         <span class="k-stage-badge" style="background:${currentStage.color}22;color:${currentStage.color}">${currentStage.emoji} Stage ${kid.stage}</span>
       </div>
       <div class="kcb">
         <div class="kprog-lbl"><span>Overall Progress</span><span>${pct}%</span></div>
         <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
-        <div class="km-dots">${dots}</div>
+        <div class="km-dots" title="${totalMilestonesDone(kid)} of ${TOTAL_MILESTONES} milestones">${dots}</div>
       </div>
       <div class="kcf">
-        <span>📚 ${totalMilestonesDone(kid)} milestones done</span>
+        <span>${ready ? '🎓 Ready to graduate!' : '📚 ' + totalMilestonesDone(kid) + ' milestones done'}</span>
         <span>🏆 ${earnedAchievements(kid).length} badges</span>
       </div>
     </div>
@@ -1019,49 +1086,72 @@ function updateKidCardInGrid(kid) {
   const el = document.getElementById('kcard-' + kid.id);
   if (el) {
     const tmp = document.createElement('div');
-    tmp.innerHTML = renderKidCard(kid);
-    el.replaceWith(tmp.firstChild);
+    tmp.innerHTML = renderKidCard(kid).trim();
+    el.replaceWith(tmp.firstElementChild);
   }
-  // update stats bar too
-  const total = kids.length;
-  const totalDone = kids.reduce((s, k) => s + totalMilestonesDone(k), 0);
-  const avgProg = total > 0 ? Math.round(kids.reduce((s, k) => s + totalProgressPct(k), 0) / total) : 0;
-  const achCount = kids.reduce((s, k) => s + earnedAchievements(k).length, 0);
-  const statsBar = document.getElementById('dash-stats-bar');
-  if (statsBar) {
-    statsBar.innerHTML = `
-      <div class="dstat"><div class="dstat-icon" style="background:rgba(124,111,255,.18)">👶</div><div><div class="dstat-val">${total}</div><div class="dstat-lbl">Students</div></div></div>
-      <div class="dstat"><div class="dstat-icon" style="background:rgba(0,212,170,.18)">✅</div><div><div class="dstat-val">${totalDone}</div><div class="dstat-lbl">Milestones Done</div></div></div>
-      <div class="dstat"><div class="dstat-icon" style="background:rgba(255,209,102,.18)">📈</div><div><div class="dstat-val">${avgProg}%</div><div class="dstat-lbl">Avg Progress</div></div></div>
-      <div class="dstat"><div class="dstat-icon" style="background:rgba(255,107,157,.18)">🏆</div><div><div class="dstat-val">${achCount}</div><div class="dstat-lbl">Achievements</div></div></div>
-    `;
-  }
+  renderStatsBar();
+}
+
+/* ── BACKUP REMINDER ──────────────────────────────────────────── */
+function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+function renderBackupBanner() {
+  const el = document.getElementById('backup-banner');
+  if (!el) return;
+  if (kids.length === 0) { el.innerHTML = ''; return; }
+  const lastBackup = lsGet('cka_last_backup');
+  const lastChange = lsGet('cka_last_change');
+  const snoozed = lsGet('cka_backup_snooze');
+  const daysSince = lastBackup ? Math.floor((Date.now() - new Date(lastBackup)) / 86400000) : null;
+  const changedSince = !lastBackup || (lastChange && lastChange > lastBackup);
+  const due = changedSince && (daysSince === null || daysSince >= BACKUP_REMINDER_DAYS);
+  if (!due || (snoozed && snoozed > new Date().toISOString())) { el.innerHTML = ''; return; }
+  const when = lastBackup ? `Your last backup was <strong>${daysSince} days ago</strong>` : `You <strong>haven't downloaded a backup yet</strong>`;
+  el.innerHTML = `<div class="backup-banner" role="status">
+    <span style="font-size:1.3rem">💾</span>
+    <span class="bb-txt">${when}. Progress is stored only on this device — a backup file keeps it safe if the browser is cleared.</span>
+    <button class="btn btn-sm btn-teal" onclick="exportData()">⬇️ Download backup</button>
+    <button class="btn btn-sm btn-muted" onclick="snoozeBackup()">Remind me tomorrow</button>
+  </div>`;
+}
+function snoozeBackup() {
+  lsSet('cka_backup_snooze', new Date(Date.now() + 86400000).toISOString());
+  renderBackupBanner();
 }
 
 /* ── ADD KID MODAL ────────────────────────────────────────────── */
 function openAddKidModal() {
-  selAvatar = '🦊';
-  const avHtml = AVATARS.map(a => `<div class="av-opt ${a===selAvatar?'sel':''}" onclick="pickAvatar('${a}')">${a}</div>`).join('');
-  const stageOpts = STAGES.map(s => `<option value="${s.id}">${s.emoji} Stage ${s.id}: ${s.name}</option>`).join('');
+  selAvatar = AVATARS[0];
+  const avHtml = AVATARS.map(a => `<button type="button" class="av-opt ${a===selAvatar?'sel':''}" aria-label="Avatar ${a}" onclick="pickAvatar('${a}')">${a}</button>`).join('');
+  const stageOpts = STAGES.map(s => `<option value="${s.id}">${s.emoji} Stage ${s.id}: ${s.name} (age ${s.age})</option>`).join('');
   showModal(`
     <div class="modal-header">
       <h2>➕ Add New Student</h2>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
     </div>
-    <div class="modal-body">
-      <div class="form-group"><label>Student Name</label><input type="text" class="form-control" id="fi-name" placeholder="e.g. Alice" /></div>
+    <form class="modal-body" onsubmit="event.preventDefault();submitAddKid()">
+      <div class="form-group"><label for="fi-name">First name or nickname</label><input type="text" class="form-control" id="fi-name" maxlength="40" placeholder="e.g. Alice" autocomplete="off" /></div>
       <div class="form-row">
-        <div class="form-group"><label>Age</label><input type="number" class="form-control" id="fi-age" min="4" max="18" placeholder="6" /></div>
-        <div class="form-group"><label>Starting Stage</label><select class="form-control" id="fi-stage">${stageOpts}</select></div>
+        <div class="form-group"><label for="fi-age">Age</label><input type="number" class="form-control" id="fi-age" min="4" max="18" placeholder="6" oninput="suggestStage()" /></div>
+        <div class="form-group"><label for="fi-stage">Starting Stage</label><select class="form-control" id="fi-stage">${stageOpts}</select></div>
       </div>
       <div class="form-group"><label>Choose Avatar</label><div class="av-picker" id="av-picker">${avHtml}</div></div>
-      <div class="form-group"><label>Notes (optional)</label><textarea class="form-control" id="fi-notes" placeholder="Interests, learning style, goals..."></textarea></div>
+      <div class="form-group"><label for="fi-notes">Notes (optional)</label><textarea class="form-control" id="fi-notes" maxlength="5000" placeholder="Interests, learning style, goals..."></textarea></div>
       <div class="form-actions">
-        <button class="btn btn-sm btn-muted" onclick="closeModal()">Cancel</button>
-        <button class="btn btn-sm btn-primary" onclick="submitAddKid()">Add Student ➕</button>
+        <button type="button" class="btn btn-sm btn-muted" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary">Add Student ➕</button>
       </div>
-    </div>
+    </form>
   `);
+  setTimeout(() => document.getElementById('fi-name')?.focus(), 50);
+}
+/* Pre-select the stage that matches the child's age (parent can still change it). */
+function suggestStage() {
+  const age = parseInt(document.getElementById('fi-age')?.value);
+  const sel = document.getElementById('fi-stage');
+  if (!sel || isNaN(age)) return;
+  const idx = STAGES.findIndex(st => { const lo = parseInt(st.age); return age < lo; });
+  sel.value = String(idx === -1 ? LAST_STAGE : Math.max(0, idx - 1));
 }
 function pickAvatar(a) {
   selAvatar = a;
@@ -1072,11 +1162,12 @@ function submitAddKid() {
   const age = document.getElementById('fi-age')?.value;
   const stage = document.getElementById('fi-stage')?.value;
   const notes = document.getElementById('fi-notes')?.value?.trim();
-  if (!name) { showToast('⚠️ Please enter a student name', 'warn'); return; }
-  addKid(name, age || 6, selAvatar, stage || 0, notes);
+  if (!name) { showToast('⚠️ Please enter a name', 'warn'); document.getElementById('fi-name')?.focus(); return; }
+  const kid = addKid(name, age || 6, selAvatar, stage || 0, notes);
+  if (!kid) return;
   closeModal();
   renderDashboard();
-  showToast(`✅ ${name} added to the academy!`, 'success');
+  showToast(`✅ ${kid.name} added to the academy!`, 'success');
 }
 
 /* ── KID DETAIL MODAL ─────────────────────────────────────────── */
@@ -1085,85 +1176,81 @@ function openKidDetail(kidId) {
   if (!kid) return;
   currentDetailKidId = kidId;
   currentDetailStage = kid.stage;
-  const pct = totalProgressPct(kid);
-  const earned = earnedAchievements(kid);
   const tabsHtml = STAGES.map(st => {
     const p = stageProgressPct(kid, st.id);
     return `<button class="s-tab ${st.id === currentDetailStage ? 'active' : ''}" onclick="switchDetailTab(${st.id})">${st.emoji} ${st.name} <span class="tp">${p}%</span></button>`;
   }).join('');
-  const achHtml = ACHIEVEMENTS.map(a => `<span class="ach ${earned.includes(a.id)?'earned':'locked'}" title="${a.desc}">${a.e} ${a.n}</span>`).join('');
-  const logsHtml = (kid.sessions || []).slice(0, 8).map(s =>
-    `<div class="log-item"><span class="log-date">${fmtDate(s.date)}</span><span>${s.note}</span></div>`
-  ).join('') || '<div style="color:var(--muted);font-size:.85rem;">No sessions logged yet.</div>';
+  const stageOpts = STAGES.map(s => `<option value="${s.id}" ${s.id===kid.stage?'selected':''}>${s.emoji} Stage ${s.id}: ${s.name}</option>`).join('');
 
   showModal(`
     <div class="modal-header">
-      <h2>👤 ${kid.name}'s Progress</h2>
+      <h2>👤 ${esc(kid.name)}'s Progress</h2>
       <div style="display:flex;gap:.5rem;align-items:center">
-        <button class="btn btn-sm btn-muted" onclick="printReport('${kidId}')">🖨️ Report</button>
-        <button class="btn btn-sm btn-red" onclick="confirmRemoveKid('${kidId}')">🗑️</button>
-        <button class="modal-close" onclick="closeModal()">✕</button>
+        <button class="btn btn-sm btn-muted" onclick="printReport('${kid.id}')">🖨️ Report</button>
+        <button class="btn btn-sm btn-red" onclick="confirmRemoveKid('${kid.id}')" aria-label="Remove student">🗑️</button>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
       </div>
     </div>
     <div class="modal-body">
       <div class="kd-header">
-        <div class="kd-av">${kid.avatar}</div>
+        <div class="kd-av">${esc(kid.avatar)}</div>
         <div class="kd-info">
-          <h2>${kid.name}</h2>
+          <h2>${esc(kid.name)}</h2>
           <div class="kd-meta">Age ${kid.age} · Joined ${fmtDate(kid.joinDate)} · Last active ${fmtDate(kid.lastActive)}</div>
-          <div style="margin-top:.4rem">${STAGES.map((st,i) => {
-            const p = stageProgressPct(kid, st.id);
-            const col = p===100 ? 'badge-teal' : p>0 ? 'badge-purple' : 'badge badge-muted';
-            return `<span class="badge ${p===100?'badge-teal':p>0?'badge-purple':'badge-muted'}" style="margin-right:.3rem">${st.emoji} ${p}%</span>`;
-          }).join('')}</div>
+          <div class="kd-meta" style="margin-top:.2rem">Now on: <strong id="kd-cur-stage" style="color:var(--text)"></strong></div>
+          <label class="stage-set">Change stage:
+            <select class="form-control" id="kd-stage-select" onchange="setStage('${kid.id}', this.value)">${stageOpts}</select>
+          </label>
         </div>
-        <div class="kd-progress-ring" id="kd-ring-wrap">
-          <div class="prog-ring-wrap">
-            <svg width="70" height="70" viewBox="0 0 70 70">
-              <circle cx="35" cy="35" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
-              <circle cx="35" cy="35" r="28" fill="none" stroke="url(#rg)" stroke-width="6"
-                stroke-dasharray="${Math.round(2*Math.PI*28)}" stroke-dashoffset="${Math.round(2*Math.PI*28*(1-pct/100))}"
-                stroke-linecap="round"/>
-              <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--purple)"/><stop offset="100%" stop-color="var(--teal)"/></linearGradient></defs>
-            </svg>
-            <div class="prog-ring-text">${pct}%</div>
-          </div>
-          <div class="prog-ring-lbl">Overall</div>
-        </div>
+        <div class="kd-progress-ring" id="kd-ring-wrap"></div>
       </div>
 
+      <div id="kd-grad"></div>
       <div class="all-prog" id="kd-stage-bars"></div>
 
-      <div class="stage-tabs" id="kd-tabs">${tabsHtml}</div>
+      <div class="stage-tabs" id="kd-tabs" role="tablist">${tabsHtml}</div>
       <div id="kd-milestone-list"></div>
 
       <div class="det-section">
         <h4>🏆 Achievements</h4>
-        <div class="achievements-row">${achHtml}</div>
+        <div class="achievements-row" id="kd-ach"></div>
       </div>
 
       <div class="det-section">
-        <h4>📝 Notes</h4>
-        <textarea class="form-control" id="kd-notes" style="min-height:64px" onblur="saveNotes('${kidId}')" placeholder="Add notes about this student...">${kid.notes||''}</textarea>
+        <h4><label for="kd-notes">📝 Notes</label></h4>
+        <textarea class="form-control" id="kd-notes" maxlength="5000" style="min-height:64px" oninput="queueSaveNotes('${kid.id}')" onblur="saveNotes('${kid.id}')" placeholder="Add notes about this student...">${esc(kid.notes)}</textarea>
       </div>
 
       <div class="det-section">
         <h4>📅 Recent Activity</h4>
-        <div>${logsHtml}</div>
+        <div id="kd-log"></div>
       </div>
     </div>
   `, true);
 
-  renderStageProgressBars(kid);
-  renderMilestoneList(kid, currentDetailStage);
+  refreshDetail(kid);
+}
+function renderAchievements(kid) {
+  const el = document.getElementById('kd-ach');
+  if (!el) return;
+  const earned = earnedAchievements(kid);
+  el.innerHTML = ACHIEVEMENTS.map(a => `<span class="ach ${earned.includes(a.id)?'earned':'locked'}" title="${a.desc}">${a.e} ${a.n}</span>`).join('');
+}
+function renderActivity(kid) {
+  const el = document.getElementById('kd-log');
+  if (!el) return;
+  el.innerHTML = (kid.sessions || []).slice(0, 8).map(s =>
+    `<div class="log-item"><span class="log-date">${fmtDate(s.date)}</span><span>${esc(s.note)}</span></div>`
+  ).join('') || '<div style="color:var(--muted);font-size:.85rem;">No activity yet — tick a milestone to get started.</div>';
 }
 function switchDetailTab(stageId) {
   currentDetailStage = stageId;
   const kid = kids.find(k => k.id === currentDetailKidId);
   if (!kid) return;
-  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
-  const tabs = document.querySelectorAll('.s-tab');
-  if (tabs[stageId]) tabs[stageId].classList.add('active');
+  document.querySelectorAll('.s-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === stageId);
+    t.setAttribute('aria-selected', i === stageId ? 'true' : 'false');
+  });
   renderMilestoneList(kid, stageId);
 }
 function renderStageProgressBars(kid) {
@@ -1172,7 +1259,7 @@ function renderStageProgressBars(kid) {
   el.innerHTML = STAGES.map(st => {
     const p = stageProgressPct(kid, st.id);
     return `<div class="sp-row">
-      <span class="sp-lbl">${st.emoji} ${st.name}</span>
+      <span class="sp-lbl">${st.emoji} ${st.name}${st.id === kid.stage ? ' ◀' : ''}</span>
       <div class="sp-track"><div class="sp-fill" style="width:${p}%;background:${st.color}"></div></div>
       <span class="sp-pct" style="color:${st.color}">${p}%</span>
     </div>`;
@@ -1186,7 +1273,7 @@ function renderOverallRing(kid) {
   const offset = Math.round(circ*(1-pct/100));
   wrap.innerHTML = `
     <div class="prog-ring-wrap">
-      <svg width="70" height="70" viewBox="0 0 70 70">
+      <svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true">
         <circle cx="35" cy="35" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
         <circle cx="35" cy="35" r="28" fill="none" stroke="url(#rg2)" stroke-width="6"
           stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
@@ -1204,26 +1291,31 @@ function renderMilestoneList(kid, stageId) {
   if (!stage) return;
   el.innerHTML = `<div class="ms-list">${stage.milestones.map(m => {
     const done = isCompleted(kid, stageId, m.id);
-    return `<div class="ms-item ${done?'done':''}" onclick="toggleMilestone('${kid.id}', ${stageId}, '${m.id}')">
-      <div class="ms-cb">${done?'✓':''}</div>
+    return `<div class="ms-item ${done?'done':''}" role="checkbox" tabindex="0" aria-checked="${done}" onclick="toggleMilestone('${kid.id}', ${stageId}, '${m.id}')">
+      <div class="ms-cb" aria-hidden="true">${done?'✓':''}</div>
       <span class="ms-txt">${m.t}</span>
     </div>`;
   }).join('')}</div>`;
-  // Update tabs
   document.querySelectorAll('.s-tab').forEach((t, i) => {
-    const p = stageProgressPct(kid, i);
     const sp = t.querySelector('.tp');
-    if (sp) sp.textContent = p + '%';
+    if (sp) sp.textContent = stageProgressPct(kid, i) + '%';
   });
 }
+let notesTimer = null;
+function queueSaveNotes(kidId) {
+  clearTimeout(notesTimer);
+  notesTimer = setTimeout(() => saveNotes(kidId), 600);
+}
 function saveNotes(kidId) {
+  clearTimeout(notesTimer);
   const el = document.getElementById('kd-notes');
-  if (el) updateKidNotes(kidId, el.value);
+  const kid = kids.find(k => k.id === kidId);
+  if (el && kid && kid.notes !== el.value) updateKidNotes(kidId, el.value);
 }
 function confirmRemoveKid(kidId) {
   const kid = kids.find(k => k.id === kidId);
   if (!kid) return;
-  if (confirm(`Remove ${kid.name} from the academy? This cannot be undone.`)) {
+  if (confirm(`Remove ${kid.name} from the academy? This cannot be undone unless you have a backup file.`)) {
     removeKid(kidId);
     closeModal();
     renderDashboard();
@@ -1234,41 +1326,54 @@ function printReport(kidId) {
   const kid = kids.find(k => k.id === kidId);
   if (!kid) return;
   const w = window.open('', '_blank');
+  if (!w) { showToast('⚠️ Please allow pop-ups to print the report', 'warn'); return; }
   const rows = STAGES.map(st => {
     const p = stageProgressPct(kid, st.id);
     const msDone = st.milestones.filter(m => isCompleted(kid, st.id, m.id));
     const msRows = st.milestones.map(m => {
       const done = isCompleted(kid, st.id, m.id);
-      return `<li style="color:${done?'#26de81':'#888'};margin-bottom:4px">${done?'✅':'⬜'} ${m.t}</li>`;
+      return `<li style="color:${done?'#1a9c5a':'#888'};margin-bottom:4px">${done?'✅':'⬜'} ${m.t}</li>`;
     }).join('');
     return `<div style="margin-bottom:24px;break-inside:avoid">
       <h3 style="margin-bottom:8px">${st.emoji} Stage ${st.id}: ${st.name} — ${p}% (${msDone.length}/${st.milestones.length})</h3>
-      <ul style="padding-left:20px">${msRows}</ul>
+      <ul style="padding-left:20px;list-style:none">${msRows}</ul>
     </div>`;
   }).join('');
   const ach = earnedAchievements(kid);
-  w.document.write(`<!DOCTYPE html><html><head><title>${kid.name} — Progress Report</title>
+  const name = esc(kid.name);
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name} — Progress Report</title>
     <style>body{font-family:sans-serif;padding:2rem;color:#111;}h1{margin-bottom:.25rem;}p{color:#666;margin-bottom:1.5rem;}h3{color:#333;}</style>
     </head><body>
-    <h1>${kid.avatar} ${kid.name} — CodeKids Academy Progress Report</h1>
-    <p>Age: ${kid.age} | Joined: ${fmtDate(kid.joinDate)} | Overall: ${totalProgressPct(kid)}% | Badges: ${ach.length}</p>
+    <h1>${esc(kid.avatar)} ${name} — CodeKids Academy Progress Report</h1>
+    <p>Age: ${kid.age} | Current stage: ${kid.stage} (${STAGES[kid.stage].name}) | Joined: ${fmtDate(kid.joinDate)} | Overall: ${totalProgressPct(kid)}% | Badges: ${ach.length}</p>
     ${rows}
     <p style="border-top:1px solid #eee;padding-top:1rem;color:#999;font-size:12px">Generated by CodeKids Academy on ${new Date().toLocaleDateString()}</p>
     </body></html>`);
   w.document.close();
+  w.focus();
   w.print();
 }
 
 /* ── MODAL HELPERS ────────────────────────────────────────────── */
+let lastFocus = null;
 function showModal(html, wide = false) {
   const box = document.getElementById('modal-box');
   const overlay = document.getElementById('modal-overlay');
+  if (!overlay.classList.contains('open')) lastFocus = document.activeElement;
   box.innerHTML = html;
   box.className = 'modal' + (wide ? ' modal-wide' : '');
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
   overlay.classList.add('open');
+  setTimeout(() => { if (!box.contains(document.activeElement)) box.querySelector('.modal-close')?.focus(); }, 60);
 }
 function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
+  const overlay = document.getElementById('modal-overlay');
+  if (!overlay.classList.contains('open')) return;
+  if (currentDetailKidId) saveNotes(currentDetailKidId);
+  overlay.classList.remove('open');
+  currentDetailKidId = null;
+  if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
 }
 function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
@@ -1280,7 +1385,7 @@ function buildCurriculum() {
   if (!el) return;
   el.innerHTML = STAGES.map(st => `
     <div class="stage-acc">
-      <div class="acc-head" id="acc-head-${st.id}" onclick="toggleAcc(${st.id})">
+      <div class="acc-head" id="acc-head-${st.id}" role="button" tabindex="0" aria-expanded="false" aria-controls="acc-body-${st.id}" onclick="toggleAcc(${st.id})">
         <span class="acc-em">${st.emoji}</span>
         <div class="acc-meta">
           <h3>Stage ${st.id}: ${st.name}</h3>
@@ -1290,10 +1395,11 @@ function buildCurriculum() {
         <span class="acc-arr" id="acc-arr-${st.id}">▼</span>
       </div>
       <div class="acc-body" id="acc-body-${st.id}">
+        ${st.ageNote ? `<div class="age-note"><strong>👪 Age limits:</strong> ${st.ageNote}</div>` : ''}
         <div class="acc-grid">
           <div class="acc-card">
             <h4>📚 Key Resources</h4>
-            ${st.resources.map(r => `<div class="ri-item"><span class="ri">${r.e}</span><div><a href="${r.u}" target="_blank">${r.n}</a><span class="ri-sub">${r.s}</span></div></div>`).join('')}
+            ${st.resources.map(r => `<div class="ri-item"><span class="ri">${r.e}</span><div><a href="${r.u}" target="_blank" rel="noopener">${r.n}</a><span class="ri-sub">${r.s}</span></div></div>`).join('')}
           </div>
           <div class="acc-card">
             <h4>✅ Stage Milestones</h4>
@@ -1315,8 +1421,9 @@ function buildCurriculum() {
 function toggleAcc(stageId) {
   const head = document.getElementById('acc-head-' + stageId);
   const body = document.getElementById('acc-body-' + stageId);
-  head.classList.toggle('open');
-  body.classList.toggle('open');
+  const open = head.classList.toggle('open');
+  body.classList.toggle('open', open);
+  head.setAttribute('aria-expanded', open);
 }
 
 /* ── MINI STAGES (HOME) ──────────────────────────────────────── */
@@ -1324,12 +1431,19 @@ function buildMiniStages() {
   const el = document.getElementById('mini-stages-home');
   if (!el) return;
   el.innerHTML = STAGES.map(st => `
-    <div class="mini-stage" onclick="navigate('curriculum')" style="border-color:${st.color}33">
+    <div class="mini-stage" role="button" tabindex="0" onclick="openStage(${st.id})" style="border-color:${st.color}33">
       <span class="ms-em">${st.emoji}</span>
       <div class="ms-nm">${st.name}</div>
       <div class="ms-ag">Age ${st.age}</div>
     </div>
   `).join('');
+}
+
+function openStage(id) {
+  navigate('curriculum');
+  const head = document.getElementById('acc-head-' + id);
+  if (head && !head.classList.contains('open')) toggleAcc(id);
+  setTimeout(() => head && head.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
 /* ── RESOURCES VIEW ───────────────────────────────────────────── */
@@ -1367,6 +1481,8 @@ function renderResGrid() {
     const map = { course:'rt-book', book:'rt-book', game:'rt-game', hardware:'rt-hw', platform:'rt-free', tool:'rt-free', video:'rt-vid', app:'rt-free', framework:'rt-free', activity:'rt-game' };
     return `<span class="rtag ${map[t]||'rt-free'}">${t}</span>`;
   };
+  const acctTag = a => a === '13+' ? '<span class="rtag rt-age" title="Sign-up requires age 13+">13+</span>'
+    : a === 'parent' ? '<span class="rtag rt-age" title="Needs an account with age limits — a parent should create and supervise it">👪 Parent account</span>' : '';
   el.innerHTML = list.map(r => {
     const pips = STAGES.map((_, i) => `<div class="spip ${r.stages.includes(i)?'on':''}"></div>`).join('');
     return `<div class="rbc">
@@ -1376,44 +1492,98 @@ function renderResGrid() {
       </div>
       <div class="rbc-body">
         <p>${r.desc}</p>
-        <div class="r-tags">${typeTag(r.type)}${costTag(r.cost)}</div>
+        <div class="r-tags">${typeTag(r.type)}${acctTag(r.acct)}</div>
       </div>
       <div class="rbc-foot">
         <div class="stage-pips">${pips}</div>
-        <a href="${r.url}" target="_blank">Visit →</a>
+        <a href="${r.url}" target="_blank" rel="noopener">Visit →</a>
       </div>
     </div>`;
   }).join('') || '<div style="color:var(--muted);padding:2rem;grid-column:1/-1;text-align:center">No resources match this filter.</div>';
 }
 
-/* ── EXPORT / IMPORT ──────────────────────────────────────────── */
+/* ── BACKUP / RESTORE ─────────────────────────────────────────── */
 function exportData() {
-  if (kids.length === 0) { showToast('⚠️ No students to export', 'warn'); return; }
-  const data = { version: 1, exported: today(), kids };
+  if (kids.length === 0) { showToast('⚠️ No students to back up yet', 'warn'); return; }
+  const data = { app: 'codekids-academy', version: 2, exported: new Date().toISOString(), kids };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `codekids-backup-${today()}.json`;
+  document.body.appendChild(a);
   a.click();
-  showToast('✅ Data exported successfully!', 'success');
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  lsSet('cka_last_backup', new Date().toISOString());
+  renderBackupBanner();
+  showToast('✅ Backup downloaded — keep the file somewhere safe.', 'success');
 }
+let pendingImport = null;
 function importData(evt) {
   const file = evt.target.files[0];
+  evt.target.value = '';
   if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { showToast('❌ That file is too large to be a CodeKids backup.', 'warn'); return; }
   const reader = new FileReader();
   reader.onload = e => {
+    let incoming;
     try {
       const data = JSON.parse(e.target.result);
-      const importedKids = data.kids || data;
-      if (!Array.isArray(importedKids)) throw new Error('Invalid format');
-      kids = importedKids;
-      saveKids();
-      renderDashboard();
-      showToast(`✅ Imported ${kids.length} students!`, 'success');
-    } catch { showToast('❌ Could not read file. Please use a valid export file.', 'warn'); }
+      const list = Array.isArray(data) ? data : data && data.kids;
+      if (!Array.isArray(list)) throw new Error('Invalid format');
+      incoming = list.map(sanitizeKid).filter(Boolean);
+    } catch { showToast('❌ Could not read file. Please choose a CodeKids backup file.', 'warn'); return; }
+    if (incoming.length === 0) { showToast('⚠️ No students found in that file.', 'warn'); return; }
+    pendingImport = incoming;
+    if (kids.length === 0) { applyImport('replace'); return; }
+    const names = incoming.slice(0, 6).map(k => esc(k.name)).join(', ') + (incoming.length > 6 ? '…' : '');
+    showModal(`
+      <div class="modal-header"><h2>⬆️ Restore from backup</h2><button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button></div>
+      <div class="modal-body">
+        <p style="font-size:.9rem;margin-bottom:1rem">This file has <strong>${incoming.length}</strong> student${incoming.length>1?'s':''}: ${names}.<br/>You currently have <strong>${kids.length}</strong> on this device.</p>
+        <div class="import-opts">
+          <button class="btn btn-sm btn-teal" onclick="applyImport('merge')">➕ Merge — add new students, update ones that match</button>
+          <button class="btn btn-sm btn-red" onclick="applyImport('replace')">♻️ Replace — delete current students and use the file</button>
+          <button class="btn btn-sm btn-muted" onclick="pendingImport=null;closeModal()">Cancel</button>
+        </div>
+      </div>`);
   };
   reader.readAsText(file);
-  evt.target.value = '';
+}
+function applyImport(mode) {
+  if (!pendingImport) return;
+  if (mode === 'replace') {
+    kids = pendingImport;
+  } else {
+    pendingImport.forEach(k => {
+      const i = kids.findIndex(x => x.id === k.id);
+      if (i > -1) kids[i] = k; else kids.push(k);
+    });
+  }
+  const n = pendingImport.length;
+  pendingImport = null;
+  saveKids();
+  closeModal();
+  renderDashboard();
+  showToast(`✅ Restored ${n} student${n>1?'s':''}.`, 'success');
+}
+function eraseAllData() {
+  if (!confirm('Erase ALL CodeKids students and progress stored on this device? This cannot be undone unless you have a backup file.')) return;
+  kids = [];
+  ['cka_kids', 'cka_last_change', 'cka_last_backup', 'cka_backup_snooze'].forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+  showToast('🗑️ All CodeKids data on this device has been erased.', 'info');
+}
+
+/* ── OFFLINE + STORAGE PROTECTION ─────────────────────────────── */
+function setupOfflineAndStorage() {
+  // Ask the browser to keep our data even when space is low (Chrome/Edge/Firefox honour this).
+  if (navigator.storage && navigator.storage.persist) {
+    navigator.storage.persisted().then(p => { if (!p && kids.length) navigator.storage.persist(); }).catch(() => {});
+  }
+  // Service worker = works offline + installable. Only on http(s), not file://
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 }
 
 /* ── TOAST ────────────────────────────────────────────────────── */
@@ -1467,7 +1637,14 @@ function launchConfetti() {
 }
 
 /* ── KEYBOARD ─────────────────────────────────────────────────── */
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeMobileMenu(); return; }
+  const t = e.target;
+  if ((e.key === 'Enter' || e.key === ' ') && t.matches && t.matches('[role="button"],[role="checkbox"]')) {
+    e.preventDefault();
+    t.click();
+  }
+});
 </script>
 </body>
 </html>

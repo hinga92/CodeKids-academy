@@ -1,0 +1,15 @@
+{
+  "name": "CodeKids Academy",
+  "short_name": "CodeKids",
+  "description": "A free, private progress tracker that guides kids aged 5–18 from unplugged logic to building AI apps.",
+  "start_url": "./#dashboard",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07090f",
+  "theme_color": "#07090f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
