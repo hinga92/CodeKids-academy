@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>CodeKids Academy — Coding & Automation for Kids</title>
   <meta name="description" content="A free, private progress tracker that guides kids aged 5–18 from unplugged logic to building AI apps."/>
   <meta name="theme-color" content="#07090f"/>
@@ -26,27 +26,24 @@
     html{scroll-behavior:smooth;}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden;}
     a{color:var(--teal);text-decoration:none;}
-    a:hover{opacity:.8;text-decoration:underline;}
     input,select,textarea,button{font-family:inherit;}
 
     /* ── NAV ── */
-    .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(7,9,15,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;padding:0 1.5rem;gap:.75rem;}
+    .nav{position:fixed;top:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-top));padding-top:env(safe-area-inset-top)!important;background:rgba(7,9,15,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;padding:0 1.5rem;gap:.75rem;}
     .nav-logo{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.1rem;cursor:pointer;flex-shrink:0;text-decoration:none;}
     .nav-logo .li{width:36px;height:36px;background:linear-gradient(135deg,var(--purple),var(--teal));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
     .nav-logo .lt{background:linear-gradient(90deg,var(--purple-l),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .nav-links{display:flex;align-items:center;gap:.2rem;flex:1;justify-content:center;flex-wrap:wrap;}
     .nav-link{padding:.42rem .82rem;border-radius:8px;font-size:.86rem;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap;}
-    .nav-link:hover{color:var(--text);background:rgba(255,255,255,.06);}
     .nav-link.active{color:var(--purple-l);background:rgba(124,111,255,.15);}
     .nav-cta{background:linear-gradient(135deg,var(--purple),var(--teal));color:#fff;padding:.44rem 1rem;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;border:none;flex-shrink:0;white-space:nowrap;}
-    .nav-cta:hover{opacity:.88;}
     .nav-ham{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer;margin-left:auto;padding:.2rem;}
-    .mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem;z-index:999;flex-direction:column;gap:.25rem;}
+    .mobile-menu{display:none;position:fixed;top:calc(var(--nav-h) + env(safe-area-inset-top));left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem;z-index:999;flex-direction:column;gap:.25rem;}
     .mobile-menu.open{display:flex;}
     .mobile-menu .nav-link{text-align:left;}
 
     /* ── LAYOUT ── */
-    .page-wrap{padding-top:var(--nav-h);min-height:100vh;}
+    .page-wrap{padding-top:calc(var(--nav-h) + env(safe-area-inset-top));padding-bottom:env(safe-area-inset-bottom);min-height:100vh;}
     .view{display:none;}
     .view.active{display:block;}
     .container{max-width:1100px;margin:0 auto;padding:0 1.25rem;}
@@ -54,18 +51,12 @@
     /* ── BUTTONS ── */
     .btn{display:inline-flex;align-items:center;gap:.45rem;border:none;cursor:pointer;font-weight:600;transition:all .18s;border-radius:var(--r-sm);}
     .btn-primary{background:linear-gradient(135deg,var(--purple),#5a54d4);color:#fff;padding:.78rem 1.7rem;font-size:1rem;font-weight:700;border-radius:var(--r-md);}
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,111,255,.38);}
     .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--border2)!important;color:var(--text);padding:.78rem 1.7rem;font-size:1rem;border-radius:var(--r-md);}
-    .btn-secondary:hover{background:rgba(255,255,255,.11);}
     .btn-sm{padding:.48rem .95rem;font-size:.84rem;}
     .btn-purple{background:rgba(124,111,255,.18);color:var(--purple-l);border:1px solid rgba(124,111,255,.28)!important;}
-    .btn-purple:hover{background:rgba(124,111,255,.28);}
     .btn-teal{background:rgba(0,212,170,.14);color:var(--teal);border:1px solid rgba(0,212,170,.24)!important;}
-    .btn-teal:hover{background:rgba(0,212,170,.24);}
     .btn-red{background:rgba(255,107,107,.14);color:var(--red);border:1px solid rgba(255,107,107,.24)!important;}
-    .btn-red:hover{background:rgba(255,107,107,.24);}
     .btn-muted{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)!important;}
-    .btn-muted:hover{background:rgba(255,255,255,.1);color:var(--text);}
 
     /* ── HOME HERO ── */
     .hero{text-align:center;padding:5rem 1.5rem 3.5rem;position:relative;overflow:hidden;}
@@ -91,7 +82,6 @@
     .step-card p{font-size:.83rem;color:var(--muted);}
     .mini-stages{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;padding:1rem 0 2rem;}
     .mini-stage{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:.9rem 1rem;text-align:center;min-width:105px;flex:1;max-width:138px;cursor:pointer;transition:all .2s;}
-    .mini-stage:hover{transform:translateY(-3px);border-color:var(--purple);}
     .ms-em{font-size:1.75rem;display:block;margin-bottom:.3rem;}
     .ms-nm{font-size:.77rem;font-weight:600;}
     .ms-ag{font-size:.7rem;color:var(--muted);}
@@ -126,7 +116,6 @@
     .empty-state p{color:var(--muted);margin-bottom:1.4rem;max-width:380px;margin-left:auto;margin-right:auto;font-size:.9rem;}
     .kids-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;margin-bottom:2rem;}
     .kid-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;cursor:pointer;transition:all .2s;}
-    .kid-card:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 12px 38px rgba(0,0,0,.28);}
     .kct{padding:1.15rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--border);}
     .k-av{width:54px;height:54px;background:var(--card2);border:2px solid var(--border2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.75rem;flex-shrink:0;}
     .k-info h3{font-size:1rem;font-weight:700;}
@@ -151,7 +140,6 @@
     .modal-header{padding:1.4rem 1.65rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
     .modal-header h2{font-size:1.1rem;font-weight:800;}
     .modal-close{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.06);border:none;color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-    .modal-close:hover{background:rgba(255,255,255,.13);color:var(--text);}
     .modal-body{padding:1.4rem 1.65rem;}
 
     /* ── FORMS ── */
@@ -164,7 +152,6 @@
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
     .av-picker{display:flex;gap:.45rem;flex-wrap:wrap;}
     .av-opt{width:44px;height:44px;background:var(--card);border:2px solid var(--border);border-radius:9px;font-size:1.45rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-    .av-opt:hover{border-color:var(--purple);}
     .av-opt.sel{border-color:var(--teal);background:rgba(0,212,170,.1);}
     .form-actions{display:flex;gap:.55rem;justify-content:flex-end;padding-top:.75rem;border-top:1px solid var(--border);margin-top:1.25rem;}
 
@@ -180,7 +167,6 @@
     .prog-ring-lbl{font-size:.7rem;color:var(--muted);}
     .stage-tabs{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1.1rem;}
     .s-tab{padding:.38rem .75rem;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:.3rem;}
-    .s-tab:hover{border-color:var(--border2);color:var(--text);}
     .s-tab.active{background:rgba(124,111,255,.15);border-color:var(--purple);color:var(--purple-l);}
     .s-tab .tp{font-size:.68rem;background:rgba(255,255,255,.1);padding:.08rem .32rem;border-radius:4px;}
     .all-prog{margin-bottom:1.1rem;}
@@ -191,7 +177,6 @@
     .sp-pct{min-width:36px;text-align:right;font-weight:700;font-size:.8rem;}
     .ms-list{display:flex;flex-direction:column;gap:.45rem;}
     .ms-item{display:flex;align-items:flex-start;gap:.7rem;padding:.82rem .95rem;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .15s;}
-    .ms-item:hover{border-color:var(--border2);}
     .ms-item.done{background:rgba(0,212,170,.06);border-color:rgba(0,212,170,.22);}
     .ms-cb{width:22px;height:22px;border:2px solid var(--border2);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;transition:all .2s;margin-top:1px;}
     .ms-item.done .ms-cb{background:var(--teal);border-color:var(--teal);color:#000;}
@@ -212,9 +197,11 @@
     .view-header h1{font-size:1.65rem;font-weight:800;margin-bottom:.35rem;}
     .view-header p{color:var(--muted);font-size:.9rem;}
     .stage-acc{margin-bottom:.85rem;}
-    .acc-head{scroll-margin-top:calc(var(--nav-h) + 12px);}
+    .acc-head{scroll-margin-top:calc(var(--nav-h) + env(safe-area-inset-top) + 12px);}
+    .native-only{display:none;}
+    html.is-native .native-only{display:block;}
+    html.is-native .web-only{display:none!important;}
     .acc-head{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.45rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);cursor:pointer;transition:all .15s;user-select:none;}
-    .acc-head:hover{border-color:var(--border2);}
     .acc-head.open{border-radius:var(--r-md) var(--r-md) 0 0;border-bottom-color:transparent;}
     .acc-em{font-size:1.75rem;flex-shrink:0;}
     .acc-meta{flex:1;}
@@ -237,11 +224,9 @@
     /* ── RESOURCES ── */
     .res-filters{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.65rem;}
     .rf{padding:.38rem .88rem;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;}
-    .rf:hover{color:var(--text);border-color:var(--border2);}
     .rf.active{background:rgba(124,111,255,.15);border-color:var(--purple);color:var(--purple-l);}
     .res-big-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1rem;margin-bottom:3rem;}
     .rbc{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;transition:all .18s;}
-    .rbc:hover{border-color:var(--border2);transform:translateY(-2px);}
     .rbc-head{padding:.82rem 1.05rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
     .rbc-head-l{display:flex;align-items:center;gap:.5rem;}
     .rbc-head h3{font-size:.92rem;font-weight:700;}
@@ -280,7 +265,7 @@
     .domain-section h3{font-size:1rem;font-weight:700;margin-bottom:.85rem;}
 
     /* ── TOAST ── */
-    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r-md);padding:.85rem 1.2rem;font-size:.86rem;display:flex;align-items:center;gap:.6rem;transform:translateY(100px);opacity:0;transition:all .3s;z-index:9999;max-width:320px;box-shadow:0 8px 30px rgba(0,0,0,.4);}
+    .toast{position:fixed;bottom:calc(2rem + env(safe-area-inset-bottom));right:2rem;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r-md);padding:.85rem 1.2rem;font-size:.86rem;display:flex;align-items:center;gap:.6rem;transform:translateY(100px);opacity:0;transition:all .3s;z-index:9999;max-width:320px;box-shadow:0 8px 30px rgba(0,0,0,.4);}
     .toast.show{transform:translateY(0);opacity:1;}
     .toast.success{border-left:3px solid var(--teal);}
     .toast.info{border-left:3px solid var(--purple);}
@@ -316,12 +301,10 @@
     .std{display:inline-block;font-family:'SF Mono','Fira Code',monospace;font-size:.66rem;font-weight:700;padding:.06rem .38rem;border-radius:4px;background:rgba(72,219,251,.1);color:var(--blue);margin:.15rem .25rem 0 0;cursor:help;white-space:nowrap;}
     .ms-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem;margin-top:.15rem;}
     .ev-btn{margin-left:auto;font-size:.72rem;padding:.18rem .5rem;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;}
-    .ev-btn:hover{color:var(--text);border-color:var(--teal);}
     .ev-btn.has{color:var(--teal);border-color:rgba(0,212,170,.4);}
     .ev-line{font-size:.76rem;color:var(--muted);margin-top:.2rem;word-break:break-word;}
     .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem;}
     .proj-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.95rem 1.05rem;display:flex;flex-direction:column;gap:.4rem;cursor:pointer;transition:all .15s;}
-    .proj-card:hover{border-color:var(--purple);transform:translateY(-2px);}
     .proj-card h5{font-size:.92rem;font-weight:800;}
     .proj-card p{font-size:.8rem;color:var(--muted);line-height:1.5;flex:1;}
     .proj-meta{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.72rem;color:var(--muted);}
@@ -350,6 +333,7 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:768px){
+      .form-control,select.form-control,textarea.form-control{font-size:16px;}
       .nav-links,.nav-cta{display:none;}
       .nav-ham{display:block;}
       .hero h1{font-size:2rem;}
@@ -365,7 +349,31 @@
       .modal{transform:none!important;max-height:none!important;box-shadow:none!important;border:none!important;max-width:100%!important;}
       body{background:#fff!important;color:#000!important;}
     }
-  </style>
+  
+    /* Hover effects only on devices with a real pointer (avoids iOS "double-tap" on buttons) */
+    @media (hover:hover){
+      a:hover{opacity:.8;text-decoration:underline;}
+      .nav-link:hover{color:var(--text);background:rgba(255,255,255,.06);}
+      .nav-cta:hover{opacity:.88;}
+      .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,111,255,.38);}
+      .btn-secondary:hover{background:rgba(255,255,255,.11);}
+      .btn-purple:hover{background:rgba(124,111,255,.28);}
+      .btn-teal:hover{background:rgba(0,212,170,.24);}
+      .btn-red:hover{background:rgba(255,107,107,.24);}
+      .btn-muted:hover{background:rgba(255,255,255,.1);color:var(--text);}
+      .mini-stage:hover{transform:translateY(-3px);border-color:var(--purple);}
+      .kid-card:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 12px 38px rgba(0,0,0,.28);}
+      .modal-close:hover{background:rgba(255,255,255,.13);color:var(--text);}
+      .av-opt:hover{border-color:var(--purple);}
+      .s-tab:hover{border-color:var(--border2);color:var(--text);}
+      .ms-item:hover{border-color:var(--border2);}
+      .acc-head:hover{border-color:var(--border2);}
+      .rf:hover{color:var(--text);border-color:var(--border2);}
+      .rbc:hover{border-color:var(--border2);transform:translateY(-2px);}
+      .ev-btn:hover{color:var(--text);border-color:var(--teal);}
+      .proj-card:hover{border-color:var(--purple);transform:translateY(-2px);}
+    }
+</style>
 </head>
 <body>
 
@@ -454,7 +462,7 @@
           <div class="feat-card"><span class="feat-icon">📎</span><h3>Portfolio of Proof</h3><p>Attach a link or note to each completed milestone. The report becomes a portfolio your child can be proud of.</p></div>
           <div class="feat-card"><span class="feat-icon">📚</span><h3>Curated Resources</h3><p><span class="js-res-count">35</span> hand-picked free and paid resources — books, apps, courses, games and hardware kits — all linked and categorized.</p></div>
           <div class="feat-card"><span class="feat-icon">💾</span><h3>Local Data Storage</h3><p>All progress is saved on your own device — nothing is sent anywhere. We remind you to download a backup file regularly so nothing is ever lost.</p></div>
-          <div class="feat-card"><span class="feat-icon">📱</span><h3>Install Like an App</h3><p>Add CodeKids to your home screen and it works offline. On iPhone, installing it also protects your saved progress from Safari's automatic clean-up.</p></div>
+          <div class="feat-card web-only"><span class="feat-icon">📱</span><h3>Install Like an App</h3><p>Add CodeKids to your home screen and it works offline. On iPhone, installing it also protects your saved progress from Safari's automatic clean-up.</p></div>
         </div>
       </div>
 
@@ -534,7 +542,7 @@
         <h3>What we store</h3>
         <ul class="step-list">
           <li><span class="sn">✓</span><div>Only what you type in: each student's first name (or nickname), age, avatar, stage, milestone ticks and your notes.</div></li>
-          <li><span class="sn">✓</span><div>It is saved <strong>only in this browser on this device</strong> (browser "local storage"). It is never sent to us or anyone else.</div></li>
+          <li><span class="sn">✓</span><div>It is saved <strong>only on this device</strong> (inside the app, or in your browser's storage on the website). It is never sent to us or anyone else.</div></li>
           <li><span class="sn">✓</span><div>No accounts, no email addresses, no cookies, no analytics, no advertising, no tracking.</div></li>
           <li><span class="sn">✓</span><div>Tip: use a nickname or first name only. You don't need to enter a full name, school or photo.</div></li>
         </ul>
@@ -543,10 +551,15 @@
         <h3>Keeping your data safe</h3>
         <ul class="step-list">
           <li><span class="sn">1</span><div><strong>Download a backup</strong> from the Dashboard (⬇️ Backup) every week or so. We'll remind you. Keep the file somewhere safe — it contains your child's progress.</div></li>
-          <li><span class="sn">2</span><div><strong>On iPhone/iPad:</strong> Safari can delete website data that hasn't been used for 7 days. Tap Share → <em>Add to Home Screen</em> and open CodeKids from there — installed apps are protected from this.</div></li>
+          <li class="web-only"><span class="sn">2</span><div><strong>On iPhone/iPad:</strong> Safari can delete website data that hasn't been used for 7 days. Tap Share → <em>Add to Home Screen</em> and open CodeKids from there — installed apps are protected from this.</div></li>
           <li><span class="sn">3</span><div>Clearing your browser history/site data, or using a private window, will erase progress. Restore it with ⬆️ Restore and your backup file.</div></li>
           <li><span class="sn">4</span><div>Progress does not sync between devices. To move to a new device, download a backup on the old one and restore it on the new one.</div></li>
         </ul>
+      </div>
+      <div class="domain-section native-only">
+        <h3>🔔 Weekly reminder</h3>
+        <label class="switch-row"><span>A gentle reminder every Sunday at 5 pm with each child's next milestone. It's created on this device — nothing is sent anywhere.</span>
+          <input type="checkbox" id="reminder-toggle" onchange="toggleReminder(this.checked)"/></label>
       </div>
       <div class="domain-section">
         <h3>🛡️ Kid-safe links</h3>
@@ -596,6 +609,88 @@ const ACHIEVEMENTS = [
   { id:'ach-all', e:'🏆', n:'Full Journey', desc:'Complete all 7 stages!' },
 ];
 
+/* ── NATIVE (iOS / Android via Capacitor) ─────────────────────── */
+// In the website these are no-ops; inside the app they call native plugins.
+const Native = (() => {
+  const cap = window.Capacitor;
+  const isNative = !!(cap && cap.isNativePlatform && cap.isNativePlatform());
+  const P = name => {
+    if (!isNative) return null;
+    try { return (cap.Plugins && cap.Plugins[name]) || cap.registerPlugin(name); } catch(e) { return null; }
+  };
+  if (isNative) document.documentElement.classList.add('is-native', 'platform-' + cap.getPlatform());
+  async function shareFile(filename, text, title) {
+    try {
+      const fs = P('Filesystem'), share = P('Share');
+      const res = await fs.writeFile({ path: filename, data: text, directory: 'CACHE', encoding: 'utf8' });
+      await share.share({ title, files: [res.uri] });
+      return true;
+    } catch(e) {
+      if (!/cancel/i.test(String(e && (e.message || e)))) showToast('⚠️ Could not share the file: ' + (e.message || e), 'warn');
+      return false;
+    }
+  }
+  function haptic(kind) {
+    const h = P('Haptics');
+    if (!h) return;
+    (kind === 'success' ? h.notification({ type: 'SUCCESS' }) : h.impact({ style: 'LIGHT' })).catch(() => {});
+  }
+  async function setup() {
+    if (!isNative) return;
+    P('StatusBar')?.setStyle({ style: 'DARK' }).catch(() => {});
+    P('SplashScreen')?.hide().catch(() => {});
+    if (lsGet('cka_reminder') === 'on') scheduleReminder(true);
+  }
+  // Weekly "Next up" reminder — a local notification, nothing leaves the device.
+  const REMINDER_ID = 1001;
+  async function scheduleReminder(silent) {
+    const ln = P('LocalNotifications');
+    if (!ln) return false;
+    try {
+      let perm = await ln.checkPermissions();
+      if (perm.display !== 'granted' && !silent) perm = await ln.requestPermissions();
+      if (perm.display !== 'granted') { if (!silent) showToast('⚠️ Notifications are turned off for CodeKids in Settings.', 'warn'); return false; }
+      await ln.cancel({ notifications: [{ id: REMINDER_ID }] }).catch(() => {});
+      const next = kids.slice(0, 3).map(k => { const m = nextMilestone(k); return m ? `${k.name}: ${m.t}` : null; }).filter(Boolean);
+      await ln.schedule({ notifications: [{
+        id: REMINDER_ID,
+        title: '🚀 CodeKids — coding time this week?',
+        body: next.length ? next.join('\n') : 'Open CodeKids to pick this week\'s project.',
+        schedule: { on: { weekday: 1, hour: 17, minute: 0 }, allowWhileIdle: true },
+      }] });
+      return true;
+    } catch(e) { if (!silent) showToast('⚠️ Could not set the reminder.', 'warn'); return false; }
+  }
+  async function cancelReminder() {
+    const ln = P('LocalNotifications');
+    if (ln) await ln.cancel({ notifications: [{ id: REMINDER_ID }] }).catch(() => {});
+  }
+  return { isNative, platform: isNative ? cap.getPlatform() : 'web', P, shareFile, haptic, setup, scheduleReminder, cancelReminder };
+})();
+
+/* Print on the web; share an HTML file (print/save/send from the share sheet) in the app. */
+function openPrintable(title, filename, html) {
+  if (Native.isNative) { Native.shareFile(filename, html, title); return; }
+  const w = window.open('', '_blank');
+  if (!w) { showToast('⚠️ Please allow pop-ups to print', 'warn'); return; }
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  w.print();
+}
+async function toggleReminder(on) {
+  if (on) {
+    const ok = await Native.scheduleReminder(false);
+    lsSet('cka_reminder', ok ? 'on' : 'off');
+    const t = document.getElementById('reminder-toggle'); if (t) t.checked = ok;
+    if (ok) showToast('🔔 Weekly reminder set for Sundays at 5 pm', 'success');
+  } else {
+    await Native.cancelReminder();
+    lsSet('cka_reminder', 'off');
+    showToast('🔕 Weekly reminder turned off', 'info');
+  }
+}
+
 /* ── STATE ────────────────────────────────────────────────────── */
 let kids = [];
 let selAvatar = '🦊';
@@ -625,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
   navigate(viewFromHash(), false);
   window.addEventListener('hashchange', () => navigate(viewFromHash(), false));
   setupOfflineAndStorage();
+  Native.setup();
 });
 
 /* ── ROUTER ───────────────────────────────────────────────────── */
@@ -643,7 +739,10 @@ function navigate(view, updateHash = true) {
   });
   if (updateHash && location.hash !== '#' + view) history.pushState(null, '', '#' + view);
   if (view === 'dashboard') renderDashboard();
-  if (view === 'privacy') { const t = document.getElementById('kid-safe-toggle'); if (t) t.checked = kidSafeOn(); }
+  if (view === 'privacy') {
+    const t = document.getElementById('kid-safe-toggle'); if (t) t.checked = kidSafeOn();
+    const r = document.getElementById('reminder-toggle'); if (r) r.checked = lsGet('cka_reminder') === 'on';
+  }
   window.scrollTo(0, 0);
 }
 
@@ -662,6 +761,7 @@ function loadKids() {
   } catch(e) { kids = []; }
 }
 function saveKids() {
+  if (Native.isNative && lsGet('cka_reminder') === 'on') { clearTimeout(saveKids.t); saveKids.t = setTimeout(() => Native.scheduleReminder(true), 1500); }
   try {
     localStorage.setItem('cka_kids', JSON.stringify(kids));
     localStorage.setItem('cka_last_change', new Date().toISOString());
@@ -762,6 +862,7 @@ function toggleMilestone(kidId, stageId, milestoneId) {
     kid.progress[key].splice(idx, 1);
   } else {
     kid.progress[key].push(milestoneId);
+    Native.haptic('light');
     kid.lastActive = today();
     const stage = STAGES[stageId];
     kid.sessions.unshift({ date: today(), note: '✅ ' + stage.milestones.find(m=>m.id===milestoneId)?.t, stage: stageId });
@@ -1006,11 +1107,11 @@ function renderBackupBanner() {
   const changedSince = !lastBackup || (lastChange && lastChange > lastBackup);
   const due = changedSince && (daysSince === null || daysSince >= BACKUP_REMINDER_DAYS);
   if (!due || (snoozed && snoozed > new Date().toISOString())) { el.innerHTML = ''; return; }
-  const when = lastBackup ? `Your last backup was <strong>${daysSince} days ago</strong>` : `You <strong>haven't downloaded a backup yet</strong>`;
+  const when = lastBackup ? `Your last backup was <strong>${daysSince} days ago</strong>` : `You <strong>haven't saved a backup yet</strong>`;
   el.innerHTML = `<div class="backup-banner" role="status">
     <span style="font-size:1.3rem">💾</span>
-    <span class="bb-txt">${when}. Progress is stored only on this device — a backup file keeps it safe if the browser is cleared.</span>
-    <button class="btn btn-sm btn-teal" onclick="exportData()">⬇️ Download backup</button>
+    <span class="bb-txt">${when}. Progress is stored only on this device — a backup file keeps it safe ${Native.isNative ? 'if the app is deleted or you change phones' : 'if the browser is cleared'}.</span>
+    <button class="btn btn-sm btn-teal" onclick="exportData()">⬇️ ${Native.isNative ? 'Save backup' : 'Download backup'}</button>
     <button class="btn btn-sm btn-muted" onclick="snoozeBackup()">Remind me tomorrow</button>
   </div>`;
 }
@@ -1238,8 +1339,6 @@ function confirmRemoveKid(kidId) {
 function printReport(kidId) {
   const kid = kids.find(k => k.id === kidId);
   if (!kid) return;
-  const w = window.open('', '_blank');
-  if (!w) { showToast('⚠️ Please allow pop-ups to print the report', 'warn'); return; }
   const rows = STAGES.map(st => {
     const p = stageProgressPct(kid, st.id);
     const msDone = st.milestones.filter(m => isCompleted(kid, st.id, m.id));
@@ -1262,7 +1361,7 @@ function printReport(kidId) {
   const extra = `<div style="break-inside:avoid;margin-top:12px"><h3>🎯 CSTA K–12 standards practised (${stdMet.length})</h3>
     ${stdMet.length ? `<ul style="padding-left:20px">${stdMet.map(c => `<li style="margin-bottom:3px"><strong>${c}</strong> — ${STANDARDS[c]}</li>`).join('')}</ul>` : '<p>None yet.</p>'}</div>
     ${portfolio ? `<div style="break-inside:avoid;margin-top:12px"><h3>📎 Portfolio</h3><ul style="padding-left:20px">${portfolio}</ul></div>` : ''}`;
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name} — Progress Report</title>
+  openPrintable(`${kid.name} — CodeKids report`, `codekids-report-${kid.name.replace(/[^A-Za-z0-9]+/g, '-')}-${today()}.html`, `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} — Progress Report</title>
     <style>body{font-family:sans-serif;padding:2rem;color:#111;}h1{margin-bottom:.25rem;}p{color:#666;margin-bottom:1.5rem;}h3{color:#333;}</style>
     </head><body>
     <h1>${esc(kid.avatar)} ${name} — CodeKids Academy Progress Report</h1>
@@ -1271,9 +1370,6 @@ function printReport(kidId) {
     ${extra}
     <p style="border-top:1px solid #eee;padding-top:1rem;color:#999;font-size:12px">Generated by CodeKids Academy on ${new Date().toLocaleDateString()}</p>
     </body></html>`);
-  w.document.close();
-  w.focus();
-  w.print();
 }
 
 /* ── MODAL HELPERS ────────────────────────────────────────────── */
@@ -1395,13 +1491,10 @@ function openProject(stageId, projId) {
 }
 function printProject(stageId, projId) {
   const st = STAGES[stageId], p = findProject(stageId, projId);
-  const w = window.open('', '_blank');
-  if (!w) { showToast('⚠️ Please allow pop-ups to print', 'warn'); return; }
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${p.title} — CodeKids project</title>
+  openPrintable(`${p.title} — CodeKids project`, `codekids-project-${p.id}.html`, `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${p.title} — CodeKids project</title>
     <style>body{font-family:sans-serif;padding:2rem;color:#111;max-width:720px;margin:auto}h1{margin-bottom:.3rem}.badge{display:inline-block;border:1px solid #ccc;border-radius:12px;padding:2px 8px;font-size:12px;margin:2px}h3{margin-top:1.2rem;text-transform:uppercase;font-size:13px;color:#555}li{margin-bottom:6px}</style></head>
     <body><h1>${p.e} ${p.title}</h1>${projectBriefHtml(st, p, true)}
     <p style="margin-top:2rem;border-top:1px solid #eee;padding-top:.6rem;color:#999;font-size:12px">CodeKids Academy · Standards: CSTA K–12 Computer Science Standards (2017)</p></body></html>`);
-  w.document.close(); w.focus(); w.print();
 }
 
 function toggleAcc(stageId) {
@@ -1492,7 +1585,17 @@ function renderResGrid() {
 function exportData() {
   if (kids.length === 0) { showToast('⚠️ No students to back up yet', 'warn'); return; }
   const data = { app: 'codekids-academy', version: 2, exported: new Date().toISOString(), kids };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const json = JSON.stringify(data, null, 2);
+  if (Native.isNative) {
+    Native.shareFile(`codekids-backup-${today()}.json`, json, 'CodeKids backup').then(ok => {
+      if (!ok) return;
+      lsSet('cka_last_backup', new Date().toISOString());
+      renderBackupBanner();
+      showToast('✅ Backup saved — keep the file somewhere safe (e.g. Files or iCloud Drive).', 'success');
+    });
+    return;
+  }
+  const blob = new Blob([json], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `codekids-backup-${today()}.json`;
@@ -1567,7 +1670,7 @@ function setupOfflineAndStorage() {
     navigator.storage.persisted().then(p => { if (!p && kids.length) navigator.storage.persist(); }).catch(() => {});
   }
   // Service worker = works offline + installable. Only on http(s), not file://
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  if (!Native.isNative && 'serviceWorker' in navigator && location.protocol.startsWith('http')) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 }
@@ -1622,6 +1725,7 @@ function showToast(msg, type = 'info') {
 
 /* ── CONFETTI ─────────────────────────────────────────────────── */
 function launchConfetti() {
+  Native.haptic('success');
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;

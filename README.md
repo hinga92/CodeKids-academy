@@ -23,8 +23,11 @@ Live site: https://hinga92.github.io/CodeKids-academy/
 | `manifest.json` | Lets phones/computers install it as an app |
 | `sw.js` | Service worker — makes the app work offline |
 | `icons/` | App icons |
+| `ios/`, `android/` | Native iPhone/iPad and Android apps (Capacitor) — see [docs/APP_STORES.md](docs/APP_STORES.md) |
+| `assets/` | Source images for app icons & splash screens |
+| `scripts/build-www.mjs` | Copies the web app into `www/` for the native apps |
 
-There is no build step and no server. Open `index.html` to use it locally (offline mode only works when served over http/https).
+The website has no build step and no server. The native apps are built with `npm run sync` (see [docs/APP_STORES.md](docs/APP_STORES.md)). Open `index.html` to use it locally (offline mode only works when served over http/https).
 
 ## Deploying
 
@@ -47,4 +50,4 @@ When you change `index.html` or `curriculum.js`, also bump `VERSION` in `sw.js` 
 Student data (name/nickname, age, avatar, progress, notes) is stored only in the browser's local storage on the device where it's entered. Nothing is sent to any server. See the **Privacy** page in the app for the parent-facing version.
 
 ## Roadmap
-See [docs/STRATEGY.md](docs/STRATEGY.md). Phases 1–2 are done; Phase 3 is the iOS/Android app.
+See [docs/STRATEGY.md](docs/STRATEGY.md). Phases 1–3 are done (web app, curriculum, iOS/Android apps). Next: store submission and the Phase 4 pilot.
