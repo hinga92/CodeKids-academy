@@ -490,6 +490,7 @@
         <div class="dash-actions">
           <button class="btn btn-sm btn-teal" onclick="exportData()" title="Download a backup file of all students">⬇️ Backup</button>
           <label class="btn btn-sm btn-muted" style="cursor:pointer" title="Restore students from a backup file">⬆️ Restore<input type="file" accept=".json,application/json" style="display:none" onchange="importData(event)"/></label>
+          <button class="btn btn-sm btn-muted" onclick="openCheckin()" title="Anonymous weekly summary for the pilot organiser">📋 Weekly check-in</button>
           <button class="btn btn-sm btn-purple" onclick="openAddKidModal()">➕ Add Student</button>
         </div>
       </div>
@@ -1243,7 +1244,123 @@ function renderAchievements(kid) {
   const el = document.getElementById('kd-ach');
   if (!el) return;
   const earned = earnedAchievements(kid);
-  el.innerHTML = ACHIEVEMENTS.map(a => `<span class="ach ${earned.includes(a.id)?'earned':'locked'}" title="${a.desc}">${a.e} ${a.n}</span>`).join('');
+  el.innerHTML = ACHIEVEMENTS.map(a => {
+    const got = earned.includes(a.id);
+    const stageId = a.id === 'ach-all' ? null : Number(a.id.split('-')[1]);
+    return got && stageId !== null
+      ? `<button class="ach earned" style="cursor:pointer;font:inherit" title="${a.desc} — tap for a printable certificate" onclick="printCertificate('${kid.id}', ${stageId})">${a.e} ${a.n} 📜</button>`
+      : `<span class="ach ${got?'earned':'locked'}" title="${a.desc}">${a.e} ${a.n}</span>`;
+  }).join('') + (earned.length ? '<div style="font-size:.74rem;color:var(--muted);width:100%;margin-top:.3rem">Tap a 📜 badge for a printable certificate.</div>' : '');
+}
+
+/* ── PRINTABLES ───────────────────────────────────────────────── */
+const SITE_URL = 'https://hinga92.github.io/CodeKids-academy/';
+function openPrintables() {
+  // In the apps, printing works best in the phone's browser (print/save as PDF).
+  if (Native.isNative) { gatePending = SITE_URL + 'printables/unplugged-pack.html'; if (kidSafeOn() && Date.now() >= gateUntil) openGate(); else window.open(gatePending, '_blank'); return; }
+  window.open('printables/unplugged-pack.html', '_blank');
+}
+
+/* ── WEEKLY CHECK-IN (anonymous, for the pilot) ───────────────── */
+function ticksLast7Days(kid) {
+  const since = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
+  return (kid.sessions || []).filter(x => x.date >= since && /^✅/.test(x.note || '')).length;
+}
+function openCheckin() {
+  if (!kids.length) { showToast('⚠️ Add a student first', 'warn'); return; }
+  const code = lsGet('cka_family_code') || '';
+  const opt = (id, n, sel) => Array.from({ length: n }, (_, i) => i + 1).map(v => `<option ${v === sel ? 'selected' : ''}>${v}</option>`).join('');
+  showModal(`
+    <div class="modal-header"><h2>📋 Weekly check-in</h2><button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button></div>
+    <form class="modal-body" onsubmit="event.preventDefault();shareCheckin()">
+      <p style="font-size:.84rem;color:var(--muted);margin-bottom:1rem">An <strong>anonymous</strong> summary for the pilot organiser — no names. Ages, stages and this week's milestone count are filled in automatically.</p>
+      <div class="form-row">
+        <div class="form-group"><label for="ci-code">Family code</label><input class="form-control" id="ci-code" maxlength="8" placeholder="e.g. F03" value="${esc(code)}" autocapitalize="characters"/></div>
+        <div class="form-group"><label for="ci-sessions">Coding sessions this week</label><select class="form-control" id="ci-sessions"><option>0</option>${opt('s', 7, 1)}</select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label for="ci-mins">Total minutes (about)</label><input class="form-control" id="ci-mins" type="number" min="0" max="999" inputmode="numeric" placeholder="30"/></div>
+        <div class="form-group"><label for="ci-device">Device used</label><select class="form-control" id="ci-device"><option>Phone</option><option>Tablet</option><option>Laptop/PC</option><option>Mixed</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label for="ci-conf">My confidence helping (1–5)</label><select class="form-control" id="ci-conf">${opt('c', 5, 3)}</select></div>
+        <div class="form-group"><label for="ci-fun">Child's enjoyment (1–5)</label><select class="form-control" id="ci-fun">${opt('f', 5, 4)}</select></div>
+      </div>
+      <div class="form-group"><label for="ci-good">What worked well?</label><textarea class="form-control" id="ci-good" maxlength="400" placeholder="e.g. Snowflake loops — she made 5 of them!"></textarea></div>
+      <div class="form-group"><label for="ci-hard">What was hard or confusing?</label><textarea class="form-control" id="ci-hard" maxlength="400" placeholder="e.g. Couldn't find the right Code.org lesson"></textarea></div>
+      <p style="font-size:.74rem;color:var(--muted)">Please don't type your child's name in the boxes.</p>
+      <div class="form-actions">
+        <button type="button" class="btn btn-sm btn-muted" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary">📤 Share check-in</button>
+      </div>
+    </form>`);
+}
+function buildCheckinText() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const clean = t => t.replace(/[\r\n]+/g, ' ').replace(/"/g, "'");
+  const code = v('ci-code').toUpperCase().replace(/[^A-Z0-9-]/g, '') || 'F??';
+  lsSet('cka_family_code', code);
+  const ages = kids.map(k => k.age).join('/');
+  const stages = kids.map(k => k.stage).join('/');
+  const ticks = kids.reduce((s, k) => s + ticksLast7Days(k), 0);
+  const fields = [today(), code, ages, stages, ticks, v('ci-sessions'), v('ci-mins') || '0', v('ci-conf'), v('ci-fun'), clean(v('ci-good')), clean(v('ci-hard')), v('ci-device')];
+  const csv = fields.map((f, i) => i >= 9 && i <= 10 ? `"${f}"` : (i === 2 || i === 3 ? `"${f}"` : f)).join(',');
+  return `📋 CodeKids weekly check-in — ${code}
+Kids' ages: ${ages} · Stages: ${stages}
+Milestones ticked (last 7 days): ${ticks}
+Sessions: ${v('ci-sessions')} · Minutes: ${v('ci-mins') || '0'} · Device: ${v('ci-device')}
+Parent confidence: ${v('ci-conf')}/5 · Child enjoyment: ${v('ci-fun')}/5
+✅ Worked: ${v('ci-good') || '—'}
+🤔 Hard: ${v('ci-hard') || '—'}
+
+CSV: ${csv}`;
+}
+async function shareCheckin() {
+  const text = buildCheckinText();
+  try {
+    if (Native.isNative) { await Native.P('Share').share({ title: 'CodeKids check-in', text }); }
+    else if (navigator.share) { await navigator.share({ title: 'CodeKids check-in', text }); }
+    else { await navigator.clipboard.writeText(text); showToast('📋 Copied — paste it into WhatsApp or an email to the organiser', 'success'); }
+    closeModal();
+  } catch(e) {
+    if (/cancel|abort/i.test(String(e && (e.message || e.name || e)))) return;
+    try { await navigator.clipboard.writeText(text); showToast('📋 Copied — paste it to the organiser', 'success'); closeModal(); }
+    catch(_) { showModal(`<div class="modal-header"><h2>📋 Copy this</h2><button class="modal-close" onclick="closeModal()">✕</button></div><div class="modal-body"><textarea class="form-control" style="min-height:220px">${esc(text)}</textarea></div>`); }
+  }
+}
+
+/* ── CERTIFICATES ─────────────────────────────────────────────── */
+function printCertificate(kidId, stageId) {
+  const kid = kids.find(k => k.id === kidId), st = STAGES[stageId];
+  if (!kid || !st || stageProgressPct(kid, stageId) !== 100) return;
+  const std = [...new Set(st.milestones.flatMap(m => m.std))].sort();
+  const done = (kid.sessions || []).find(x => x.note && x.note.includes('Completed Stage ' + stageId + ':'));
+  const date = new Date((done && done.date) || today()).toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+  const name = esc(kid.name);
+  openPrintable(`${kid.name} — Stage ${stageId} certificate`, `codekids-certificate-${kid.name.replace(/[^A-Za-z0-9]+/g, '-')}-stage${stageId}.html`,
+  `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} — CodeKids certificate</title>
+  <style>
+    @page{size:letter landscape;margin:0}
+    body{margin:0;font-family:Georgia,'Times New Roman',serif;color:#1d2033;background:#fff}
+    .c{box-sizing:border-box;width:100%;max-width:11in;min-height:8.2in;margin:auto;padding:.6in;border:14px solid ${st.color};outline:3px solid #1d2033;outline-offset:-26px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+    .k{font-family:-apple-system,Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase;font-size:14px;color:#6b7090}
+    h1{font-size:44px;margin:.2em 0}
+    .n{font-size:52px;font-style:italic;margin:.2em 0;border-bottom:2px solid #c9cbe0;display:inline-block;padding:0 .6em}
+    .s{font-size:24px;margin:.5em 0}
+    .e{font-size:64px}
+    .std{font-family:-apple-system,Arial,sans-serif;font-size:11px;color:#6b7090;margin-top:1.2em}
+    .sig{display:flex;justify-content:space-around;margin-top:2em;font-family:-apple-system,Arial,sans-serif;font-size:13px;color:#6b7090}
+    .sig div{border-top:1.5px solid #1d2033;padding-top:.3em;min-width:2.6in}
+  </style></head><body><div class="c">
+    <div class="k">CodeKids Academy · Certificate of Achievement</div>
+    <div class="e">${st.emoji}</div>
+    <h1>Stage ${st.id}: ${st.name}</h1>
+    <div class="s">This certifies that</div>
+    <div><span class="n">${name}</span></div>
+    <div class="s">completed every Explorer, Builder and Creator milestone of this stage.</div>
+    <div class="std">CSTA K–12 Computer Science Standards practised: ${std.join(' · ')}</div>
+    <div class="sig"><div>${date}</div><div>Grown-up / Mentor</div></div>
+  </div></body></html>`);
 }
 function renderActivity(kid) {
   const el = document.getElementById('kd-log');
@@ -1421,6 +1538,7 @@ function buildCurriculum() {
       </div>
       <div class="acc-body" id="acc-body-${st.id}">
         ${st.ageNote ? `<div class="age-note"><strong>👪 Age limits:</strong> ${st.ageNote}</div>` : ''}
+        ${st.id <= 1 ? `<div class="next-box"><h4>🖨️ Printable unplugged pack</h4>Arrow cards, a treasure grid, Robot Chef &amp; Treasure Hunt worksheets and Debug Detective puzzles — 7 pages for screen-free coding. <button class="btn btn-sm btn-teal" style="margin-top:.5rem" onclick="openPrintables()">Open the pack</button></div>` : ''}
         <div class="acc-grid">
           <div class="acc-card">
             <h4>📚 Key Resources</h4>

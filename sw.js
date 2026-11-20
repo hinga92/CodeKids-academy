@@ -1,7 +1,7 @@
 // CodeKids Academy service worker — makes the app work offline.
 // Bump VERSION whenever index.html changes so parents get the update.
-const VERSION = 'codekids-v3';
-const SHELL = ['./', './index.html', './manifest.json', './curriculum.js', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png'];
+const VERSION = 'codekids-v4';
+const SHELL = ['./', './index.html', './manifest.json', './curriculum.js', './printables/unplugged-pack.html', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

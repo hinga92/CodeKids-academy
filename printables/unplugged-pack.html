@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CodeKids Unplugged Pack — printable cards & worksheets</title>
+<style>
+  :root{--ink:#1d2033;--muted:#6b7090;--line:#c9cbe0;--purple:#7c6fff;--teal:#00b894;--yellow:#ffd166;--pink:#ff6b9d;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);background:#eceef6;line-height:1.45;}
+  .toolbar{position:sticky;top:0;z-index:5;background:#1d2033;color:#fff;padding:.7rem 1rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;}
+  .toolbar button{background:#7c6fff;color:#fff;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:700;font-size:.95rem;cursor:pointer;}
+  .toolbar a{color:#5ef0d0;}
+  .page{background:#fff;width:100%;max-width:8.5in;min-height:10.6in;margin:1rem auto;padding:.55in .6in;box-shadow:0 4px 18px rgba(0,0,0,.12);page-break-after:always;break-after:page;}
+  h1{font-size:30px;margin-bottom:.3rem;}
+  h2{font-size:22px;margin-bottom:.25rem;}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:1rem;}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border:1px solid var(--line);border-radius:10px;padding:1px 8px;margin-right:4px;color:var(--muted);}
+  ol,ul{padding-left:1.2rem;font-size:14px;}
+  li{margin-bottom:.3rem;}
+  .box{border:2px solid var(--line);border-radius:12px;padding:.8rem 1rem;margin:.8rem 0;font-size:14px;}
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px dashed var(--line);border-left:2px dashed var(--line);margin-top:.6rem;}
+  .card{border-right:2px dashed var(--line);border-bottom:2px dashed var(--line);height:1.55in;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .card .sym{font-size:58px;line-height:1;font-weight:900;}
+  .card .lbl{font-size:12px;font-weight:700;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em;}
+  .c-up .sym{color:#7c6fff}.c-right .sym{color:#00b894}.c-down .sym{color:#ff6b9d}.c-left .sym{color:#ff9f43}
+  .c-rep .sym{color:#1d2033;font-size:36px}.c-if .sym{font-size:30px}
+  /* grids */
+  .grid{display:grid;border:3px solid var(--ink);margin:.6rem auto;}
+  .grid div{border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:26px;}
+  .g4{grid-template-columns:repeat(4,1.45in);grid-template-rows:repeat(4,1.45in);width:max-content;}
+  .g5{grid-template-columns:repeat(5,.42in);grid-template-rows:repeat(5,.42in);width:max-content;margin:.3rem 0;}
+  .g5 div{font-size:18px;}
+  .rock{background:#e3e4ee;}
+  /* worksheets */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:.6rem;}
+  th,td{border:1.5px solid var(--line);padding:.45rem .5rem;text-align:left;vertical-align:top;}
+  th{background:#f4f4fa;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+  td.n{width:34px;text-align:center;color:var(--muted);font-weight:700;}
+  .tall td{height:.48in;}
+  .puzzles{display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.2rem;}
+  .pz{border:2px solid var(--line);border-radius:12px;padding:.7rem .8rem;}
+  .pz h3{font-size:15px;margin-bottom:.2rem;}
+  .prog{font-size:22px;font-weight:900;letter-spacing:.2em;margin:.3rem 0;}
+  .answers{transform:rotate(180deg);font-size:12px;color:var(--muted);margin-top:1rem;border-top:1px dashed var(--line);padding-top:.5rem;}
+  .foot{font-size:11px;color:var(--muted);margin-top:1rem;}
+  @media print{
+    body{background:#fff;}
+    .toolbar{display:none;}
+    .page{box-shadow:none;margin:0;max-width:none;min-height:auto;padding:.4in .45in;}
+    @page{size:letter;margin:0;}
+  }
+  @media(max-width:700px){
+    .page{padding:1rem;min-height:auto;}
+    .cards{grid-template-columns:repeat(2,1fr);}
+    .g4{grid-template-columns:repeat(4,20vw);grid-template-rows:repeat(4,20vw);}
+    .puzzles{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button onclick="window.print()">🖨️ Print the pack</button>
+  <span>7 pages · Letter/A4 · best in colour, works in black &amp; white</span>
+  <a href="../index.html#curriculum">← Back to CodeKids</a>
+</div>
+
+<!-- PAGE 1: cover -->
+<section class="page">
+  <h1>🌱 CodeKids Unplugged Pack</h1>
+  <p class="sub">Screen-free coding games for ages 5–7 · Stage 0 &amp; 1 · CodeKids Academy</p>
+  <div class="box">
+    <strong>What's inside</strong>
+    <ol>
+      <li><strong>Arrow cards:</strong> the "code" kids use to program a robot (cut out)</li>
+      <li><strong>Loop &amp; if cards:</strong> level-up cards: repeat, and "if wall"</li>
+      <li><strong>Treasure grid:</strong> a 4×4 tabletop maze (or tape one on the floor)</li>
+      <li><strong>Robot Chef worksheet:</strong> write an algorithm a grown-up must follow exactly</li>
+      <li><strong>Treasure Hunt Code sheet:</strong> design a coded hunt for the family</li>
+      <li><strong>Debug Detective:</strong> 4 puzzles: find and fix the bug</li>
+    </ol>
+  </div>
+  <div class="box">
+    <strong>How to play (10 minutes to learn)</strong>
+    <ol>
+      <li>Put a toy (the <strong>robot</strong>) on START and a treat on the ⭐ TREASURE.</li>
+      <li>Your child lays out arrow cards in a line: that's the <strong>program</strong>.</li>
+      <li><strong>Run it:</strong> move the robot one square per card, exactly as written.</li>
+      <li>Robot didn't reach the treasure? That's a <strong>bug</strong>! Find the wrong card and fix it.</li>
+      <li>Level up: use a <strong>repeat</strong> card to make the program shorter.</li>
+    </ol>
+  </div>
+  <div class="box">
+    <strong>Ask, don't tell:</strong> "What did you expect to happen?" · "What actually happened?" · "Which card caused it?" · "What could you try?"
+  </div>
+  <p class="foot">Matches CodeKids milestones m0-0 to m0-5 · CSTA K–12 standards 1A-AP-08, 1A-AP-10, 1A-AP-11, 1A-AP-14. Free to print and share for non-commercial use.</p>
+</section>
+
+<!-- PAGE 2: arrow cards -->
+<section class="page">
+  <h2>✂️ Arrow cards <span class="tag">cut along the dashed lines</span></h2>
+  <p class="sub">Each card moves the robot <strong>one square</strong> in the direction of the arrow.</p>
+  <div class="cards">
+    <div class="card c-up"><div class="sym">↑</div><div class="lbl">Up</div></div>
+    <div class="card c-up"><div class="sym">↑</div><div class="lbl">Up</div></div>
+    <div class="card c-up"><div class="sym">↑</div><div class="lbl">Up</div></div>
+    <div class="card c-up"><div class="sym">↑</div><div class="lbl">Up</div></div>
+    <div class="card c-right"><div class="sym">→</div><div class="lbl">Right</div></div>
+    <div class="card c-right"><div class="sym">→</div><div class="lbl">Right</div></div>
+    <div class="card c-right"><div class="sym">→</div><div class="lbl">Right</div></div>
+    <div class="card c-right"><div class="sym">→</div><div class="lbl">Right</div></div>
+    <div class="card c-down"><div class="sym">↓</div><div class="lbl">Down</div></div>
+    <div class="card c-down"><div class="sym">↓</div><div class="lbl">Down</div></div>
+    <div class="card c-down"><div class="sym">↓</div><div class="lbl">Down</div></div>
+    <div class="card c-down"><div class="sym">↓</div><div class="lbl">Down</div></div>
+    <div class="card c-left"><div class="sym">←</div><div class="lbl">Left</div></div>
+    <div class="card c-left"><div class="sym">←</div><div class="lbl">Left</div></div>
+    <div class="card c-left"><div class="sym">←</div><div class="lbl">Left</div></div>
+    <div class="card c-left"><div class="sym">←</div><div class="lbl">Left</div></div>
+    <div class="card"><div class="sym">🏁</div><div class="lbl">Start</div></div>
+    <div class="card"><div class="sym">⭐</div><div class="lbl">Treasure</div></div>
+    <div class="card"><div class="sym">🪨</div><div class="lbl">Rock</div></div>
+    <div class="card"><div class="sym">🪨</div><div class="lbl">Rock</div></div>
+  </div>
+</section>
+
+<!-- PAGE 3: loop & if cards -->
+<section class="page">
+  <h2>🔁 Level-up cards: loops &amp; ifs</h2>
+  <p class="sub">Put a <strong>repeat</strong> card in front of an arrow: "repeat 3 × →" moves right 3 times. Fewer cards = a shorter program!</p>
+  <div class="cards">
+    <div class="card c-rep"><div class="sym">🔁 2×</div><div class="lbl">Repeat twice</div></div>
+    <div class="card c-rep"><div class="sym">🔁 2×</div><div class="lbl">Repeat twice</div></div>
+    <div class="card c-rep"><div class="sym">🔁 3×</div><div class="lbl">Repeat 3 times</div></div>
+    <div class="card c-rep"><div class="sym">🔁 3×</div><div class="lbl">Repeat 3 times</div></div>
+    <div class="card c-rep"><div class="sym">🔁 4×</div><div class="lbl">Repeat 4 times</div></div>
+    <div class="card c-rep"><div class="sym">🔁 ?×</div><div class="lbl">You choose</div></div>
+    <div class="card c-if"><div class="sym">🪨 ⇒ ↑</div><div class="lbl">If rock ahead, go up</div></div>
+    <div class="card c-if"><div class="sym">🧱 ⇒ ↓</div><div class="lbl">If wall, go down</div></div>
+  </div>
+  <div class="box" style="margin-top:1.2rem">
+    <strong>Challenge ladder</strong>
+    <ol>
+      <li>Reach the treasure with any program.</li>
+      <li>Reach it in the <strong>fewest cards</strong> using repeats.</li>
+      <li>Add 2 rocks and use an <strong>if</strong> card to get around them.</li>
+      <li>Swap roles: your child hides the treasure and writes the program; <strong>you</strong> are the robot!</li>
+    </ol>
+  </div>
+</section>
+
+<!-- PAGE 4: 4x4 treasure grid -->
+<section class="page">
+  <h2>🗺️ Treasure grid</h2>
+  <p class="sub">Place 🏁 START, ⭐ TREASURE and up to 3 🪨 rocks (cut-outs from page 2). Use a small toy as the robot.</p>
+  <div class="grid g4">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+  <div class="box"><strong>Floor version:</strong> make the same 4×4 grid with masking tape (squares about 30 cm / 1 ft). Your child stands on START and <em>is</em> the robot!</div>
+</section>
+
+<!-- PAGE 5: Robot Chef -->
+<section class="page">
+  <h2>🤖 Robot Chef: write an algorithm</h2>
+  <p class="sub">A grown-up is the robot and does <strong>exactly</strong> what each step says. No more, no less!</p>
+  <p style="font-size:14px"><strong>Snack:</strong> ______________________________ &nbsp; <strong>Chef:</strong> ____________________</p>
+  <table class="tall">
+    <tr><th>#</th><th>Step (say or draw it)</th><th>Worked? ✅ / 🐞</th><th>Fix</th></tr>
+    <tr><td class="n">1</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">2</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">3</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">4</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">5</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">6</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">7</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">8</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">9</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">10</td><td></td><td></td><td></td></tr>
+  </table>
+  <div class="box">🐞 <strong>Bug I fixed:</strong> _______________________________________________ <br/><br/>Why it happened: ________________________________________________</div>
+</section>
+
+<!-- PAGE 6: Treasure Hunt Code -->
+<section class="page">
+  <h2>🏴‍☠️ Treasure Hunt Code</h2>
+  <p class="sub">Hide a treasure at home. Write the code to find it. Give it to someone; can they find it with no hints?</p>
+  <p style="font-size:14px"><strong>Start at:</strong> ____________________ &nbsp; <strong>Coder:</strong> ____________________ &nbsp; <strong>Player:</strong> ____________________</p>
+  <table class="tall">
+    <tr><th>#</th><th>Direction (↑ → ↓ ← or turn)</th><th>How many steps?</th><th>Repeat?</th></tr>
+    <tr><td class="n">1</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">2</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">3</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">4</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">5</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">6</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">7</td><td></td><td></td><td></td></tr>
+    <tr><td class="n">8</td><td></td><td></td><td></td></tr>
+  </table>
+  <div class="box"><strong>IF rule (optional):</strong> IF you see __________________, THEN ____________________</div>
+  <div class="box">Did the player find it? &nbsp; ☐ Yes, first try &nbsp; ☐ After a fix &nbsp;&nbsp; What was confusing? ______________________________</div>
+</section>
+
+<!-- PAGE 7: Debug detective -->
+<section class="page">
+  <h2>🔍 Debug Detective</h2>
+  <p class="sub">Each robot 🤖 starts at 🏁 and should reach ⭐, but each program has <strong>one bug</strong>. Find it and fix it!</p>
+  <div class="puzzles">
+    <div class="pz">
+      <h3>Case 1: Too short?</h3>
+      <div class="grid g5">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div>⭐</div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div>🏁</div><div></div><div></div><div></div><div></div>
+      </div>
+      <div class="prog">↑ ↑</div>
+      <p style="font-size:13px">Fix: ______________________</p>
+    </div>
+    <div class="pz">
+      <h3>Case 2: Wrong way!</h3>
+      <div class="grid g5">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div>⭐</div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div>🏁</div><div></div><div></div><div></div><div></div>
+      </div>
+      <div class="prog">↑ ↑ → ← →</div>
+      <p style="font-size:13px">Fix: ______________________</p>
+    </div>
+    <div class="pz">
+      <h3>Case 3: Crash!</h3>
+      <div class="grid g5">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div>🏁</div><div></div><div class="rock">🪨</div><div></div><div>⭐</div>
+      </div>
+      <div class="prog">→ → → →</div>
+      <p style="font-size:13px">Fix: ______________________</p>
+    </div>
+    <div class="pz">
+      <h3>Case 4: Loop trouble</h3>
+      <div class="grid g5">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+        <div>🏁</div><div></div><div></div><div></div><div>⭐</div>
+      </div>
+      <div class="prog">🔁 3× →</div>
+      <p style="font-size:13px">Fix: ______________________</p>
+    </div>
+  </div>
+  <div class="answers">
+    Answers: 1) Add one more ↑ (↑ ↑ ↑) · 2) The ← should be → (↑ ↑ → → →) · 3) Go around the rock: ↑ → → → → ↓ · 4) Repeat 4 times, not 3 (🔁 4× →)
+  </div>
+  <p class="foot">CodeKids Academy · hinga92.github.io/CodeKids-academy · Standards 1A-AP-10 (sequences &amp; loops), 1A-AP-14 (debugging)</p>
+</section>
+</body>
+</html>

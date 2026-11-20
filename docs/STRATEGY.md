@@ -100,7 +100,7 @@ Apple often rejects apps that are just a website in a wrapper. Add real native v
 | 1 ✅ | Bug fixes, safety, offline app, backups, Privacy page | — | Shipped |
 | 2 ✅ | Standards, levels, 21 projects, Next Up, portfolio, grown-up check | — | Shipped (this commit) |
 | 3 ✅ | **Mobile apps (Capacitor):** iOS + Android projects, reminders, share sheet, haptics, icons — store submission pending your accounts ([APP_STORES.md](APP_STORES.md)) | — | Approved in both stores |
-| 4 | **Pilot:** 5–10 families or 1 club for 4 weeks; printable unplugged packs; parent guide videos (60–90 s each); Spanish translation | 4–6 weeks | ≥60% of families active weekly in week 4 |
+| 4 🚧 | **Pilot** (kit ready — [docs/pilot](pilot/README.md)): 5–10 families or 1 club for 4 weeks; printable unplugged packs; parent guide videos (60–90 s each); Spanish translation | 4–6 weeks | ≥60% of families active weekly in week 4 |
 | 5 | **Clubs and sync** (only if the pilot shows demand): parent accounts, mentor dashboard, encrypted sync, COPPA consent flow | 2–3 months | Club pays for a plan |
 | 6 | **Learn inside the app:** embedded Blockly and Python (Pyodide) playground for stages 2–3; AI helper for parents that suggests next projects from interests (runs server-side, never on kids' devices) | 3+ months | Kids finish an in-app project |
 

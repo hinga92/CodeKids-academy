@@ -19,6 +19,8 @@ Live site: https://hinga92.github.io/CodeKids-academy/
 |---|---|
 | `index.html` | The app (HTML, CSS and JavaScript) |
 | `curriculum.js` | Stages, milestones, standards, projects and resources (shared with future mobile apps) |
+| `printables/` | Printable unplugged pack (arrow cards, maze, worksheets, debug puzzles) |
+| `docs/pilot/` | Phase 4 pilot kit — plan, invites, parent guide, interview, video scripts, tracker |
 | `docs/STRATEGY.md` | Competitor research, standards, mobile-app plan and roadmap |
 | `manifest.json` | Lets phones/computers install it as an app |
 | `sw.js` | Service worker — makes the app work offline |
@@ -50,4 +52,4 @@ When you change `index.html` or `curriculum.js`, also bump `VERSION` in `sw.js` 
 Student data (name/nickname, age, avatar, progress, notes) is stored only in the browser's local storage on the device where it's entered. Nothing is sent to any server. See the **Privacy** page in the app for the parent-facing version.
 
 ## Roadmap
-See [docs/STRATEGY.md](docs/STRATEGY.md). Phases 1–3 are done (web app, curriculum, iOS/Android apps). Next: store submission and the Phase 4 pilot.
+See [docs/STRATEGY.md](docs/STRATEGY.md). Phases 1–3 are done (web app, curriculum, iOS/Android apps). Phase 4 (family pilot) kit is ready in [docs/pilot](docs/pilot/README.md).
