@@ -309,6 +309,33 @@
     .stage-set{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;font-size:.8rem;color:var(--muted);}
     .stage-set select{width:auto;padding:.3rem .5rem;font-size:.8rem;}
     .rt-age{background:rgba(255,107,107,.12);color:var(--red);}
+    /* ── PHASE 2: levels, standards, projects, evidence, gate ── */
+    .lvl-head{display:flex;align-items:center;gap:.45rem;font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.9rem 0 .45rem;}
+    .lvl-head:first-child{margin-top:0;}
+    .lvl-head .lv-desc{font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted2);}
+    .std{display:inline-block;font-family:'SF Mono','Fira Code',monospace;font-size:.66rem;font-weight:700;padding:.06rem .38rem;border-radius:4px;background:rgba(72,219,251,.1);color:var(--blue);margin:.15rem .25rem 0 0;cursor:help;white-space:nowrap;}
+    .ms-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem;margin-top:.15rem;}
+    .ev-btn{margin-left:auto;font-size:.72rem;padding:.18rem .5rem;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;}
+    .ev-btn:hover{color:var(--text);border-color:var(--teal);}
+    .ev-btn.has{color:var(--teal);border-color:rgba(0,212,170,.4);}
+    .ev-line{font-size:.76rem;color:var(--muted);margin-top:.2rem;word-break:break-word;}
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem;}
+    .proj-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:.95rem 1.05rem;display:flex;flex-direction:column;gap:.4rem;cursor:pointer;transition:all .15s;}
+    .proj-card:hover{border-color:var(--purple);transform:translateY(-2px);}
+    .proj-card h5{font-size:.92rem;font-weight:800;}
+    .proj-card p{font-size:.8rem;color:var(--muted);line-height:1.5;flex:1;}
+    .proj-meta{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.72rem;color:var(--muted);}
+    .brief h3{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:1.1rem 0 .5rem;}
+    .brief ol,.brief ul{padding-left:1.2rem;font-size:.88rem;display:flex;flex-direction:column;gap:.35rem;}
+    .brief .lead{font-size:.92rem;}
+    .next-box{background:linear-gradient(135deg,rgba(124,111,255,.1),rgba(0,212,170,.07));border:1px solid var(--border2);border-radius:var(--r-md);padding:.95rem 1.1rem;margin-bottom:1.1rem;font-size:.86rem;}
+    .next-box h4{font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--purple-l);margin-bottom:.45rem;}
+    .next-box .nb-row{display:flex;gap:.6rem;align-items:flex-start;margin-top:.35rem;}
+    .gate-q{font-size:1.6rem;font-weight:900;text-align:center;margin:.6rem 0 1rem;}
+    .gate-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;}
+    .gate-opts .btn{justify-content:center;font-size:1.05rem;padding:.7rem;}
+    .switch-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.88rem;}
+    .switch-row input{width:22px;height:22px;accent-color:var(--teal);}
     .age-note{background:rgba(255,107,107,.07);border-left:3px solid var(--red);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:.7rem 1rem;font-size:.84rem;color:#f0c4c4;margin-bottom:1rem;}
     .age-note strong{color:var(--red);}
     .import-opts{display:flex;flex-direction:column;gap:.6rem;}
@@ -327,6 +354,7 @@
       .nav-ham{display:block;}
       .hero h1{font-size:2rem;}
       .acc-grid,.form-row,.grid2{grid-template-columns:1fr;}
+      .gate-opts{grid-template-columns:repeat(3,1fr);}
       .dash-top{flex-direction:column;align-items:flex-start;}
       .kd-header{flex-direction:column;}
       .kd-progress-ring{margin-left:0;}
@@ -386,6 +414,7 @@
         <div class="hstat"><span class="val">7</span><span class="lbl">Learning Stages</span></div>
         <div class="hstat"><span class="val"><span class="js-res-count">35</span></span><span class="lbl">Curated Resources</span></div>
         <div class="hstat"><span class="val js-ms-count">42</span><span class="lbl">Tracked Milestones</span></div>
+        <div class="hstat"><span class="val">21</span><span class="lbl">Guided Projects</span></div>
         <div class="hstat"><span class="val">5→18</span><span class="lbl">Age Range</span></div>
       </div>
     </div>
@@ -406,7 +435,7 @@
         </div>
         <div class="steps-grid">
           <div class="step-card"><div class="step-n">1</div><h3>Add Your Students</h3><p>Create a profile for each child with their name, age, avatar and starting stage.</p></div>
-          <div class="step-card"><div class="step-n">2</div><h3>Follow the Curriculum</h3><p>Each stage has resources, projects and milestones perfectly matched to their age.</p></div>
+          <div class="step-card"><div class="step-n">2</div><h3>Follow “Next Up”</h3><p>Each child gets a suggested next milestone and a step-by-step project matched to their stage and level.</p></div>
           <div class="step-card"><div class="step-n">3</div><h3>Track &amp; Celebrate</h3><p>Check off milestones as they complete them. Watch progress bars fill up and earn achievements!</p></div>
           <div class="step-card"><div class="step-n">4</div><h3>Graduate to the Next Stage</h3><p>When all milestones are ticked, advance them to the next stage with a celebration! 🎉</p></div>
         </div>
@@ -420,7 +449,9 @@
         <div class="features-grid">
           <div class="feat-card"><span class="feat-icon">📊</span><h3>Progress Dashboard</h3><p>See every student's progress at a glance. Color-coded stages, completion dots and progress bars make tracking intuitive.</p></div>
           <div class="feat-card"><span class="feat-icon">✅</span><h3>Milestone Checklists</h3><p><span class="js-ms-count">42</span> carefully crafted milestones across 7 stages. Check them off as your child completes them — with confetti celebrations!</p></div>
-          <div class="feat-card"><span class="feat-icon">🏆</span><h3>Achievements System</h3><p>Kids earn badges as they hit stage completions and special goals. Badges keep motivation sky-high.</p></div>
+          <div class="feat-card"><span class="feat-icon">🎯</span><h3>Standards-Aligned</h3><p>Every milestone and project is mapped to the CSTA K–12 Computer Science Standards used by US schools — and shows up on the printable report.</p></div>
+          <div class="feat-card"><span class="feat-icon">🏗️</span><h3>21 Guided Projects</h3><p>Step-by-step project briefs for every stage and level — Explorer, Builder, Creator — each with clear “done when” checks and a stretch challenge.</p></div>
+          <div class="feat-card"><span class="feat-icon">📎</span><h3>Portfolio of Proof</h3><p>Attach a link or note to each completed milestone. The report becomes a portfolio your child can be proud of.</p></div>
           <div class="feat-card"><span class="feat-icon">📚</span><h3>Curated Resources</h3><p><span class="js-res-count">35</span> hand-picked free and paid resources — books, apps, courses, games and hardware kits — all linked and categorized.</p></div>
           <div class="feat-card"><span class="feat-icon">💾</span><h3>Local Data Storage</h3><p>All progress is saved on your own device — nothing is sent anywhere. We remind you to download a backup file regularly so nothing is ever lost.</p></div>
           <div class="feat-card"><span class="feat-icon">📱</span><h3>Install Like an App</h3><p>Add CodeKids to your home screen and it works offline. On iPhone, installing it also protects your saved progress from Safari's automatic clean-up.</p></div>
@@ -470,7 +501,7 @@
     <div class="container">
       <div class="view-header">
         <h1>🗺️ Full Curriculum — 7 Stages</h1>
-        <p>Click any stage to expand resources, projects and milestones. All resources are linked directly.</p>
+        <p>Each stage has three levels — 🧭 Explorer, 🔧 Builder, 🚀 Creator — with milestones and guided projects mapped to the <a href="https://csteachers.org/k12standards/" target="_blank" rel="noopener">CSTA K–12 Computer Science Standards</a>.</p>
       </div>
       <div id="curriculum-accordions"></div>
     </div>
@@ -496,7 +527,7 @@
   <div id="view-privacy" class="view">
     <div class="container" style="max-width:780px">
       <div class="view-header">
-        <h1>🔒 Privacy &amp; Your Data</h1>
+        <h1>🔒 Privacy, Safety &amp; Your Data</h1>
         <p>Plain-English answers for parents and mentors. Last updated: <span id="privacy-date">November 2026</span>.</p>
       </div>
       <div class="domain-section">
@@ -516,6 +547,11 @@
           <li><span class="sn">3</span><div>Clearing your browser history/site data, or using a private window, will erase progress. Restore it with ⬆️ Restore and your backup file.</div></li>
           <li><span class="sn">4</span><div>Progress does not sync between devices. To move to a new device, download a backup on the old one and restore it on the new one.</div></li>
         </ul>
+      </div>
+      <div class="domain-section">
+        <h3>🛡️ Kid-safe links</h3>
+        <label class="switch-row"><span>Ask a grown-up a quick question before opening any outside website (recommended when children use CodeKids on their own).</span>
+          <input type="checkbox" id="kid-safe-toggle" onchange="setKidSafe(this.checked)"/></label>
       </div>
       <div class="domain-section">
         <h3>Deleting data</h3>
@@ -546,221 +582,8 @@
 <!-- ═══════════════════════════════════════════════════════════════
      JAVASCRIPT
 ═══════════════════════════════════════════════════════════════ -->
+<script src="curriculum.js"></script>
 <script>
-/* ── DATA: STAGES ─────────────────────────────────────────────── */
-const STAGES = [
-  { id:0, emoji:'🌱', name:'Unplugged Logic', age:'5–6', color:'#7c6fff',
-    desc:'Build sequencing, loops and conditions through play — no screen needed.',
-    resources:[
-      { e:'📗', n:'Hello Ruby', u:'https://www.helloruby.com', s:'Adventure stories that teach coding concepts beautifully.' },
-      { e:'🐢', n:'Robot Turtles Board Game', u:'https://www.thinkfun.com', s:'Youngest programmers\' game. Ages 4+.' },
-      { e:'🤖', n:'Botley the Coding Robot', u:'https://learningresources.com/botley', s:'Screen-free programmable robot. Ages 5+.' },
-      { e:'🐭', n:'Code & Go Robot Mouse', u:'https://learningresources.com', s:'Physical robot navigates a maze — sequences & debugging.' },
-    ],
-    activities:[
-      'Robot Game — give exact instructions; parent acts as robot',
-      'Floor Grid Maze — use tape + direction cards',
-      'PB&J Algorithm — program a parent to make a sandwich',
-      'Algorithm Art — write instructions to draw a picture',
-    ],
-    milestones:[
-      { id:'m0-0', t:'Completed the Robot Game with a parent' },
-      { id:'m0-1', t:'Built and navigated a floor grid maze' },
-      { id:'m0-2', t:'Read Hello Ruby — at least 2 chapters' },
-      { id:'m0-3', t:'Completed the PB&J Algorithm activity' },
-      { id:'m0-4', t:'Played Robot Turtles or Code & Go Mouse' },
-      { id:'m0-5', t:'Can explain what a "sequence" is in their own words' },
-    ],
-    projects:['🤖 Program a parent to make breakfast','🗺️ Treasure map with directions','🎭 Act out an if/then story','🎨 Algorithm drawing game'],
-  },
-  { id:1, emoji:'🎮', name:'Block Coding', age:'6–7', color:'#00d4aa',
-    desc:'Drag-and-drop visual programming. No typing needed. Concepts snap together like LEGO.',
-    resources:[
-      { e:'🐱', n:'ScratchJr (iPad/Android)', u:'https://scratchjr.org', s:'Official MIT app for ages 5–7. Perfect first coding tool. FREE.' },
-      { e:'💡', n:'Lightbot', u:'https://lightbot.com', s:'Guide a robot with command blocks. Sequences, loops & procedures.' },
-      { e:'❄️', n:'Code.org — Frozen (Anna & Elsa)', u:'https://code.org/hourofcode/frozen', s:'Draw snowflakes with loops. No account needed. FREE.' },
-      { e:'🎵', n:'Code.org — Dance Party', u:'https://hourofcode.com/dance', s:'Code characters to dance to music. Kids love it! FREE.' },
-    ],
-    activities:[
-      'Code.org Course A — full pre-reader curriculum',
-      'ScratchJr — animate a character with 3+ actions',
-      'Lightbot — complete levels 1 through 5',
-      'Make an animated birthday card',
-    ],
-    milestones:[
-      { id:'m1-0', t:'Opened ScratchJr independently and created a project' },
-      { id:'m1-1', t:'Completed Code.org Course A (all lessons)' },
-      { id:'m1-2', t:'Made a character do 3+ different actions in ScratchJr' },
-      { id:'m1-3', t:'Completed Lightbot levels 1–5' },
-      { id:'m1-4', t:'Animated a birthday card or greeting in ScratchJr' },
-      { id:'m1-5', t:'Can explain what a "loop" does in their own words' },
-    ],
-    projects:['🐱 Make a cat walk and say hello','🌅 Animate a sunrise scene','🎂 Animated birthday card','❄️ Draw snowflakes with loops'],
-  },
-  { id:2, emoji:'🐱', name:'Visual Programming', age:'7–9', color:'#48dbfb',
-    desc:'Graduate to full Scratch. Build real games, animations and stories with variables and functions.',
-    resources:[
-      { e:'🐱', n:'Scratch 3.0', u:'https://scratch.mit.edu', s:'World\'s most popular kids programming language. 100M+ projects. FREE.' },
-      { e:'🧱', n:'LEGO Boost', u:'https://lego.com/boost', s:'Build LEGO and code it with Scratch-like blocks. Ages 7+.' },
-      { e:'💎', n:'micro:bit', u:'https://microbit.org', s:'$15 programmable circuit board. Thousands of beginner projects.' },
-      { e:'📺', n:'Griffpatch on YouTube', u:'https://youtube.com/@griffpatch', s:'World\'s most popular Scratch creator. Amazing tutorials. FREE.' },
-    ],
-    activities:[
-      'Scratch — build a game with score counter & lives',
-      'Code.org Course B or C',
-      'LEGO Boost or micro:bit hardware project',
-      'Create an interactive story with choices',
-    ],
-    milestones:[
-      { id:'m2-0', t:'Built a complete Scratch game with a score counter' },
-      { id:'m2-1', t:'Completed Code.org Course B or C' },
-      { id:'m2-2', t:'Created an animated interactive story in Scratch' },
-      { id:'m2-3', t:'Used variables in a Scratch project' },
-      { id:'m2-4', t:'Shared a project on the Scratch community' },
-      { id:'m2-5', t:'Built a project using micro:bit or LEGO Boost (optional hardware)' },
-    ],
-    projects:['🎮 Platform jump game with lives','🐠 Fish catcher game','📖 Story with choices','🎵 Virtual piano','🌍 Geography quiz'],
-  },
-  { id:3, emoji:'🐍', name:'First Real Code', age:'9–11', color:'#ffd166',
-    desc:'Transition from blocks to typing real Python code. Swift Playgrounds for Apple fans.',
-    resources:[
-      { e:'🐢', n:'Trinket.io Turtle Python', u:'https://trinket.io/turtle', s:'Draw with Python turtle in the browser instantly. FREE.' },
-      { e:'📗', n:'Python for Kids (book)', u:'https://nostarch.com/pythonforkids', s:'Best-selling intro book by Jason Briggs. Ages 9–12.' },
-      { e:'📱', n:'Swift Playgrounds (iPad)', u:'https://apple.com/swift/playgrounds', s:'Apple\'s own learn-to-code app. Gorgeous, game-like, zero setup. FREE.' },
-      { e:'🔧', n:'CheckiO — Python Puzzles', u:'https://py.checkio.org', s:'Python puzzle island. Solve challenges to advance on a map. FREE.' },
-    ],
-    activities:[
-      'Trinket.io — first Python turtle drawings',
-      'Swift Playgrounds — Learn to Code 1 & 2',
-      'CodingBat — 10 Python exercises',
-      'Build a trivia quiz with 5+ questions',
-    ],
-    milestones:[
-      { id:'m3-0', t:'Wrote first Python program in Trinket or Thonny' },
-      { id:'m3-1', t:'Built a number guessing game in Python' },
-      { id:'m3-2', t:'Created Turtle graphics art with 3+ shapes' },
-      { id:'m3-3', t:'Completed 10 CodingBat Python exercises' },
-      { id:'m3-4', t:'Built a trivia quiz app with 5+ questions' },
-      { id:'m3-5', t:'Completed Swift Playgrounds — Learn to Code 1' },
-    ],
-    projects:['🎲 Number guessing game','🔐 Caesar cipher encoder','🐢 Turtle art generator','🧮 Calculator','📋 To-do list saved to file'],
-  },
-  { id:4, emoji:'🌐', name:'Web & Apps', age:'11–13', color:'#ff9f43',
-    desc:'HTML, CSS, JavaScript. Build websites and apps that run in any browser.',
-    ageNote:'GitHub requires users to be 13 or older. Under-13s can publish with Netlify Drop (no account needed) or under a parent\'s GitHub account with the parent present.',
-    resources:[
-      { e:'🏕️', n:'freeCodeCamp — Web Design', u:'https://freecodecamp.org/learn/2022/responsive-web-design', s:'300 hours of HTML & CSS. 5 certification projects. FREE.' },
-      { e:'🎓', n:'The Odin Project', u:'https://theodinproject.com', s:'Top-rated full-stack curriculum. HTML → CSS → JS → Node. FREE.' },
-      { e:'📝', n:'VS Code', u:'https://code.visualstudio.com', s:'Most popular code editor in the world. FREE.' },
-      { e:'🐙', n:'GitHub Pages', u:'https://pages.github.com', s:'Host any HTML website for free. Perfect for first live portfolio. FREE.' },
-    ],
-    activities:[
-      'Build a personal webpage with HTML & CSS',
-      'Add JavaScript interactivity',
-      'freeCodeCamp Responsive Web Design',
-      'Publish first site live on GitHub Pages',
-    ],
-    milestones:[
-      { id:'m4-0', t:'Built a personal webpage with HTML & CSS' },
-      { id:'m4-1', t:'Added JavaScript interactivity to a webpage' },
-      { id:'m4-2', t:'Completed freeCodeCamp Responsive Web Design' },
-      { id:'m4-3', t:'Published a website live on GitHub Pages' },
-      { id:'m4-4', t:'Built a JavaScript project (calculator, quiz or game)' },
-      { id:'m4-5', t:'Made first Git commit and push to GitHub' },
-    ],
-    projects:['🌐 Personal portfolio site','🧮 Calculator app','🎮 Browser game (Pong/Tetris)','✅ To-do list with localStorage','🃏 Memory card flip game'],
-  },
-  { id:5, emoji:'⚙️', name:'APIs & Automation', age:'13–15', color:'#ff6b9d',
-    desc:'Connect services with APIs, automate real tasks, build back-end servers.',
-    ageNote:'Most automation services (Zapier, Make, n8n Cloud), chat platforms (Discord, Telegram) and cloud hosts have minimum ages of 13–18. A parent should create and own these accounts and any API keys.',
-    resources:[
-      { e:'📗', n:'Automate the Boring Stuff', u:'https://automatetheboringstuff.com', s:'The best Python automation book. Fully free online. FREE.' },
-      { e:'⚡', n:'n8n — Workflow Automation', u:'https://n8n.io', s:'Open-source visual workflow automation. Self-hostable. FREE.' },
-      { e:'🚀', n:'Flask — Python Web Framework', u:'https://flask.palletsprojects.com', s:'Build REST APIs and web servers with Python. Lightweight.' },
-      { e:'▲', n:'Vercel Deployment', u:'https://vercel.com', s:'Deploy web apps in seconds. Free tier. Perfect for first backends.' },
-    ],
-    activities:[
-      'Connect to a public API and display data',
-      'Build a Python automation script',
-      'Create a Flask REST API',
-      'Build a Zapier or n8n workflow',
-    ],
-    milestones:[
-      { id:'m5-0', t:'Connected to a public API and displayed live data' },
-      { id:'m5-1', t:'Built a Python automation script (files, email or web)' },
-      { id:'m5-2', t:'Created a Flask or Node.js web server' },
-      { id:'m5-3', t:'Built a Zapier or n8n workflow with 3+ steps' },
-      { id:'m5-4', t:'Set up a database and performed CRUD operations' },
-      { id:'m5-5', t:'Deployed a full-stack app to the cloud (Vercel/Railway)' },
-    ],
-    projects:['🤖 Discord or Telegram bot','📊 Live data dashboard','🛒 Full-stack shopping list','⏰ Task scheduler bot','🔔 Price tracker + email alerts'],
-  },
-  { id:6, emoji:'🤖', name:'AI & Professional', age:'15–18+', color:'#ff6b6b',
-    desc:'Machine learning, AI agents, LLMs and professional engineering practices. The summit.',
-    ageNote:'AI model APIs usually require users to be 18+ (some allow 13–17 with parental permission). Keep API keys in a parent\'s account with a spending limit set, and never paste keys into public code.',
-    resources:[
-      { e:'🎓', n:'fast.ai — Practical Deep Learning', u:'https://fast.ai', s:'Top-down practical ML. Build real models from day 1. FREE.' },
-      { e:'🦜', n:'LangChain Docs', u:'https://docs.langchain.com', s:'Build AI agents, chains, RAG systems. The leading AI framework. FREE.' },
-      { e:'🎓', n:'DeepLearning.AI Short Courses', u:'https://learn.deeplearning.ai', s:'30+ short AI courses from the world\'s best instructors. FREE.' },
-      { e:'🤗', n:'Hugging Face — NLP Course', u:'https://huggingface.co/learn', s:'Learn transformers, LLMs and fine-tuning. FREE.' },
-    ],
-    activities:[
-      'fast.ai or Andrew Ng ML course',
-      'Build an AI chatbot with an LLM API (parent-owned key)',
-      'Create a LangChain agent',
-      'Enter a Kaggle competition',
-    ],
-    milestones:[
-      { id:'m6-0', t:'Completed fast.ai or Andrew Ng ML Specialization' },
-      { id:'m6-1', t:'Built an AI-powered app using an LLM API' },
-      { id:'m6-2', t:'Created a LangChain agent or RAG system' },
-      { id:'m6-3', t:'Entered a Kaggle competition' },
-      { id:'m6-4', t:'Made a contribution to an open-source project on GitHub' },
-      { id:'m6-5', t:'Published a technical blog post or YouTube tutorial' },
-    ],
-    projects:['🤖 AI tutor chatbot','🧠 RAG app over personal notes','📸 Image classifier','🌐 Full SaaS with AI features','📊 Automated data analysis agent'],
-  },
-];
-
-/* ── DATA: RESOURCES ─────────────────────────────────────────── */
-const RESOURCES = [
-  { n:'Hello Ruby',url:'https://www.helloruby.com',e:'📗',desc:'Adventure stories teaching loops, conditions and decomposition for ages 5–7.',type:'book',cost:'paid',stages:[0]},
-  { n:'Robot Turtles',url:'https://www.thinkfun.com',e:'🐢',desc:'The youngest programmer\'s board game. No screens needed. Ages 4+.',type:'game',cost:'paid',stages:[0,1]},
-  { n:'Code & Go Robot Mouse',url:'https://learningresources.com',e:'🐭',desc:'Physical mouse navigates a maze — teaches sequences and debugging.',type:'hardware',cost:'paid',stages:[0,1]},
-  { n:'ScratchJr',url:'https://scratchjr.org',e:'🐱',desc:'Official MIT drag-and-drop app for ages 5–7. No reading required. FREE.',type:'app',cost:'free',stages:[1]},
-  { n:'Code.org — Course A',acct:'parent',url:'https://studio.code.org/courses/coursea-2025/units/1',e:'🤖',desc:'Full curriculum for pre-readers. Videos + activities. 100% free.',type:'course',cost:'free',stages:[1]},
-  { n:'Code.org — Dance Party',url:'https://hourofcode.com/dance',e:'🎵',desc:'Code characters to dance to their favourite music. Huge hit with kids!',type:'activity',cost:'free',stages:[1,2]},
-  { n:'Lightbot',url:'https://lightbot.com',e:'💡',desc:'Guide a robot with command blocks. Teaches sequences, loops and procedures.',type:'game',cost:'paid',stages:[1,2]},
-  { n:'Scratch 3.0',acct:'parent',url:'https://scratch.mit.edu',e:'🐱',desc:'The world\'s most popular kids programming language. 100M+ projects online.',type:'platform',cost:'free',stages:[2,3]},
-  { n:'Code.org — Course B/C/D',acct:'parent',url:'https://studio.code.org/courses/courseb-2025/units/1',e:'🎓',desc:'Complete self-paced curriculum for ages 6–10. Videos + exercises + projects.',type:'course',cost:'free',stages:[1,2]},
-  { n:'Griffpatch on YouTube',url:'https://youtube.com/@griffpatch',e:'📺',desc:'World\'s most popular Scratch creator. Makes Minecraft in Scratch!',type:'video',cost:'free',stages:[2]},
-  { n:'micro:bit',url:'https://microbit.org',e:'💎',desc:'$15 programmable circuit board with thousands of beginner projects.',type:'hardware',cost:'paid',stages:[2,3]},
-  { n:'LEGO Boost',url:'https://lego.com/boost',e:'🧱',desc:'Build LEGO models and code them with Scratch-like blocks. Ages 7+.',type:'hardware',cost:'paid',stages:[2]},
-  { n:'Makey Makey',url:'https://makeymakey.com',e:'🌈',desc:'Turn bananas into keyboards! Connects the real world to the computer.',type:'hardware',cost:'paid',stages:[2,3]},
-  { n:'Trinket.io Turtle Python',url:'https://trinket.io/turtle',e:'🐢',desc:'Draw with Python turtle graphics instantly in the browser. No install needed.',type:'platform',cost:'free',stages:[3]},
-  { n:'Python for Kids',url:'https://nostarch.com/pythonforkids',e:'📗',desc:'Best-selling intro book by Jason Briggs with games and fun examples.',type:'book',cost:'paid',stages:[3]},
-  { n:'Swift Playgrounds',url:'https://apple.com/swift/playgrounds',e:'📱',desc:'Apple\'s own app for learning Swift. Gorgeous, game-like, zero setup.',type:'app',cost:'free',stages:[3,4]},
-  { n:'Thonny IDE',url:'https://thonny.org',e:'🖥️',desc:'Best first Python IDE — shows how variables change in real time.',type:'tool',cost:'free',stages:[3]},
-  { n:'CheckiO — Python Puzzles',url:'https://py.checkio.org',e:'🔧',desc:'Python puzzle island — solve coding challenges to advance on a map.',type:'game',cost:'free',stages:[3,4]},
-  { n:'Automate the Boring Stuff',url:'https://automatetheboringstuff.com',e:'📗',desc:'The best Python automation book. Files, emails, PDFs, web scraping. FREE online.',type:'book',cost:'free',stages:[3,4,5]},
-  { n:'freeCodeCamp — Web Design',acct:'parent',url:'https://freecodecamp.org',e:'🏕️',desc:'300 hours of HTML & CSS with 5 certification projects. 100% free.',type:'course',cost:'free',stages:[4]},
-  { n:'The Odin Project',url:'https://theodinproject.com',e:'🎓',desc:'Top-rated full-stack curriculum: HTML → CSS → JavaScript → Node.js.',type:'course',cost:'free',stages:[4,5]},
-  { n:'JavaScript.info',url:'https://javascript.info',e:'📘',desc:'The modern JavaScript tutorial. Best written resource on the web.',type:'book',cost:'free',stages:[4]},
-  { n:'VS Code',url:'https://code.visualstudio.com',e:'📝',desc:'Most popular code editor in the world. Extensions for every language.',type:'tool',cost:'free',stages:[3,4,5,6]},
-  { n:'GitHub Pages',acct:'13+',url:'https://pages.github.com',e:'🐙',desc:'Host any HTML website for free. Perfect for first live portfolios.',type:'platform',cost:'free',stages:[4,5]},
-  { n:'n8n — Automation',acct:'parent',url:'https://n8n.io',e:'🔧',desc:'Open-source visual workflow automation. Self-hostable or cloud.',type:'platform',cost:'free',stages:[5]},
-  { n:'Zapier',acct:'parent',url:'https://zapier.com',e:'⚡',desc:'No-code automation between 6,000+ apps. Great for learning trigger/action model.',type:'platform',cost:'mixed',stages:[5]},
-  { n:'Make.com',acct:'parent',url:'https://make.com',e:'🔗',desc:'Visual drag-and-drop workflow builder. Free tier available.',type:'platform',cost:'mixed',stages:[5]},
-  { n:'Flask',url:'https://flask.palletsprojects.com',e:'🚀',desc:'Build REST APIs and web servers with Python. Lightweight and beginner-friendly.',type:'framework',cost:'free',stages:[5]},
-  { n:'fast.ai',url:'https://fast.ai',e:'🎓',desc:'Practical deep learning — build real AI models from day 1. Completely free.',type:'course',cost:'free',stages:[6]},
-  { n:'DeepLearning.AI Courses',acct:'parent',url:'https://learn.deeplearning.ai',e:'🤖',desc:'30+ short AI courses on agents, RAG, LLMOps. From the world\'s best instructors.',type:'course',cost:'free',stages:[6]},
-  { n:'LangChain',url:'https://docs.langchain.com',e:'🦜',desc:'Build AI agents, chains and RAG systems. The leading AI orchestration framework.',type:'framework',cost:'free',stages:[6]},
-  { n:'Hugging Face Learn',acct:'parent',url:'https://huggingface.co/learn',e:'🤗',desc:'Learn transformers, LLMs and fine-tuning state-of-the-art models.',type:'course',cost:'free',stages:[6]},
-  { n:'Kaggle Learn',acct:'parent',url:'https://kaggle.com/learn',e:'🏆',desc:'Bite-size ML courses and competitions. Build your portfolio with Kaggle notebooks.',type:'platform',cost:'free',stages:[6]},
-  { n:'Replit',acct:'13+',url:'https://replit.com',e:'💻',desc:'Browser-based IDE. No install needed. Share projects with just a link.',type:'tool',cost:'mixed',stages:[3,4,5]},
-  { n:'Google Colab',acct:'parent',url:'https://colab.research.google.com',e:'📓',desc:'Jupyter notebooks in the browser. Great prep for data science.',type:'tool',cost:'free',stages:[5,6]},
-];
-
 const AVATARS = ['🦊','🐼','🦁','🐯','🐸','🦄','🐳','🦋','🐶','🐱','🦖','🚀','⭐','🌈','🎮'];
 const ACHIEVEMENTS = [
   { id:'ach-0', e:'🌱', n:'First Steps', desc:'Complete Stage 0' },
@@ -820,6 +643,7 @@ function navigate(view, updateHash = true) {
   });
   if (updateHash && location.hash !== '#' + view) history.pushState(null, '', '#' + view);
   if (view === 'dashboard') renderDashboard();
+  if (view === 'privacy') { const t = document.getElementById('kid-safe-toggle'); if (t) t.checked = kidSafeOn(); }
   window.scrollTo(0, 0);
 }
 
@@ -848,6 +672,18 @@ function saveKids() {
 }
 function genId() { return 'k_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
 
+function sanitizeEvidence(ev, progress) {
+  const out = {};
+  if (!ev || typeof ev !== 'object') return out;
+  const done = new Set(Object.values(progress).flat());
+  Object.keys(ev).forEach(mid => {
+    const e = ev[mid];
+    if (!done.has(mid) || !e || typeof e !== 'object') return;
+    const link = safeLink(e.link), note = String(e.note || '').slice(0, 500);
+    if (link || note) out[mid] = { link, note, date: /^\d{4}-\d{2}-\d{2}$/.test(e.date) ? e.date : today() };
+  });
+  return out;
+}
 /* Turn any stored or imported object into a clean, safe student record (or null). */
 function sanitizeKid(k) {
   if (!k || typeof k !== 'object') return null;
@@ -875,6 +711,7 @@ function sanitizeKid(k) {
       ? [...new Set(k.completedStages.map(Number).filter(n => n >= 0 && n <= LAST_STAGE))]
       : STAGES.filter(st => (progress['s' + st.id] || []).length === st.milestones.length).map(st => st.id),
     notes: String(k.notes || '').slice(0, 5000),
+    evidence: sanitizeEvidence(k.evidence, progress),
     joinDate: isDate(k.joinDate) ? k.joinDate : today(),
     lastActive: isDate(k.lastActive) ? k.lastActive : today(),
     sessions: (Array.isArray(k.sessions) ? k.sessions : []).slice(0, 30)
@@ -949,9 +786,72 @@ function refreshDetail(kid) {
   renderStageProgressBars(kid);
   renderOverallRing(kid);
   renderGradBox(kid);
+  renderNextSteps(kid);
   renderAchievements(kid);
   renderActivity(kid);
   updateKidCardInGrid(kid);
+}
+
+/* ── WHAT'S NEXT ──────────────────────────────────────────────── */
+function nextMilestone(kid) {
+  const st = STAGES[kid.stage];
+  return [...st.milestones].sort((a, b) => a.lvl - b.lvl).find(m => !isCompleted(kid, st.id, m.id));
+}
+function renderNextSteps(kid) {
+  const el = document.getElementById('kd-next');
+  if (!el) return;
+  const st = STAGES[kid.stage];
+  const next = nextMilestone(kid);
+  if (!next) { el.innerHTML = ''; return; }
+  const proj = st.projects.find(p => p.lvl === next.lvl) || st.projects[0];
+  el.innerHTML = `<div class="next-box">
+    <h4>🧭 Next up for ${esc(kid.name)}</h4>
+    <div class="nb-row"><span>🎯</span><span><strong>${LEVELS[next.lvl].e} ${LEVELS[next.lvl].name} milestone:</strong> ${next.t}</span></div>
+    <div class="nb-row"><span>${proj.e}</span><span><strong>Suggested project:</strong> <a href="#" onclick="event.preventDefault();openProject(${st.id}, '${proj.id}')">${proj.title}</a> · ⏱ ${proj.mins} · ${proj.tool}</span></div>
+  </div>`;
+}
+
+/* ── EVIDENCE / PORTFOLIO ─────────────────────────────────────── */
+function safeLink(u) {
+  u = String(u || '').trim();
+  if (!u) return '';
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  try { const x = new URL(u); return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href.slice(0, 500) : ''; } catch(e) { return ''; }
+}
+function openEvidence(kidId, stageId, mid) {
+  const kid = kids.find(k => k.id === kidId);
+  const m = STAGES[stageId].milestones.find(x => x.id === mid);
+  if (!kid || !m) return;
+  const ev = kid.evidence[mid] || {};
+  showModal(`
+    <div class="modal-header"><h2>📎 Proof of learning</h2><button class="modal-close" onclick="openKidDetail('${kid.id}')" aria-label="Back">✕</button></div>
+    <form class="modal-body" onsubmit="event.preventDefault();saveEvidence('${kid.id}', ${stageId}, '${mid}')">
+      <p style="font-size:.88rem;margin-bottom:1rem"><strong>${esc(kid.name)}</strong> — ${m.t}</p>
+      <div class="form-group"><label for="ev-link">Link to the project (optional)</label>
+        <input class="form-control" id="ev-link" type="text" inputmode="url" autocapitalize="off" spellcheck="false" maxlength="500" placeholder="e.g. https://scratch.mit.edu/projects/…" value="${esc(ev.link || '')}"/></div>
+      <div class="form-group"><label for="ev-note">What did they make or learn? (optional)</label>
+        <textarea class="form-control" id="ev-note" maxlength="500" placeholder="e.g. Made a maze game with 3 levels; fixed a bug where the score went negative.">${esc(ev.note || '')}</textarea></div>
+      <p style="font-size:.76rem;color:var(--muted)">Proof appears in the printed report as a portfolio. Don't include photos of faces or personal details in shared links.</p>
+      <div class="form-actions">
+        ${kid.evidence[mid] ? `<button type="button" class="btn btn-sm btn-red" style="margin-right:auto" onclick="saveEvidence('${kid.id}', ${stageId}, '${mid}', true)">Remove</button>` : ''}
+        <button type="button" class="btn btn-sm btn-muted" onclick="openKidDetail('${kid.id}')">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary">Save proof</button>
+      </div>
+    </form>`);
+}
+function saveEvidence(kidId, stageId, mid, remove) {
+  const kid = kids.find(k => k.id === kidId);
+  if (!kid) return;
+  const rawLink = document.getElementById('ev-link')?.value || '';
+  const link = safeLink(rawLink);
+  const note = (document.getElementById('ev-note')?.value || '').trim().slice(0, 500);
+  if (!remove && rawLink.trim() && !link) { showToast('⚠️ That link doesn\'t look right — use a web address starting with https://', 'warn'); return; }
+  if (remove || (!link && !note)) delete kid.evidence[mid];
+  else kid.evidence[mid] = { link, note, date: today() };
+  saveKids();
+  openKidDetail(kidId);
+  switchDetailTab(stageId);
+  showToast(remove ? '🗑️ Proof removed' : '📎 Proof saved to the portfolio', 'success');
 }
 
 /* ── STAGE ADVANCEMENT ────────────────────────────────────────── */
@@ -1206,6 +1106,7 @@ function openKidDetail(kidId) {
       </div>
 
       <div id="kd-grad"></div>
+      <div id="kd-next"></div>
       <div class="all-prog" id="kd-stage-bars"></div>
 
       <div class="stage-tabs" id="kd-tabs" role="tablist">${tabsHtml}</div>
@@ -1289,13 +1190,25 @@ function renderMilestoneList(kid, stageId) {
   if (!el) return;
   const stage = STAGES[stageId];
   if (!stage) return;
-  el.innerHTML = `<div class="ms-list">${stage.milestones.map(m => {
-    const done = isCompleted(kid, stageId, m.id);
-    return `<div class="ms-item ${done?'done':''}" role="checkbox" tabindex="0" aria-checked="${done}" onclick="toggleMilestone('${kid.id}', ${stageId}, '${m.id}')">
-      <div class="ms-cb" aria-hidden="true">${done?'✓':''}</div>
-      <span class="ms-txt">${m.t}</span>
-    </div>`;
-  }).join('')}</div>`;
+  el.innerHTML = [1,2,3].map(l => {
+    const items = stage.milestones.filter(m => m.lvl === l);
+    if (!items.length) return '';
+    return `<div class="lvl-head">${LEVELS[l].e} ${LEVELS[l].name} <span class="lv-desc">— ${LEVELS[l].desc}</span></div>
+    <div class="ms-list">${items.map(m => {
+      const done = isCompleted(kid, stageId, m.id);
+      const ev = kid.evidence[m.id];
+      return `<div class="ms-item ${done?'done':''}" role="checkbox" tabindex="0" aria-checked="${done}" onclick="toggleMilestone('${kid.id}', ${stageId}, '${m.id}')">
+        <div class="ms-cb" aria-hidden="true">${done?'✓':''}</div>
+        <div style="flex:1">
+          <span class="ms-txt">${m.t}</span>
+          <div class="ms-meta">${stdChips(m.std)}
+            ${done ? `<button class="ev-btn ${ev?'has':''}" onclick="event.stopPropagation();openEvidence('${kid.id}', ${stageId}, '${m.id}')">${ev ? '📎 Proof saved' : '📎 Add proof'}</button>` : ''}
+          </div>
+          ${done && ev ? `<div class="ev-line">${ev.link ? `🔗 ${esc(ev.link)}` : ''}${ev.link && ev.note ? ' · ' : ''}${esc(ev.note)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }).join('');
   document.querySelectorAll('.s-tab').forEach((t, i) => {
     const sp = t.querySelector('.tp');
     if (sp) sp.textContent = stageProgressPct(kid, i) + '%';
@@ -1341,12 +1254,21 @@ function printReport(kidId) {
   }).join('');
   const ach = earnedAchievements(kid);
   const name = esc(kid.name);
+  const stdMet = [...new Set(STAGES.flatMap(st => st.milestones.filter(m => isCompleted(kid, st.id, m.id)).flatMap(m => m.std)))].sort();
+  const portfolio = STAGES.flatMap(st => st.milestones.filter(m => kid.evidence[m.id]).map(m => {
+    const ev = kid.evidence[m.id];
+    return `<li style="margin-bottom:8px"><strong>${st.emoji} ${m.t}</strong><br/>${ev.note ? esc(ev.note) + '<br/>' : ''}${ev.link ? `<a href="${esc(ev.link)}">${esc(ev.link)}</a>` : ''}</li>`;
+  })).join('');
+  const extra = `<div style="break-inside:avoid;margin-top:12px"><h3>🎯 CSTA K–12 standards practised (${stdMet.length})</h3>
+    ${stdMet.length ? `<ul style="padding-left:20px">${stdMet.map(c => `<li style="margin-bottom:3px"><strong>${c}</strong> — ${STANDARDS[c]}</li>`).join('')}</ul>` : '<p>None yet.</p>'}</div>
+    ${portfolio ? `<div style="break-inside:avoid;margin-top:12px"><h3>📎 Portfolio</h3><ul style="padding-left:20px">${portfolio}</ul></div>` : ''}`;
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name} — Progress Report</title>
     <style>body{font-family:sans-serif;padding:2rem;color:#111;}h1{margin-bottom:.25rem;}p{color:#666;margin-bottom:1.5rem;}h3{color:#333;}</style>
     </head><body>
     <h1>${esc(kid.avatar)} ${name} — CodeKids Academy Progress Report</h1>
     <p>Age: ${kid.age} | Current stage: ${kid.stage} (${STAGES[kid.stage].name}) | Joined: ${fmtDate(kid.joinDate)} | Overall: ${totalProgressPct(kid)}% | Badges: ${ach.length}</p>
     ${rows}
+    ${extra}
     <p style="border-top:1px solid #eee;padding-top:1rem;color:#999;font-size:12px">Generated by CodeKids Academy on ${new Date().toLocaleDateString()}</p>
     </body></html>`);
   w.document.close();
@@ -1402,22 +1324,86 @@ function buildCurriculum() {
             ${st.resources.map(r => `<div class="ri-item"><span class="ri">${r.e}</span><div><a href="${r.u}" target="_blank" rel="noopener">${r.n}</a><span class="ri-sub">${r.s}</span></div></div>`).join('')}
           </div>
           <div class="acc-card">
-            <h4>✅ Stage Milestones</h4>
-            ${st.milestones.map(m => `<div class="ri-item"><span class="ri">📌</span><div>${m.t}</div></div>`).join('')}
+            <h4>✅ Milestones by level</h4>
+            ${[1,2,3].map(l => `<div class="lvl-head">${LEVELS[l].e} ${LEVELS[l].name}</div>` +
+              st.milestones.filter(m => m.lvl === l).map(m => `<div class="ri-item"><div>${m.t}<div class="ms-meta">${stdChips(m.std)}</div></div></div>`).join('')).join('')}
           </div>
           <div class="acc-card">
             <h4>🛠️ Activities</h4>
             ${st.activities.map(a => `<div class="ri-item"><span class="ri">▶️</span><div>${a}</div></div>`).join('')}
           </div>
           <div class="acc-card">
-            <h4>🏗️ Project Ideas</h4>
-            <div class="proj-pills">${st.projects.map(p => `<span class="pp">${p}</span>`).join('')}</div>
+            <h4>🎯 Standards covered</h4>
+            <p style="font-size:.8rem;color:var(--muted);margin-bottom:.4rem">CSTA K–12 level ${stageStdLevels(st)}. Hover or tap a code for its meaning.</p>
+            <div>${stdChips([...new Set(st.milestones.flatMap(m => m.std).concat(st.projects.flatMap(p => p.std)))].sort())}</div>
           </div>
+        </div>
+        <div class="acc-card">
+          <h4>🏗️ Guided projects — tap one for the full step-by-step brief</h4>
+          <div class="proj-grid">${st.projects.map(p => projCard(st, p)).join('')}</div>
         </div>
       </div>
     </div>
   `).join('');
 }
+function stdChips(codes) {
+  return (codes || []).map(c => `<span class="std" tabindex="0" onclick="event.stopPropagation()" title="${c}: ${STANDARDS[c] || ''}">${c}</span>`).join('');
+}
+function stageStdLevels(st) {
+  const lv = [...new Set(st.milestones.flatMap(m => m.std).map(c => c.split('-')[0]))];
+  const order = ['1A', '1B', '2', '3A', '3B'];
+  return lv.sort((a, b) => order.indexOf(a) - order.indexOf(b)).map(l => `${l} (${STANDARD_LEVELS[l]})`).join(' → ');
+}
+function projCard(st, p) {
+  return `<div class="proj-card" role="button" tabindex="0" onclick="openProject(${st.id}, '${p.id}')">
+    <h5>${p.e} ${p.title}</h5>
+    <p>${p.brief}</p>
+    <div class="proj-meta"><span class="badge badge-purple">${LEVELS[p.lvl].e} ${LEVELS[p.lvl].name}</span><span>⏱ ${p.mins}</span></div>
+  </div>`;
+}
+function findProject(stageId, projId) {
+  const st = STAGES[stageId];
+  return st && st.projects.find(p => p.id === projId);
+}
+function projectBriefHtml(st, p, forPrint) {
+  return `<div class="brief">
+    <p class="lead">${p.brief}</p>
+    <div class="proj-meta" style="margin-top:.6rem">
+      <span class="badge badge-purple">${LEVELS[p.lvl].e} ${LEVELS[p.lvl].name}</span>
+      <span class="badge badge-blue">${st.emoji} Stage ${st.id}: ${st.name}</span>
+      <span class="badge badge-muted">⏱ ${p.mins}</span>
+      <span class="badge badge-muted">🛠️ ${p.tool}</span>
+    </div>
+    <h3>Steps</h3><ol>${p.steps.map(x => `<li>${x}</li>`).join('')}</ol>
+    <h3>✅ Done when…</h3><ul>${p.done.map(x => `<li>${x}</li>`).join('')}</ul>
+    <h3>🌟 Stretch challenge</h3><p style="font-size:.88rem">${p.stretch}</p>
+    <h3>🎯 Standards practised</h3>
+    ${forPrint ? `<ul>${p.std.map(c => `<li><strong>${c}</strong> — ${STANDARDS[c]}</li>`).join('')}</ul>` : stdChips(p.std)}
+    ${forPrint ? '' : `<p style="font-size:.78rem;color:var(--muted);margin-top:1rem">Tip for grown-ups: let your child struggle a little before helping — debugging is the skill. Ask “what did you expect to happen, and what happened instead?”</p>`}
+  </div>`;
+}
+function openProject(stageId, projId) {
+  const st = STAGES[stageId], p = findProject(stageId, projId);
+  if (!p) return;
+  showModal(`
+    <div class="modal-header"><h2>${p.e} ${p.title}</h2>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button class="btn btn-sm btn-muted" onclick="printProject(${stageId}, '${projId}')">🖨️ Print</button>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      </div></div>
+    <div class="modal-body">${projectBriefHtml(st, p, false)}</div>`, true);
+}
+function printProject(stageId, projId) {
+  const st = STAGES[stageId], p = findProject(stageId, projId);
+  const w = window.open('', '_blank');
+  if (!w) { showToast('⚠️ Please allow pop-ups to print', 'warn'); return; }
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${p.title} — CodeKids project</title>
+    <style>body{font-family:sans-serif;padding:2rem;color:#111;max-width:720px;margin:auto}h1{margin-bottom:.3rem}.badge{display:inline-block;border:1px solid #ccc;border-radius:12px;padding:2px 8px;font-size:12px;margin:2px}h3{margin-top:1.2rem;text-transform:uppercase;font-size:13px;color:#555}li{margin-bottom:6px}</style></head>
+    <body><h1>${p.e} ${p.title}</h1>${projectBriefHtml(st, p, true)}
+    <p style="margin-top:2rem;border-top:1px solid #eee;padding-top:.6rem;color:#999;font-size:12px">CodeKids Academy · Standards: CSTA K–12 Computer Science Standards (2017)</p></body></html>`);
+  w.document.close(); w.focus(); w.print();
+}
+
 function toggleAcc(stageId) {
   const head = document.getElementById('acc-head-' + stageId);
   const body = document.getElementById('acc-body-' + stageId);
@@ -1584,6 +1570,45 @@ function setupOfflineAndStorage() {
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
+}
+
+/* ── PARENTAL GATE (grown-up check before leaving the app) ─────── */
+let gateUntil = 0, gatePending = null, gateAnswer = 0;
+function kidSafeOn() { return lsGet('cka_kid_safe') !== 'off'; }
+function setKidSafe(on) {
+  lsSet('cka_kid_safe', on ? 'on' : 'off');
+  showToast(on ? '🛡️ Grown-up check is on for outside links' : 'Grown-up check is off', 'info');
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href^="http"]');
+  if (!a || !kidSafeOn() || Date.now() < gateUntil) return;
+  e.preventDefault();
+  gatePending = a.href;
+  openGate();
+}, true);
+function openGate() {
+  const x = 3 + Math.floor(Math.random() * 7), y = 6 + Math.floor(Math.random() * 4);
+  gateAnswer = x * y;
+  const opts = new Set([gateAnswer]);
+  while (opts.size < 6) { const d = Math.floor(Math.random() * 13) - 6; if (d) opts.add(gateAnswer + d); }
+  const btns = [...opts].sort(() => Math.random() - .5).map(n => `<button class="btn btn-secondary" onclick="answerGate(${n})">${n}</button>`).join('');
+  let host = '';
+  try { host = new URL(gatePending).hostname; } catch(e) {}
+  showModal(`
+    <div class="modal-header"><h2>🛡️ Grown-ups only</h2><button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:.88rem;color:var(--muted)">This opens another website${host ? ` (<strong style="color:var(--text)">${esc(host)}</strong>)` : ''}. Ask a grown-up to answer:</p>
+      <div class="gate-q">What is ${x} × ${y}?</div>
+      <div class="gate-opts">${btns}</div>
+      <p style="font-size:.74rem;color:var(--muted);margin-top:1rem">Grown-ups: after one correct answer, links open freely for 10 minutes. You can turn this check off on the Privacy page.</p>
+    </div>`);
+}
+function answerGate(n) {
+  if (n !== gateAnswer) { showToast('❌ Not quite — ask a grown-up to help', 'warn'); openGate(); return; }
+  gateUntil = Date.now() + 10 * 60 * 1000;
+  const url = gatePending; gatePending = null;
+  closeModal();
+  if (url) window.open(url, '_blank', 'noopener');
 }
 
 /* ── TOAST ────────────────────────────────────────────────────── */
